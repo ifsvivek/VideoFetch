@@ -31,7 +31,7 @@ To install the VideoFetch plugin, follow these steps:
 
 ## Support
 
-If you encounter any problems or have questions about the VideoFetch plugin, please reach out to us by opening an issue on the [GitHub repository](https://github.com/ifsvivek/VideoFetch/issues/new/choose).
+If you encounter any problems or have questions about the VideoFetch plugin, please reach out to us by opening an issue on the [New Issue](https://github.com/ifsvivek/VideoFetch/issues/new/choose).
 
 ---
 
