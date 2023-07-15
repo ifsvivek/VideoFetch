@@ -1,7 +1,7 @@
 {
-  "uuid": "elephant",
-  "name": "Elephant",
-  "description": "Provides support for downloading videos from various sites.",
+  "uuid": "videofetch",
+  "name": "VideoFetch",
+  "description": "A plugin for Free Download Manager to easily download YouTube videos.",
   "version": "1.0.8",
   "icon": "icon.svg",
   "mediaParser": true,
@@ -16,6 +16,5 @@
     "msabstractparser.js",
     "msparser.js",
     "msbatchparser.js"
-  ],
-  "updateUrl": "https://free-addons.org/FDM/elephant-update.json"
+  ]
 }
