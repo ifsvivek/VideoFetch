@@ -1,4 +1,4 @@
-name: Publish FreeTube Downloader
+name: Publish VideoFetch
 
 on:
   push:
