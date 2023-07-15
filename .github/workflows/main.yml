@@ -21,7 +21,7 @@ jobs:
       - name: Build Plugin
         run: |
           dist="$(pwd)/VideoFetch.fda"
-          cd plugin/yt_dlp/yt-dlp/
+          cd plugin/yt_dlp/yt_dlp/
           rm -f "$dist"
           zip -r "$dist" *
 
