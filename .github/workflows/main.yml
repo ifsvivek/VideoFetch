@@ -1,0 +1,22 @@
+name: Publish plugin
+on:
+  release:
+    types: [created]
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Build plugin
+        run: |
+          dist="$(pwd)/elephant.fda";
+          cd "$(dirname "$0")"/../plugin/;
+          rm -f "$dist";
+          zip -r "$dist" *;
+      - name: Publish plugin
+        uses: actions/upload-release-asset@v1
+        with:
+          asset_path: VideoFetch.fda
+          asset_name: VideoFetch.fda
+          asset_content_type: application/zip
