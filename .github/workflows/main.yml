@@ -1,4 +1,4 @@
-name: Publish FreeTube Downloader
+name: Publish VideoFetch
 
 on:
   push:
@@ -13,10 +13,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          python-version: 3.x
+          node-version: '16'
 
       - name: Build Plugin
         run: |
