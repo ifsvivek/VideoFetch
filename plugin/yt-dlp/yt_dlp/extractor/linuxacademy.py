@@ -2,8 +2,11 @@ import json
 import random
 
 from .common import InfoExtractor
-from ..compat import compat_b64decode, compat_str
-from ..networking.exceptions import HTTPError
+from ..compat import (
+    compat_b64decode,
+    compat_HTTPError,
+    compat_str,
+)
 from ..utils import (
     clean_html,
     ExtractorError,
@@ -104,7 +107,7 @@ class LinuxAcademyIE(InfoExtractor):
             'sso': 'true',
         })
 
-        login_state_url = urlh.url
+        login_state_url = urlh.geturl()
 
         try:
             login_page = self._download_webpage(
@@ -116,8 +119,8 @@ class LinuxAcademyIE(InfoExtractor):
                     'Referer': login_state_url,
                 })
         except ExtractorError as e:
-            if isinstance(e.cause, HTTPError) and e.cause.status == 401:
-                error = self._parse_json(e.cause.response.read(), None)
+            if isinstance(e.cause, compat_HTTPError) and e.cause.code == 401:
+                error = self._parse_json(e.cause.read(), None)
                 message = error.get('description') or error['code']
                 raise ExtractorError(
                     '%s said: %s' % (self.IE_NAME, message), expected=True)
@@ -134,7 +137,7 @@ class LinuxAcademyIE(InfoExtractor):
             })
 
         access_token = self._search_regex(
-            r'access_token=([^=&]+)', urlh.url,
+            r'access_token=([^=&]+)', urlh.geturl(),
             'access token', default=None)
         if not access_token:
             access_token = self._parse_json(

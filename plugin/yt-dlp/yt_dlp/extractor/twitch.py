@@ -71,7 +71,7 @@ class TwitchBaseIE(InfoExtractor):
             form = self._hidden_inputs(page)
             form.update(data)
 
-            page_url = urlh.url
+            page_url = urlh.geturl()
             post_url = self._search_regex(
                 r'<form[^>]+action=(["\'])(?P<url>.+?)\1', page,
                 'post url', default=self._LOGIN_POST_URL, group='url')

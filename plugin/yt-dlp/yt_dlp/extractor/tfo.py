@@ -1,8 +1,12 @@
 import json
 
 from .common import InfoExtractor
-from ..networking import HEADRequest
-from ..utils import ExtractorError, clean_html, int_or_none
+from ..utils import (
+    HEADRequest,
+    ExtractorError,
+    int_or_none,
+    clean_html,
+)
 
 
 class TFOIE(InfoExtractor):

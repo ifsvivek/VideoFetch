@@ -225,10 +225,10 @@ class TuneInShortenerIE(InfoExtractor):
         urlh = self._request_webpage(
             url, redirect_id, note='Downloading redirect page')
 
-        url = urlh.url
+        url = urlh.geturl()
         url_parsed = urllib.parse.urlparse(url)
         if url_parsed.port == 443:
-            url = url_parsed._replace(netloc=url_parsed.hostname).url
+            url = url_parsed._replace(netloc=url_parsed.hostname).geturl()
 
         self.to_screen('Following redirect: %s' % url)
         return self.url_result(url)

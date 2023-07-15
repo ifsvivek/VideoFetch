@@ -1,6 +1,10 @@
 from .common import InfoExtractor
-from ..networking import Request
-from ..utils import float_or_none, int_or_none, parse_iso8601
+from ..utils import (
+    float_or_none,
+    int_or_none,
+    parse_iso8601,
+    sanitized_Request,
+)
 
 
 class EitbIE(InfoExtractor):
@@ -50,7 +54,7 @@ class EitbIE(InfoExtractor):
 
         hls_url = media.get('HLS_SURL')
         if hls_url:
-            request = Request(
+            request = sanitized_Request(
                 'http://mam.eitb.eus/mam/REST/ServiceMultiweb/DomainRestrictedSecurity/TokenAuth/',
                 headers={'Referer': url})
             token_data = self._download_json(

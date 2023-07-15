@@ -1,13 +1,13 @@
 import re
 
 from .common import InfoExtractor
-from ..networking import Request
 from ..utils import (
     ExtractorError,
     int_or_none,
     js_to_json,
-    traverse_obj,
+    sanitized_Request,
     urlencode_postdata,
+    traverse_obj,
 )
 
 
@@ -72,8 +72,8 @@ class TubiTvIE(InfoExtractor):
             'password': password,
         }
         payload = urlencode_postdata(form_data)
-        request = Request(self._LOGIN_URL, payload)
-        request.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        request = sanitized_Request(self._LOGIN_URL, payload)
+        request.add_header('Content-Type', 'application/x-www-form-urlencoded')
         login_page = self._download_webpage(
             request, None, False, 'Wrong login info')
         if not re.search(r'id="tubi-logout"', login_page):

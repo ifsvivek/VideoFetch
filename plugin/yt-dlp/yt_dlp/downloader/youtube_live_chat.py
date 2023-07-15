@@ -1,8 +1,8 @@
 import json
 import time
+import urllib.error
 
 from .fragment import FragmentFD
-from ..networking.exceptions import HTTPError
 from ..utils import (
     RegexNotFoundError,
     RetryManager,
@@ -10,7 +10,6 @@ from ..utils import (
     int_or_none,
     try_get,
 )
-from ..utils.networking import HTTPHeaderDict
 
 
 class YoutubeLiveChatFD(FragmentFD):
@@ -38,7 +37,10 @@ class YoutubeLiveChatFD(FragmentFD):
         start_time = int(time.time() * 1000)
 
         def dl_fragment(url, data=None, headers=None):
-            http_headers = HTTPHeaderDict(info_dict.get('http_headers'), headers)
+            http_headers = info_dict.get('http_headers', {})
+            if headers:
+                http_headers = http_headers.copy()
+                http_headers.update(headers)
             return self._download_fragment(ctx, url, info_dict, http_headers, data)
 
         def parse_actions_replay(live_chat_continuation):
@@ -127,7 +129,7 @@ class YoutubeLiveChatFD(FragmentFD):
                             or frag_index == 1 and try_refresh_replay_beginning
                             or parse_actions_replay)
                     return (True, *func(live_chat_continuation))
-                except HTTPError as err:
+                except urllib.error.HTTPError as err:
                     retry.error = err
                     continue
             return False, None, None, None

@@ -1,6 +1,9 @@
 from .common import InfoExtractor
-from ..networking import HEADRequest
-from ..utils import try_get, unified_timestamp
+from ..utils import (
+    try_get,
+    unified_timestamp,
+    HEADRequest,
+)
 
 
 class TelemundoIE(InfoExtractor):
@@ -35,7 +38,7 @@ class TelemundoIE(InfoExtractor):
 
         m3u8_url = self._request_webpage(HEADRequest(
             redirect_url + '?format=redirect&manifest=m3u&format=redirect&Tracking=true&Embedded=true&formats=MPEG4'),
-            video_id, 'Processing m3u8').url
+            video_id, 'Processing m3u8').geturl()
         formats = self._extract_m3u8_formats(m3u8_url, video_id, 'mp4')
         date = unified_timestamp(try_get(
             metadata, lambda x: x['props']['initialState']['video']['associatedPlaylists'][0]['videos'][0]['datePublished'].split(' ', 1)[1]))

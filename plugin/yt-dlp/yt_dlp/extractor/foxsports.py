@@ -1,7 +1,6 @@
 from .common import InfoExtractor
 from .uplynk import UplynkPreplayIE
-from ..networking import HEADRequest
-from ..utils import float_or_none, make_archive_id, smuggle_url
+from ..utils import HEADRequest, float_or_none, make_archive_id, smuggle_url
 
 
 class FoxSportsIE(InfoExtractor):
@@ -36,7 +35,7 @@ class FoxSportsIE(InfoExtractor):
                 'x-api-key': 'cf289e299efdfa39fb6316f259d1de93',
             })
         preplay_url = self._request_webpage(
-            HEADRequest(data['url']), video_id, 'Fetching preplay URL').url
+            HEADRequest(data['url']), video_id, 'Fetching preplay URL').geturl()
 
         return {
             '_type': 'url_transparent',

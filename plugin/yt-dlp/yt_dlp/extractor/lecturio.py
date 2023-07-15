@@ -25,7 +25,7 @@ class LecturioBaseIE(InfoExtractor):
             self._LOGIN_URL, None, 'Downloading login popup')
 
         def is_logged(url_handle):
-            return self._LOGIN_URL not in url_handle.url
+            return self._LOGIN_URL not in url_handle.geturl()
 
         # Already logged in
         if is_logged(urlh):

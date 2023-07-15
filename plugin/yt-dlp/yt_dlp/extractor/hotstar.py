@@ -6,8 +6,7 @@ import time
 import uuid
 
 from .common import InfoExtractor
-from ..compat import compat_str
-from ..networking.exceptions import HTTPError
+from ..compat import compat_HTTPError, compat_str
 from ..utils import (
     ExtractorError,
     determine_ext,
@@ -234,7 +233,7 @@ class HotStarIE(HotStarBaseIE):
                         'height': int_or_none(playback_set.get('height')),
                     }]
             except ExtractorError as e:
-                if isinstance(e.cause, HTTPError) and e.cause.status == 403:
+                if isinstance(e.cause, compat_HTTPError) and e.cause.code == 403:
                     geo_restricted = True
                 continue
 

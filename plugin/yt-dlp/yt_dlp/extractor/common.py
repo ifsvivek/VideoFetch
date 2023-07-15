@@ -17,26 +17,16 @@ import subprocess
 import sys
 import time
 import types
+import urllib.error
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree
 
 from ..compat import functools  # isort: split
-from ..compat import (
-    compat_etree_fromstring,
-    compat_expanduser,
-    compat_os_name,
-    urllib_req_to_req,
-)
+from ..compat import compat_etree_fromstring, compat_expanduser, compat_os_name
 from ..cookies import LenientSimpleCookie
 from ..downloader.f4m import get_base_url, remove_encrypted_media
 from ..downloader.hls import HlsFD
-from ..networking import HEADRequest, Request
-from ..networking.exceptions import (
-    HTTPError,
-    IncompleteRead,
-    network_exceptions,
-)
 from ..utils import (
     IDENTITY,
     JSON_LD_RE,
@@ -45,6 +35,7 @@ from ..utils import (
     FormatSorter,
     GeoRestrictedError,
     GeoUtils,
+    HEADRequest,
     LenientJSONDecoder,
     Popen,
     RegexNotFoundError,
@@ -70,6 +61,7 @@ from ..utils import (
     js_to_json,
     mimetype2ext,
     netrc_from_content,
+    network_exceptions,
     orderedSet,
     parse_bitrate,
     parse_codecs,
@@ -79,6 +71,7 @@ from ..utils import (
     parse_resolution,
     sanitize_filename,
     sanitize_url,
+    sanitized_Request,
     smuggle_url,
     str_or_none,
     str_to_int,
@@ -90,6 +83,8 @@ from ..utils import (
     unescapeHTML,
     unified_strdate,
     unified_timestamp,
+    update_Request,
+    update_url_query,
     url_basename,
     url_or_none,
     urlhandle_detect_ext,
@@ -733,7 +728,7 @@ class InfoExtractor:
             e.ie = e.ie or self.IE_NAME,
             e.traceback = e.traceback or sys.exc_info()[2]
             raise
-        except IncompleteRead as e:
+        except http.client.IncompleteRead as e:
             raise ExtractorError('A network error has occurred.', cause=e, expected=True, video_id=self.get_temp_id(url))
         except (KeyError, StopIteration) as e:
             raise ExtractorError('An extractor error has occurred.', cause=e, video_id=self.get_temp_id(url))
@@ -792,25 +787,20 @@ class InfoExtractor:
 
     @staticmethod
     def __can_accept_status_code(err, expected_status):
-        assert isinstance(err, HTTPError)
+        assert isinstance(err, urllib.error.HTTPError)
         if expected_status is None:
             return False
         elif callable(expected_status):
-            return expected_status(err.status) is True
+            return expected_status(err.code) is True
         else:
-            return err.status in variadic(expected_status)
+            return err.code in variadic(expected_status)
 
     def _create_request(self, url_or_request, data=None, headers=None, query=None):
         if isinstance(url_or_request, urllib.request.Request):
-            self._downloader.deprecation_warning(
-                'Passing a urllib.request.Request to _create_request() is deprecated. '
-                'Use yt_dlp.networking.common.Request instead.')
-            url_or_request = urllib_req_to_req(url_or_request)
-        elif not isinstance(url_or_request, Request):
-            url_or_request = Request(url_or_request)
-
-        url_or_request.update(data=data, headers=headers, query=query)
-        return url_or_request
+            return update_Request(url_or_request, data=data, headers=headers, query=query)
+        if query:
+            url_or_request = update_url_query(url_or_request, query)
+        return sanitized_Request(url_or_request, data, headers or {})
 
     def _request_webpage(self, url_or_request, video_id, note=None, errnote=None, fatal=True, data=None, headers=None, query=None, expected_status=None):
         """
@@ -846,9 +836,14 @@ class InfoExtractor:
         try:
             return self._downloader.urlopen(self._create_request(url_or_request, data, headers, query))
         except network_exceptions as err:
-            if isinstance(err, HTTPError):
+            if isinstance(err, urllib.error.HTTPError):
                 if self.__can_accept_status_code(err, expected_status):
-                    return err.response
+                    # Retain reference to error to prevent file object from
+                    # being closed before it can be read. Works around the
+                    # effects of <https://bugs.python.org/issue15002>
+                    # introduced in Python 3.4.1.
+                    err.fp._error = err
+                    return err.fp
 
             if errnote is False:
                 return False
@@ -980,11 +975,11 @@ class InfoExtractor:
         if prefix is not None:
             webpage_bytes = prefix + webpage_bytes
         if self.get_param('dump_intermediate_pages', False):
-            self.to_screen('Dumping request to ' + urlh.url)
+            self.to_screen('Dumping request to ' + urlh.geturl())
             dump = base64.b64encode(webpage_bytes).decode('ascii')
             self._downloader.to_screen(dump)
         if self.get_param('write_pages'):
-            filename = self._request_dump_filename(urlh.url, video_id)
+            filename = self._request_dump_filename(urlh.geturl(), video_id)
             self.to_screen(f'Saving request to {filename}')
             with open(filename, 'wb') as outf:
                 outf.write(webpage_bytes)
@@ -1116,7 +1111,7 @@ class InfoExtractor:
         while True:
             try:
                 return self.__download_webpage(url_or_request, video_id, note, errnote, None, fatal, *args, **kwargs)
-            except IncompleteRead as e:
+            except http.client.IncompleteRead as e:
                 try_count += 1
                 if try_count >= tries:
                     raise e
@@ -1813,7 +1808,7 @@ class InfoExtractor:
             return []
 
         manifest, urlh = res
-        manifest_url = urlh.url
+        manifest_url = urlh.geturl()
 
         return self._parse_f4m_formats(
             manifest, manifest_url, video_id, preference=preference, quality=quality, f4m_id=f4m_id,
@@ -1972,7 +1967,7 @@ class InfoExtractor:
             return [], {}
 
         m3u8_doc, urlh = res
-        m3u8_url = urlh.url
+        m3u8_url = urlh.geturl()
 
         return self._parse_m3u8_formats_and_subtitles(
             m3u8_doc, m3u8_url, ext=ext, entry_protocol=entry_protocol,
@@ -2250,7 +2245,7 @@ class InfoExtractor:
             return [], {}
 
         smil, urlh = res
-        smil_url = urlh.url
+        smil_url = urlh.geturl()
 
         namespace = self._parse_smil_namespace(smil)
 
@@ -2273,7 +2268,7 @@ class InfoExtractor:
             return {}
 
         smil, urlh = res
-        smil_url = urlh.url
+        smil_url = urlh.geturl()
 
         return self._parse_smil(smil, smil_url, video_id, f4m_params=f4m_params)
 
@@ -2465,7 +2460,7 @@ class InfoExtractor:
             return []
 
         xspf, urlh = res
-        xspf_url = urlh.url
+        xspf_url = urlh.geturl()
 
         return self._parse_xspf(
             xspf, playlist_id, xspf_url=xspf_url,
@@ -2536,7 +2531,7 @@ class InfoExtractor:
             return [], {}
 
         # We could have been redirected to a new url when we retrieved our mpd file.
-        mpd_url = urlh.url
+        mpd_url = urlh.geturl()
         mpd_base_url = base_url(mpd_url)
 
         return self._parse_mpd_formats_and_subtitles(
@@ -2907,7 +2902,7 @@ class InfoExtractor:
         if ism_doc is None:
             return [], {}
 
-        return self._parse_ism_formats_and_subtitles(ism_doc, urlh.url, ism_id)
+        return self._parse_ism_formats_and_subtitles(ism_doc, urlh.geturl(), ism_id)
 
     def _parse_ism_formats_and_subtitles(self, ism_doc, ism_url, ism_id=None):
         """

@@ -10,7 +10,6 @@ import uuid
 
 from .fragment import FragmentFD
 from ..compat import functools
-from ..networking import Request
 from ..postprocessor.ffmpeg import EXT_TO_OUT_FORMATS, FFmpegPostProcessor
 from ..utils import (
     Popen,
@@ -26,6 +25,7 @@ from ..utils import (
     encodeFilename,
     find_available_port,
     remove_end,
+    sanitized_Request,
     traverse_obj,
 )
 
@@ -357,12 +357,13 @@ class Aria2cFD(ExternalFD):
             'method': method,
             'params': [f'token:{rpc_secret}', *params],
         }).encode('utf-8')
-        request = Request(
+        request = sanitized_Request(
             f'http://localhost:{rpc_port}/jsonrpc',
             data=d, headers={
                 'Content-Type': 'application/json',
                 'Content-Length': f'{len(d)}',
-            }, proxies={'all': None})
+                'Ytdl-request-proxy': '__noproxy__',
+            })
         with self.ydl.urlopen(request) as r:
             resp = json.load(r)
         assert resp.get('id') == sanitycheck, 'Something went wrong with RPC server'

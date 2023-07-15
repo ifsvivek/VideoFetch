@@ -28,13 +28,13 @@ class SafariBaseIE(InfoExtractor):
             'Downloading login page')
 
         def is_logged(urlh):
-            return 'learning.oreilly.com/home/' in urlh.url
+            return 'learning.oreilly.com/home/' in urlh.geturl()
 
         if is_logged(urlh):
             self.LOGGED_IN = True
             return
 
-        redirect_url = urlh.url
+        redirect_url = urlh.geturl()
         parsed_url = compat_urlparse.urlparse(redirect_url)
         qs = compat_parse_qs(parsed_url.query)
         next_uri = compat_urlparse.urljoin(
@@ -129,7 +129,7 @@ class SafariIE(SafariBaseIE):
 
             webpage, urlh = self._download_webpage_handle(url, video_id)
 
-            mobj = re.match(self._VALID_URL, urlh.url)
+            mobj = re.match(self._VALID_URL, urlh.geturl())
             reference_id = mobj.group('reference_id')
             if not reference_id:
                 reference_id = self._search_regex(

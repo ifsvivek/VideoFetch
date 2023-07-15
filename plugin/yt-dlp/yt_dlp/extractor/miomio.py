@@ -2,8 +2,12 @@ import random
 
 from .common import InfoExtractor
 from ..compat import compat_urlparse
-from ..networking import Request
-from ..utils import ExtractorError, int_or_none, xpath_text
+from ..utils import (
+    xpath_text,
+    int_or_none,
+    ExtractorError,
+    sanitized_Request,
+)
 
 
 class MioMioIE(InfoExtractor):
@@ -57,7 +61,7 @@ class MioMioIE(InfoExtractor):
             'http://www.miomio.tv/mioplayer/mioplayerconfigfiles/xml.php?id=%s&r=%s' % (id, random.randint(100, 999)),
             video_id)
 
-        vid_config_request = Request(
+        vid_config_request = sanitized_Request(
             'http://www.miomio.tv/mioplayer/mioplayerconfigfiles/sina.php?{0}'.format(xml_config),
             headers=http_headers)
 

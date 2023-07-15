@@ -2,8 +2,11 @@ from datetime import datetime
 import base64
 
 from .common import InfoExtractor
-from ..networking import HEADRequest
-from ..utils import int_or_none, urlencode_postdata
+from ..utils import (
+    HEADRequest,
+    int_or_none,
+    urlencode_postdata,
+)
 
 
 class TenPlayIE(InfoExtractor):
@@ -91,7 +94,7 @@ class TenPlayIE(InfoExtractor):
             data.get('playbackApiEndpoint'), content_id, 'Downloading video JSON',
             headers=headers).get('source')
         m3u8_url = self._request_webpage(HEADRequest(
-            _video_url), content_id).url
+            _video_url), content_id).geturl()
         if '10play-not-in-oz' in m3u8_url:
             self.raise_geo_restricted(countries=['AU'])
         formats = self._extract_m3u8_formats(m3u8_url, content_id, 'mp4')

@@ -1,9 +1,13 @@
 import json
 
 from .common import InfoExtractor
-from ..networking import PUTRequest
-from ..networking.exceptions import HTTPError
-from ..utils import ExtractorError, clean_html, int_or_none
+from ..compat import compat_HTTPError
+from ..utils import (
+    clean_html,
+    ExtractorError,
+    int_or_none,
+    PUTRequest,
+)
 
 
 class PlayPlusTVIE(InfoExtractor):
@@ -43,9 +47,9 @@ class PlayPlusTVIE(InfoExtractor):
         try:
             self._token = self._download_json(req, None)['token']
         except ExtractorError as e:
-            if isinstance(e.cause, HTTPError) and e.cause.status == 401:
+            if isinstance(e.cause, compat_HTTPError) and e.cause.code == 401:
                 raise ExtractorError(self._parse_json(
-                    e.cause.response.read(), None)['errorMessage'], expected=True)
+                    e.cause.read(), None)['errorMessage'], expected=True)
             raise
 
         self._profile = self._call_api('Profiles')['list'][0]['_id']

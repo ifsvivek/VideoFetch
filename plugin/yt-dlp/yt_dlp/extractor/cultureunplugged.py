@@ -1,8 +1,10 @@
 import time
 
 from .common import InfoExtractor
-from ..networking import HEADRequest
-from ..utils import int_or_none
+from ..utils import (
+    int_or_none,
+    HEADRequest,
+)
 
 
 class CultureUnpluggedIE(InfoExtractor):

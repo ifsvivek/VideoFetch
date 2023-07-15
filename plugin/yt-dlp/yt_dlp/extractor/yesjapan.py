@@ -1,6 +1,9 @@
 from .common import InfoExtractor
-from ..networking import HEADRequest
-from ..utils import get_element_by_attribute, parse_iso8601
+from ..utils import (
+    HEADRequest,
+    get_element_by_attribute,
+    parse_iso8601,
+)
 
 
 class YesJapanIE(InfoExtractor):
@@ -39,7 +42,7 @@ class YesJapanIE(InfoExtractor):
         req = self._request_webpage(
             redirect_req, video_id, note='Resolving final URL', errnote='Could not resolve final URL', fatal=False)
         if req:
-            video_url = req.url
+            video_url = req.geturl()
 
         formats = [{
             'format_id': 'sd',

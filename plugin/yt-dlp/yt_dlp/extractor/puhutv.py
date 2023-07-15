@@ -1,6 +1,8 @@
 from .common import InfoExtractor
-from ..compat import compat_str
-from ..networking.exceptions import HTTPError
+from ..compat import (
+    compat_HTTPError,
+    compat_str,
+)
 from ..utils import (
     ExtractorError,
     int_or_none,
@@ -70,7 +72,7 @@ class PuhuTVIE(InfoExtractor):
                 display_id, 'Downloading video JSON',
                 headers=self.geo_verification_headers())
         except ExtractorError as e:
-            if isinstance(e.cause, HTTPError) and e.cause.status == 403:
+            if isinstance(e.cause, compat_HTTPError) and e.cause.code == 403:
                 self.raise_geo_restricted()
             raise
 

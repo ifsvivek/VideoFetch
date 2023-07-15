@@ -64,7 +64,7 @@ class CanalplusIE(InfoExtractor):
         #     response = self._request_webpage(
         #         HEADRequest(fmt_url), video_id,
         #         'Checking if the video is georestricted')
-        #     if '/blocage' in response.url:
+        #     if '/blocage' in response.geturl():
         #         raise ExtractorError(
         #             'The video is not available in your country',
         #             expected=True)

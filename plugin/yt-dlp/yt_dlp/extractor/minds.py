@@ -106,7 +106,7 @@ class MindsIE(MindsBaseIE):
         if poster:
             urlh = self._request_webpage(poster, video_id, fatal=False)
             if urlh:
-                thumbnail = urlh.url
+                thumbnail = urlh.geturl()
 
         return {
             'id': video_id,

@@ -2,8 +2,10 @@ import json
 import re
 
 from .brightcove import BrightcoveNewBaseIE
-from ..compat import compat_str
-from ..networking.exceptions import HTTPError
+from ..compat import (
+    compat_HTTPError,
+    compat_str,
+)
 from ..utils import (
     ExtractorError,
     try_get,
@@ -95,9 +97,9 @@ class SevenPlusIE(BrightcoveNewBaseIE):
                     'videoType': 'vod',
                 }, headers=headers)['media']
         except ExtractorError as e:
-            if isinstance(e.cause, HTTPError) and e.cause.status == 403:
+            if isinstance(e.cause, compat_HTTPError) and e.cause.code == 403:
                 raise ExtractorError(self._parse_json(
-                    e.cause.response.read().decode(), episode_id)[0]['error_code'], expected=True)
+                    e.cause.read().decode(), episode_id)[0]['error_code'], expected=True)
             raise
 
         for source in media.get('sources', {}):
