@@ -1,4 +1,4 @@
-name: Publish FreeTube Downloader
+name: Publish VideoFetch
 
 on:
   push:
@@ -49,9 +49,9 @@ jobs:
           asset_content_type: application/zip
 
       - name: Set Upload URL as Output
-        run: echo "::set-env name=UPLOAD_URL::${{ steps.create_release.outputs.upload_url }}"
+        run: echo "UPLOAD_URL=${{ steps.create_release.outputs.upload_url }}" >> $GITHUB_ENV
 
-    - name: Cleanup
-      run: |
-        rm -f ./VideoFetch.fda
-        echo "Uploaded asset URL: ${{ env.UPLOAD_URL }}"
+      - name: Cleanup
+        run: |
+          rm -f ./VideoFetch.fda
+          echo "Uploaded asset URL: $UPLOAD_URL"
