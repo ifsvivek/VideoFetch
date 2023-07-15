@@ -55,8 +55,3 @@ jobs:
       - name: Cleanup
         run: |
           rm -f ./VideoFetch.fda
-
-      - name: Set Upload URL and Release ID as Outputs
-        run: |
-          echo "::set-output name=upload_url::${{ steps.create_release.outputs.upload_url }}"
-          echo "::set-output name=release_id::${{ steps.get_release_id.outputs.release_id }}"
