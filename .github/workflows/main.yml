@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Build plugin
         run: |
-          dist="$(pwd)/elephant.fda";
+          dist="$(pwd)/VideoFetch.fda";
           cd "$(dirname "$0")"/../plugin/;
           rm -f "$dist";
           zip -r "$dist" *;
