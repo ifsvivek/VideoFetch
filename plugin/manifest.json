@@ -17,5 +17,5 @@
     "msparser.js",
     "msbatchparser.js"
   ],
-  "updateUrl": "https://raw.githubusercontent.com/ifsvivek/host/main/videofetch.json"
+  "updateUrl": "https://ifsvivek.github.io/host/videofetch.json"
 }
