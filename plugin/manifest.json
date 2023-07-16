@@ -1,0 +1,21 @@
+{
+  "uuid": "videofetch",
+  "name": "VideoFetch",
+  "description": "A plugin for Free Download Manager to easily download YouTube videos.",
+  "version": "1.0.0",
+  "icon": "icon.svg",
+  "mediaParser": true,
+  "mediaListParser": true,
+  "dependencies": {
+    "Python": {"minVersion": "3.7"}
+  },
+  "permissions": [
+    "launchPython"
+  ],
+  "scripts": [
+    "msabstractparser.js",
+    "msparser.js",
+    "msbatchparser.js"
+  ],
+  "updateUrl": "https://raw.githubusercontent.com/ifsvivek/host/main/videofetch.json"
+}
