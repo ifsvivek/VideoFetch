@@ -6,7 +6,7 @@ VideoFetch is a plugin designed to facilitate the downloading of YouTube videos 
 
 - Seamless integration with Free Download Manager for hassle-free video downloads.
 - Download high-quality videos from YouTube with a few simple steps.
-- Supports various video formats, including MP4, AVI, and more.
+- Supports various video formats, including MP4, WEBM, 3GP, M4A.
 - Easy-to-use interface for a smooth user experience.
 
 ## Installation
