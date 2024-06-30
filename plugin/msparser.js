@@ -1,10 +1,13 @@
-var msParser = (function () {
-    function MsParser() {
+var msParser = (function()
+{
+    function MsParser()
+    {
     }
 
     MsParser.prototype = {
 
-        parse: function (obj) {
+        parse: function (obj)
+        {
             return msAbstractParser.parse(obj, ["--no-playlist"]);
         },
 
@@ -14,7 +17,7 @@ var msParser = (function () {
 
         isPossiblySupportedSource: msAbstractParser.isPossiblySupportedSource,
 
-        overrideUrlPolicy: msAbstractParser.overrideUrlPolicy
+	overrideUrlPolicy: msAbstractParser.overrideUrlPolicy
     };
 
     return new MsParser();
