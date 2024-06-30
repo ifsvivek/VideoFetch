@@ -7,7 +7,7 @@
   "mediaParser": true,
   "mediaListParser": true,
   "dependencies": {
-    "Python": {"minVersion": "3.7"}
+    "Python": {"minVersion": "3.8"}
   },
   "permissions": [
     "launchPython"
