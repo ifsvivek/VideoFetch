@@ -2,7 +2,7 @@
   "uuid": "videofetch",
   "name": "VideoFetch",
   "description": "A plugin for Free Download Manager to easily download YouTube videos.",
-  "version": "1.3",
+  "version": "1.4",
   "icon": "icon.svg",
   "mediaParser": true,
   "mediaListParser": true,
