@@ -1,35 +1,20 @@
 <div align="center">
 
-# 🎥 ## 📋 Table of Contents
+# 🎥 VideoFetch
 
-- [🎥 ## 📋 Table of Contents](#---table-of-contents)
-  - [📋 Table of Contents](#-table-of-contents)
-  - [✨ Features](#-features)
-  - [🚀 Installation](#-installation)
-    - [Prerequisites](#prerequisites)
-    - [Installation Steps](#installation-steps)
-  - [📖 Usage](#-usage)
-    - [Basic Usage](#basic-usage)
-    - [Supported Sites](#supported-sites)
-      - [🎥 **Major Video Platforms**](#-major-video-platforms)
-      - [📱 **Social Media**](#-social-media)
-      - [🎓 **Educational \& Learning**](#-educational--learning)
-      - [🎮 **Gaming**](#-gaming)
-      - [🌍 **International Platforms**](#-international-platforms)
-      - [📺 **News \& Media**](#-news--media)
-      - [🎵 **Music \& Audio**](#-music--audio)
-    - [Pro Tips](#pro-tips)
-  - [🔧 Requirements](#-requirements)
-  - [🧪 Testing Multi-Site Support](#-testing-multi-site-support)
-  - [🔍 Troubleshooting](#-troubleshooting)
-    - [Common Issues](#common-issues)
-    - [Getting Help for New Sites](#getting-help-for-new-sites)
-  - [🤝 Contributing](#-contributing)
-    - [Quick Start for Contributors](#quick-start-for-contributors)
-  - [🐛 Issues \& Support](#-issues--support)
-    - [Getting Help](#getting-help)
-  - [📝 License](#-license)
-  - [🙏 Acknowledgments](#-acknowledgments)
+<p align="center">
+  <a href="https://github.com/ifsvivek/VideoFetch/releases">
+    <img src="https://img.shields.io/github/v/release/ifsvivek/VideoFetch?style=for-the-badge&logo=github" alt="Release">
+  </a>
+  <a href="https://github.com/ifsvivek/VideoFetch/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/ifsvivek/VideoFetch?style=for-the-badge" alt="License">
+  </a>
+  <a href="https://github.com/ifsvivek/VideoFetch/stargazers">
+    <img src="https://img.shields.io/github/stars/ifsvivek/VideoFetch?style=for-the-badge" alt="Stars">
+  </a>
+  <a href="https://github.com/ifsvivek/VideoFetch/issues">
+    <img src="https://img.shields.io/github/issues/ifsvivek/VideoFetch?style=for-the-badge" alt="Issues">
+  </a>
 </p>
 
 **A powerful and universal plugin for downloading videos from 1800+ video platforms with Free Download Manager**
@@ -42,7 +27,7 @@ _Transform your video downloading experience with support for YouTube, TikTok, V
 
 ## 📋 Table of Contents
 
-- [🎥 ## 📋 Table of Contents](#---table-of-contents)
+- [🎥 VideoFetch](#-videofetch)
   - [📋 Table of Contents](#-table-of-contents)
   - [✨ Features](#-features)
   - [🚀 Installation](#-installation)
@@ -60,7 +45,6 @@ _Transform your video downloading experience with support for YouTube, TikTok, V
       - [🎵 **Music \& Audio**](#-music--audio)
     - [Pro Tips](#pro-tips)
   - [🔧 Requirements](#-requirements)
-  - [🧪 Testing Multi-Site Support](#-testing-multi-site-support)
   - [🔍 Troubleshooting](#-troubleshooting)
     - [Common Issues](#common-issues)
     - [Getting Help for New Sites](#getting-help-for-new-sites)
@@ -154,53 +138,60 @@ _Transform your video downloading experience with support for YouTube, TikTok, V
 VideoFetch supports **1800+ video sites** through yt-dlp, including but not limited to:
 
 #### 🎥 **Major Video Platforms**
-- **YouTube** - Videos, playlists, channels, live streams
-- **Vimeo** - Standard and premium videos
-- **Dailymotion** - All video types
-- **Twitch** - VODs, clips, live streams
-- **TikTok** - Videos and user profiles
+
+-   **YouTube** - Videos, playlists, channels, live streams
+-   **Vimeo** - Standard and premium videos
+-   **Dailymotion** - All video types
+-   **Twitch** - VODs, clips, live streams
+-   **TikTok** - Videos and user profiles
 
 #### 📱 **Social Media**
-- **Facebook** - Videos and live streams
-- **Instagram** - Videos, IGTV, Reels
-- **Twitter/X** - Video tweets
-- **Reddit** - Video posts
-- **LinkedIn** - Native videos
+
+-   **Facebook** - Videos and live streams
+-   **Instagram** - Videos, IGTV, Reels
+-   **Twitter/X** - Video tweets
+-   **Reddit** - Video posts
+-   **LinkedIn** - Native videos
 
 #### 🎓 **Educational & Learning**
-- **Khan Academy** - Educational videos
-- **Coursera** - Course videos (where permitted)
-- **edX** - Educational content
-- **BBC iPlayer** - BBC content (UK)
-- **PBS** - Educational programming
+
+-   **Khan Academy** - Educational videos
+-   **Coursera** - Course videos (where permitted)
+-   **edX** - Educational content
+-   **BBC iPlayer** - BBC content (UK)
+-   **PBS** - Educational programming
 
 #### 🎮 **Gaming**
-- **Twitch** - Gaming streams and clips
-- **YouTube Gaming** - Gaming content
-- **Steam** - Game trailers and content
+
+-   **Twitch** - Gaming streams and clips
+-   **YouTube Gaming** - Gaming content
+-   **Steam** - Game trailers and content
 
 #### 🌍 **International Platforms**
-- **Bilibili** - Chinese video platform
-- **Youku** - Chinese streaming
-- **Nico Nico Douga** - Japanese video sharing
-- **VK** - Russian social network videos
-- **Odnoklassniki** - Russian platform
+
+-   **Bilibili** - Chinese video platform
+-   **Youku** - Chinese streaming
+-   **Nico Nico Douga** - Japanese video sharing
+-   **VK** - Russian social network videos
+-   **Odnoklassniki** - Russian platform
 
 #### 📺 **News & Media**
-- **CNN** - News videos
-- **BBC** - News and documentaries
-- **Reuters** - News content
-- **Al Jazeera** - International news
-- **Many regional news sites**
+
+-   **CNN** - News videos
+-   **BBC** - News and documentaries
+-   **Reuters** - News content
+-   **Al Jazeera** - International news
+-   **Many regional news sites**
 
 #### 🎵 **Music & Audio**
-- **SoundCloud** - Music and podcasts
-- **Bandcamp** - Independent music
-- **Mixcloud** - DJ mixes and radio shows
-- **Many music platforms**
+
+-   **SoundCloud** - Music and podcasts
+-   **Bandcamp** - Independent music
+-   **Mixcloud** - DJ mixes and radio shows
+-   **Many music platforms**
 
 > **📋 Complete List**: For a comprehensive list of all 1800+ supported sites, see [SUPPORTED_SITES.md](SUPPORTED_SITES.md)
-> 
+>
 > **Note**: Some sites may require authentication or have regional restrictions. Always respect copyright and terms of service.
 
 ### Pro Tips
@@ -225,32 +216,7 @@ VideoFetch supports **1800+ video sites** through yt-dlp, including but not limi
 | **Software** | Free Download Manager (latest version) |
 | **Internet** | Stable internet connection             |
 | **Storage**  | Sufficient disk space for downloads    |
-| **Python**   | Python 3.9+ (auto-installed with FDM) |
-
----
-
-## 🧪 Testing Multi-Site Support
-
-To verify that VideoFetch works with sites beyond YouTube, try these test URLs:
-
-```
-# Vimeo
-https://vimeo.com/148751763
-
-# TikTok (public videos)
-https://www.tiktok.com/@username/video/1234567890
-
-# Dailymotion
-https://www.dailymotion.com/video/x7xxxxx
-
-# Twitch VOD
-https://www.twitch.tv/videos/123456789
-```
-
-**How to test:**
-1. Copy any of the URLs above
-2. Add it to FDM using the VideoFetch plugin
-3. If successful, the plugin will process and offer download options
+| **Python**   | Python 3.9+ (auto-installed with FDM)  |
 
 ---
 
@@ -259,23 +225,27 @@ https://www.twitch.tv/videos/123456789
 ### Common Issues
 
 **❌ "Unsupported URL" Error**
-- The specific site may not be supported by yt-dlp
-- Check the [yt-dlp supported sites list](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)
-- Some sites may require specific URL formats
+
+-   The specific site may not be supported by yt-dlp
+-   Check the [yt-dlp supported sites list](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)
+-   Some sites may require specific URL formats
 
 **❌ "Parse Error"**
-- The video may be private or region-restricted
-- Site may have changed their video delivery method
-- Try updating VideoFetch to the latest version
+
+-   The video may be private or region-restricted
+-   Site may have changed their video delivery method
+-   Try updating VideoFetch to the latest version
 
 **❌ Download Fails**
-- Video may require authentication/login
-- Check your internet connection
-- Some videos may have DRM protection
+
+-   Video may require authentication/login
+-   Check your internet connection
+-   Some videos may have DRM protection
 
 ### Getting Help for New Sites
 
 If you find a site that should work but doesn't:
+
 1. Check if the site is supported by [yt-dlp](https://github.com/yt-dlp/yt-dlp)
 2. Test the URL directly with yt-dlp command line
 3. Report issues with specific URLs (without sharing private content)
