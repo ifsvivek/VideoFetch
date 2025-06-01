@@ -3,18 +3,25 @@ var msParser = (function () {
     }
 
     MsParser.prototype = {
-
         parse: function (obj) {
-            return msAbstractParser.parse(obj, ["--no-playlist"]);
+            return msAbstractParser.parse(obj, []);
         },
 
-        isSupportedSource: msAbstractParser.isSupportedSource,
+        isSupportedSource: function (url) {
+            return msAbstractParser.isSupportedSource(url);
+        },
 
-        supportedSourceCheckPriority: msAbstractParser.supportedSourceCheckPriority,
+        supportedSourceCheckPriority: function () {
+            return msAbstractParser.supportedSourceCheckPriority();
+        },
 
-        isPossiblySupportedSource: msAbstractParser.isPossiblySupportedSource,
+        isPossiblySupportedSource: function (obj) {
+            return msAbstractParser.isPossiblySupportedSource(obj);
+        },
 
-        overrideUrlPolicy: msAbstractParser.overrideUrlPolicy
+        overrideUrlPolicy: function (url) {
+            return msAbstractParser.overrideUrlPolicy(url);
+        }
     };
 
     return new MsParser();

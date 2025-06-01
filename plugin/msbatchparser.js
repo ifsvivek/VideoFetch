@@ -5,34 +5,25 @@ var msBatchVideoParser = (function () {
     }
 
     MsBatchVideoParser.prototype = {
-
         parse: function (obj) {
-            return msAbstractParser.parse(obj, [])
-                .then(function (res) {
-                    if (res.hasOwnProperty("entries")) {
-                        for (let i = res.entries.length - 1; i >= 0; --i) {
-                            if (!res.entries[i].hasOwnProperty("title"))
-                                continue;
-                            if (res.entries[i].title === "[Deleted video]" ||
-                                res.entries[i].title === "[Private video]") {
-                                res.entries.splice(i, 1);
-                            }
-                        }
-                    }
-                    return res;
-                });
+            return msAbstractParser.parse(obj, []);
         },
 
-        isSupportedSource: msAbstractParser.isSupportedSource,
+        isSupportedSource: function (url) {
+            return msAbstractParser.isSupportedSource(url);
+        },
 
         supportedSourceCheckPriority: function () {
-            // we need to parse as a playlist at first
-            return msAbstractParser.supportedSourceCheckPriority() + 1;
+            return msAbstractParser.supportedSourceCheckPriority();
         },
 
-        isPossiblySupportedSource: msAbstractParser.isPossiblySupportedSource,
+        isPossiblySupportedSource: function (obj) {
+            return msAbstractParser.isPossiblySupportedSource(obj);
+        },
 
-        overrideUrlPolicy: msAbstractParser.overrideUrlPolicy
+        overrideUrlPolicy: function (url) {
+            return msAbstractParser.overrideUrlPolicy(url);
+        }
     };
 
     return new MsBatchVideoParser();

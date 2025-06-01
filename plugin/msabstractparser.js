@@ -66,35 +66,55 @@ var msAbstractParser = (function () {
                     return new Promise(function (resolve, reject) {
                         var output = obj.output.trim();
                         if (!output || output[0] !== '{') {
-                            var isUnsupportedUrl = /ERROR:\s*\[generic\]\s*Unsupported URL:/.test(output);
-                            reject({
-                                error: isUnsupportedUrl ? "Unsupported URL" : "Parse error",
-                                isParseError: !isUnsupportedUrl
-                            });
+                            var errorInfo = parseYtDlpError(output);
+                            reject(errorInfo);
                         }
                         else {
-                            resolve(JSON.parse(output));
+                            try {
+                                resolve(JSON.parse(output));
+                            } catch (e) {
+                                reject({
+                                    error: "Failed to parse yt-dlp JSON output",
+                                    isParseError: true
+                                });
+                            }
                         }
                     });
                 });
         },
 
         isSupportedSource: function (url) {
-            return false;
+            // Let yt-dlp decide what it can handle - don't hardcode domains
+            return false; // Always use isPossiblySupportedSource for broader coverage
         },
 
         supportedSourceCheckPriority: function () {
-            return 0;
+            return 100; // Higher priority to ensure this plugin is tried for supported URLs
         },
 
         isPossiblySupportedSource: function (obj) {
-            if (obj.contentType && !/^text\/html(;.*)?$/.test(obj.contentType))
-                return false;
-            if (obj.resourceSize !== -1 &&
-                (obj.resourceSize === 0 || obj.resourceSize > 3 * 1024 * 1024)) {
+            // Be very permissive - let yt-dlp decide what it can handle
+            // Only exclude obvious non-video content and very basic checks
+            
+            // Skip binary files that are clearly not video pages
+            if (obj.contentType) {
+                if (/^(image\/|application\/(pdf|zip|rar|exe|msi|octet-stream)|text\/(css|javascript))/.test(obj.contentType)) {
+                    return false;
+                }
+            }
+            
+            // Skip extremely large files that are definitely not web pages
+            if (obj.resourceSize !== -1 && obj.resourceSize > 50 * 1024 * 1024) {
                 return false;
             }
-            return /^https?:\/\//.test(obj.url);
+            
+            // Only process HTTP(S) URLs
+            if (!/^https?:\/\//.test(obj.url)) {
+                return false;
+            }
+            
+            // Let yt-dlp try everything else - this covers all 1800+ supported sites
+            return true;
         },
 
         overrideUrlPolicy: function (url) {

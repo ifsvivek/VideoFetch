@@ -1,9 +1,26 @@
 <div align="center">
 
-# 🎥 VideoFetch
+# 🎥 ## 📋 Table of Contents
 
-<p>
-  <a href="https://github.com/ifsvivek/VideoFetch/releases">
+- [🎥 VideoFetch](#-videofetch)
+  - [📋 Table of Contents](#-table-of-contents)
+  - [✨ Features](#-features)
+  - [🚀 Installation](#-installation)
+    - [Prerequisites](#prerequisites)
+    - [Installation Steps](#installation-steps)
+  - [📖 Usage](#-usage)
+    - [Basic Usage](#basic-usage)
+    - [Supported Sites](#supported-sites)
+    - [Pro Tips](#pro-tips)
+  - [🔧 Requirements](#-requirements)
+  - [🧪 Testing Multi-Site Support](#-testing-multi-site-support)
+  - [🔍 Troubleshooting](#-troubleshooting)
+  - [🤝 Contributing](#-contributing)
+    - [Quick Start for Contributors](#quick-start-for-contributors)
+  - [🐛 Issues & Support](#-issues--support)
+    - [Getting Help](#getting-help)
+  - [📝 License](#-license)
+  - [🙏 Acknowledgments](#-acknowledgments)<a href="https://github.com/ifsvivek/VideoFetch/releases">
     <img src="https://img.shields.io/github/v/release/ifsvivek/VideoFetch?style=for-the-badge&logo=github" alt="Release">
   </a>
   <a href="https://github.com/ifsvivek/VideoFetch/blob/main/LICENSE">
@@ -17,9 +34,9 @@
   </a>
 </p>
 
-**A powerful and seamless plugin for downloading YouTube videos with Free Download Manager**
+**A powerful and seamless plugin for downloading videos from YouTube and 1800+ other sites with Free Download Manager**
 
-_Enhance your video downloading experience with high-quality downloads and intuitive management_
+_Enhance your video downloading experience with high-quality downloads from a vast array of video platforms_
 
 </div>
 
@@ -49,12 +66,14 @@ _Enhance your video downloading experience with high-quality downloads and intui
 ## ✨ Features
 
 -   🔗 **Seamless Integration** - Perfect compatibility with Free Download Manager
+-   🌐 **Multi-Platform Support** - Download from YouTube, Vimeo, TikTok, Twitch, and 1800+ other sites
 -   🎬 **High-Quality Downloads** - Download videos in the best available quality
 -   📁 **Multiple Formats** - Support for MP4, WEBM, 3GP, M4A formats
 -   ⚡ **Fast & Reliable** - Efficient downloading with minimal resource usage
 -   🎯 **User-Friendly** - Intuitive interface for smooth user experience
 -   🔄 **Batch Downloads** - Download multiple videos efficiently
 -   📊 **Progress Tracking** - Real-time download progress monitoring
+-   🎵 **Audio Extraction** - Extract audio-only files from videos
 
 ---
 
@@ -97,13 +116,13 @@ _Enhance your video downloading experience with high-quality downloads and intui
 
 2. **Copy Video URL**
 
-    - Navigate to any YouTube video
+    - Navigate to any supported video site (YouTube, Vimeo, TikTok, Twitch, etc.)
     - Copy the video URL from your browser
 
 3. **Start Download**
 
     - In Free Download Manager, click **"Add URL"** or press `Ctrl+U`
-    - Paste the YouTube video URL
+    - Paste the video URL from any supported site
     - VideoFetch will automatically detect and process the URL
 
 4. **Configure Download Options**
@@ -117,12 +136,70 @@ _Enhance your video downloading experience with high-quality downloads and intui
     - Monitor progress in real-time
     - Enjoy your downloaded video! 🎬
 
+### Supported Sites
+
+VideoFetch supports **1800+ video sites** through yt-dlp, including but not limited to:
+
+#### 🎥 **Major Video Platforms**
+- **YouTube** - Videos, playlists, channels, live streams
+- **Vimeo** - Standard and premium videos
+- **Dailymotion** - All video types
+- **Twitch** - VODs, clips, live streams
+- **TikTok** - Videos and user profiles
+
+#### 📱 **Social Media**
+- **Facebook** - Videos and live streams
+- **Instagram** - Videos, IGTV, Reels
+- **Twitter/X** - Video tweets
+- **Reddit** - Video posts
+- **LinkedIn** - Native videos
+
+#### 🎓 **Educational & Learning**
+- **Khan Academy** - Educational videos
+- **Coursera** - Course videos (where permitted)
+- **edX** - Educational content
+- **BBC iPlayer** - BBC content (UK)
+- **PBS** - Educational programming
+
+#### 🎮 **Gaming**
+- **Twitch** - Gaming streams and clips
+- **YouTube Gaming** - Gaming content
+- **Steam** - Game trailers and content
+
+#### 🌍 **International Platforms**
+- **Bilibili** - Chinese video platform
+- **Youku** - Chinese streaming
+- **Nico Nico Douga** - Japanese video sharing
+- **VK** - Russian social network videos
+- **Odnoklassniki** - Russian platform
+
+#### 📺 **News & Media**
+- **CNN** - News videos
+- **BBC** - News and documentaries
+- **Reuters** - News content
+- **Al Jazeera** - International news
+- **Many regional news sites**
+
+#### 🎵 **Music & Audio**
+- **SoundCloud** - Music and podcasts
+- **Bandcamp** - Independent music
+- **Mixcloud** - DJ mixes and radio shows
+- **Many music platforms**
+
+> **📋 Complete List**: For a comprehensive list of all 1800+ supported sites, see [SUPPORTED_SITES.md](SUPPORTED_SITES.md)
+> 
+> **Note**: Some sites may require authentication or have regional restrictions. Always respect copyright and terms of service.
+
 ### Pro Tips
 
 -   💡 **Batch Downloads**: Add multiple URLs at once for efficient downloading
 -   🔄 **Resume Downloads**: Interrupted downloads can be resumed automatically
--   📱 **Mobile URLs**: Works with mobile YouTube URLs (m.youtube.com)
+-   📱 **Mobile URLs**: Works with mobile versions of supported sites
 -   🎵 **Audio Only**: Extract audio-only files in M4A format
+-   🌐 **Multi-Site Support**: Try URLs from different platforms - if yt-dlp supports it, VideoFetch can download it
+-   📋 **Playlist Support**: Download entire playlists from YouTube, Vimeo, and other supported platforms
+-   🎯 **Quality Selection**: Choose from available quality options for each video
+-   🔗 **Live Stream Recording**: Some platforms support recording of live streams
 
 ---
 
@@ -134,6 +211,60 @@ _Enhance your video downloading experience with high-quality downloads and intui
 | **Software** | Free Download Manager (latest version) |
 | **Internet** | Stable internet connection             |
 | **Storage**  | Sufficient disk space for downloads    |
+| **Python**   | Python 3.9+ (auto-installed with FDM) |
+
+---
+
+## 🧪 Testing Multi-Site Support
+
+To verify that VideoFetch works with sites beyond YouTube, try these test URLs:
+
+```
+# Vimeo
+https://vimeo.com/148751763
+
+# TikTok (public videos)
+https://www.tiktok.com/@username/video/1234567890
+
+# Dailymotion
+https://www.dailymotion.com/video/x7xxxxx
+
+# Twitch VOD
+https://www.twitch.tv/videos/123456789
+```
+
+**How to test:**
+1. Copy any of the URLs above
+2. Add it to FDM using the VideoFetch plugin
+3. If successful, the plugin will process and offer download options
+
+---
+
+## 🔍 Troubleshooting
+
+### Common Issues
+
+**❌ "Unsupported URL" Error**
+- The specific site may not be supported by yt-dlp
+- Check the [yt-dlp supported sites list](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)
+- Some sites may require specific URL formats
+
+**❌ "Parse Error"**
+- The video may be private or region-restricted
+- Site may have changed their video delivery method
+- Try updating VideoFetch to the latest version
+
+**❌ Download Fails**
+- Video may require authentication/login
+- Check your internet connection
+- Some videos may have DRM protection
+
+### Getting Help for New Sites
+
+If you find a site that should work but doesn't:
+1. Check if the site is supported by [yt-dlp](https://github.com/yt-dlp/yt-dlp)
+2. Test the URL directly with yt-dlp command line
+3. Report issues with specific URLs (without sharing private content)
 
 ---
 
@@ -186,8 +317,9 @@ Copyright (c) 2025 Vivek Sharma
 ## 🙏 Acknowledgments
 
 -   Thanks to the **Free Download Manager** team for creating an excellent download manager
--   Appreciation to the **yt-dlp** project for video extraction capabilities
+-   Appreciation to the **yt-dlp** project for video extraction capabilities from 1800+ sites
 -   Gratitude to all contributors and users who make this project better
+-   Special thanks to the open-source community for maintaining video extraction tools
 
 ---
 
