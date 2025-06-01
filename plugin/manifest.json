@@ -2,7 +2,7 @@
   "uuid": "videofetch",
   "name": "VideoFetch",
   "description": "A plugin for Free Download Manager to easily download YouTube videos.",
-  "version": "1.4",
+  "version": "1.4.1",
   "icon": "icon.svg",
   "mediaParser": true,
   "mediaListParser": true,
@@ -21,6 +21,5 @@
     "msabstractparser.js",
     "msparser.js",
     "msbatchparser.js"
-  ],
-  "updateUrl": "https://ifsvivek.github.io/host/videofetch.json"
+  ]
 }
