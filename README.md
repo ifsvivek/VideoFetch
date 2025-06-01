@@ -2,7 +2,7 @@
 
 # 🎥 ## 📋 Table of Contents
 
-- [🎥 VideoFetch](#-videofetch)
+- [🎥 ## 📋 Table of Contents](#---table-of-contents)
   - [📋 Table of Contents](#-table-of-contents)
   - [✨ Features](#-features)
   - [🚀 Installation](#-installation)
@@ -11,32 +11,30 @@
   - [📖 Usage](#-usage)
     - [Basic Usage](#basic-usage)
     - [Supported Sites](#supported-sites)
+      - [🎥 **Major Video Platforms**](#-major-video-platforms)
+      - [📱 **Social Media**](#-social-media)
+      - [🎓 **Educational \& Learning**](#-educational--learning)
+      - [🎮 **Gaming**](#-gaming)
+      - [🌍 **International Platforms**](#-international-platforms)
+      - [📺 **News \& Media**](#-news--media)
+      - [🎵 **Music \& Audio**](#-music--audio)
     - [Pro Tips](#pro-tips)
   - [🔧 Requirements](#-requirements)
   - [🧪 Testing Multi-Site Support](#-testing-multi-site-support)
   - [🔍 Troubleshooting](#-troubleshooting)
+    - [Common Issues](#common-issues)
+    - [Getting Help for New Sites](#getting-help-for-new-sites)
   - [🤝 Contributing](#-contributing)
     - [Quick Start for Contributors](#quick-start-for-contributors)
-  - [🐛 Issues & Support](#-issues--support)
+  - [🐛 Issues \& Support](#-issues--support)
     - [Getting Help](#getting-help)
   - [📝 License](#-license)
-  - [🙏 Acknowledgments](#-acknowledgments)<a href="https://github.com/ifsvivek/VideoFetch/releases">
-    <img src="https://img.shields.io/github/v/release/ifsvivek/VideoFetch?style=for-the-badge&logo=github" alt="Release">
-  </a>
-  <a href="https://github.com/ifsvivek/VideoFetch/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/ifsvivek/VideoFetch?style=for-the-badge" alt="License">
-  </a>
-  <a href="https://github.com/ifsvivek/VideoFetch/stargazers">
-    <img src="https://img.shields.io/github/stars/ifsvivek/VideoFetch?style=for-the-badge" alt="Stars">
-  </a>
-  <a href="https://github.com/ifsvivek/VideoFetch/issues">
-    <img src="https://img.shields.io/github/issues/ifsvivek/VideoFetch?style=for-the-badge" alt="Issues">
-  </a>
+  - [🙏 Acknowledgments](#-acknowledgments)
 </p>
 
-**A powerful and seamless plugin for downloading videos from YouTube and 1800+ other sites with Free Download Manager**
+**A powerful and universal plugin for downloading videos from 1800+ video platforms with Free Download Manager**
 
-_Enhance your video downloading experience with high-quality downloads from a vast array of video platforms_
+_Transform your video downloading experience with support for YouTube, TikTok, Vimeo, Twitch, and 1800+ other sites through advanced yt-dlp integration_
 
 </div>
 
@@ -44,7 +42,7 @@ _Enhance your video downloading experience with high-quality downloads from a va
 
 ## 📋 Table of Contents
 
-- [🎥 VideoFetch](#-videofetch)
+- [🎥 ## 📋 Table of Contents](#---table-of-contents)
   - [📋 Table of Contents](#-table-of-contents)
   - [✨ Features](#-features)
   - [🚀 Installation](#-installation)
@@ -52,8 +50,20 @@ _Enhance your video downloading experience with high-quality downloads from a va
     - [Installation Steps](#installation-steps)
   - [📖 Usage](#-usage)
     - [Basic Usage](#basic-usage)
+    - [Supported Sites](#supported-sites)
+      - [🎥 **Major Video Platforms**](#-major-video-platforms)
+      - [📱 **Social Media**](#-social-media)
+      - [🎓 **Educational \& Learning**](#-educational--learning)
+      - [🎮 **Gaming**](#-gaming)
+      - [🌍 **International Platforms**](#-international-platforms)
+      - [📺 **News \& Media**](#-news--media)
+      - [🎵 **Music \& Audio**](#-music--audio)
     - [Pro Tips](#pro-tips)
   - [🔧 Requirements](#-requirements)
+  - [🧪 Testing Multi-Site Support](#-testing-multi-site-support)
+  - [🔍 Troubleshooting](#-troubleshooting)
+    - [Common Issues](#common-issues)
+    - [Getting Help for New Sites](#getting-help-for-new-sites)
   - [🤝 Contributing](#-contributing)
     - [Quick Start for Contributors](#quick-start-for-contributors)
   - [🐛 Issues \& Support](#-issues--support)
@@ -66,14 +76,17 @@ _Enhance your video downloading experience with high-quality downloads from a va
 ## ✨ Features
 
 -   🔗 **Seamless Integration** - Perfect compatibility with Free Download Manager
--   🌐 **Multi-Platform Support** - Download from YouTube, Vimeo, TikTok, Twitch, and 1800+ other sites
--   🎬 **High-Quality Downloads** - Download videos in the best available quality
--   📁 **Multiple Formats** - Support for MP4, WEBM, 3GP, M4A formats
+-   🌐 **Universal Platform Support** - Download from 1800+ video sites including YouTube, TikTok, Vimeo, Twitch, and many more
+-   🎯 **Smart Detection** - Automatic platform recognition and optimal format selection
+-   🎬 **High-Quality Downloads** - Download videos in the best available quality from any supported platform
+-   📁 **Multiple Formats** - Support for MP4, WEBM, 3GP, M4A formats across all platforms
 -   ⚡ **Fast & Reliable** - Efficient downloading with minimal resource usage
--   🎯 **User-Friendly** - Intuitive interface for smooth user experience
--   🔄 **Batch Downloads** - Download multiple videos efficiently
+-   🎯 **User-Friendly** - One-click downloads from any supported site
+-   🔄 **Batch Downloads** - Download multiple videos from different platforms simultaneously
 -   📊 **Progress Tracking** - Real-time download progress monitoring
--   🎵 **Audio Extraction** - Extract audio-only files from videos
+-   🎵 **Universal Audio Extraction** - Extract audio-only files from videos on any supported platform
+-   📱 **Mobile URL Support** - Works with mobile versions of supported sites
+-   🌍 **Global Reach** - Support for international platforms and regional content
 
 ---
 
@@ -116,14 +129,14 @@ _Enhance your video downloading experience with high-quality downloads from a va
 
 2. **Copy Video URL**
 
-    - Navigate to any supported video site (YouTube, Vimeo, TikTok, Twitch, etc.)
+    - Navigate to any supported video site (YouTube, TikTok, Vimeo, Twitch, Dailymotion, etc.)
     - Copy the video URL from your browser
 
 3. **Start Download**
 
     - In Free Download Manager, click **"Add URL"** or press `Ctrl+U`
-    - Paste the video URL from any supported site
-    - VideoFetch will automatically detect and process the URL
+    - Paste the video URL from any of the 1800+ supported sites
+    - VideoFetch will automatically detect the platform and process the URL
 
 4. **Configure Download Options**
 
@@ -192,14 +205,15 @@ VideoFetch supports **1800+ video sites** through yt-dlp, including but not limi
 
 ### Pro Tips
 
--   💡 **Batch Downloads**: Add multiple URLs at once for efficient downloading
+-   💡 **Batch Downloads**: Add multiple URLs from different platforms at once for efficient downloading
 -   🔄 **Resume Downloads**: Interrupted downloads can be resumed automatically
--   📱 **Mobile URLs**: Works with mobile versions of supported sites
--   🎵 **Audio Only**: Extract audio-only files in M4A format
--   🌐 **Multi-Site Support**: Try URLs from different platforms - if yt-dlp supports it, VideoFetch can download it
+-   📱 **Mobile URLs**: Works with mobile versions of supported sites (m.youtube.com, mobile.twitter.com, etc.)
+-   🎵 **Audio Only**: Extract audio-only files in M4A format from any supported platform
+-   🌐 **Multi-Platform Support**: Try URLs from any platform - if yt-dlp supports it, VideoFetch can download it
 -   📋 **Playlist Support**: Download entire playlists from YouTube, Vimeo, and other supported platforms
--   🎯 **Quality Selection**: Choose from available quality options for each video
--   🔗 **Live Stream Recording**: Some platforms support recording of live streams
+-   🎯 **Smart Quality Selection**: Automatically chooses optimal quality based on available options
+-   🔗 **Live Stream Recording**: Record live streams from supported platforms (where available)
+-   🌍 **International Sites**: Full support for regional platforms like Bilibili, VK, Nico Nico, and many others
 
 ---
 
