@@ -2,7 +2,7 @@
   "uuid": "videofetch",
   "name": "VideoFetch",
   "description": "A plugin for Free Download Manager to easily download videos from YouTube and 1800+ other sites using yt-dlp.",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "icon": "icon.svg",
   "mediaParser": true,
   "mediaListParser": true,

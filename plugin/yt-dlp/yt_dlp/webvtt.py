@@ -77,24 +77,26 @@ class _MatchChildParser(_MatchParser):
 
 class ParseError(Exception):
     def __init__(self, parser):
-        data = parser._data[parser._pos:parser._pos + 100]
-        super().__init__(f'Parse error at position {parser._pos} (near {data!r})')
+        data = parser._data[parser._pos : parser._pos + 100]
+        super().__init__(f"Parse error at position {parser._pos} (near {data!r})")
 
 
 # While the specification <https://www.w3.org/TR/webvtt1/#webvtt-timestamp>
 # prescribes that hours must be *2 or more* digits, timestamps with a single
 # digit for the hour part has been seen in the wild.
 # See https://github.com/yt-dlp/yt-dlp/issues/921
-_REGEX_TS = re.compile(r'''(?x)
+_REGEX_TS = re.compile(
+    r"""(?x)
     (?:([0-9]{1,}):)?
     ([0-9]{2}):
     ([0-9]{2})\.
     ([0-9]{3})?
-''')
-_REGEX_EOF = re.compile(r'\Z')
-_REGEX_NL = re.compile(r'(?:\r\n|[\r\n]|$)')
-_REGEX_BLANK = re.compile(r'(?:\r\n|[\r\n])+')
-_REGEX_OPTIONAL_WHITESPACE = re.compile(r'[ \t]*')
+"""
+)
+_REGEX_EOF = re.compile(r"\Z")
+_REGEX_NL = re.compile(r"(?:\r\n|[\r\n]|$)")
+_REGEX_BLANK = re.compile(r"(?:\r\n|[\r\n])+")
+_REGEX_OPTIONAL_WHITESPACE = re.compile(r"[ \t]*")
 
 
 def _parse_ts(ts):
@@ -103,7 +105,9 @@ def _parse_ts(ts):
     into an MPEG PES timestamp: a tick counter at 90 kHz resolution.
     """
     return 90 * sum(
-        int(part or 0) * mult for part, mult in zip(ts.groups(), (3600_000, 60_000, 1000, 1)))
+        int(part or 0) * mult
+        for part, mult in zip(ts.groups(), (3600_000, 60_000, 1000, 1), strict=True)
+    )
 
 
 def _format_ts(ts):
@@ -111,7 +115,7 @@ def _format_ts(ts):
     Convert an MPEG PES timestamp into a WebVTT timestamp.
     This will lose sub-millisecond precision.
     """
-    return '%02u:%02u:%02u.%03u' % timetuple_from_msec(int((ts + 45) // 90))
+    return "%02u:%02u:%02u.%03u" % timetuple_from_msec(int((ts + 45) // 90))
 
 
 class Block:
@@ -140,11 +144,12 @@ class HeaderBlock(Block):
     A WebVTT block that may only appear in the header part of the file,
     i.e. before any cue blocks.
     """
+
     pass
 
 
 class Magic(HeaderBlock):
-    _REGEX = re.compile(r'\ufeff?WEBVTT([ \t][^\r\n]*)?(?:\r\n|[\r\n])')
+    _REGEX = re.compile(r"\ufeff?WEBVTT([ \t][^\r\n]*)?(?:\r\n|[\r\n])")
 
     # XXX: The X-TIMESTAMP-MAP extension is described in RFC 8216 §3.5
     # <https://tools.ietf.org/html/rfc8216#section-3.5>, but the RFC
@@ -155,16 +160,16 @@ class Magic(HeaderBlock):
     # And strictly speaking, the presence of this extension violates
     # the W3C WebVTT spec. Oh well.
 
-    _REGEX_TSMAP = re.compile(r'X-TIMESTAMP-MAP=')
-    _REGEX_TSMAP_LOCAL = re.compile(r'LOCAL:')
-    _REGEX_TSMAP_MPEGTS = re.compile(r'MPEGTS:([0-9]+)')
-    _REGEX_TSMAP_SEP = re.compile(r'[ \t]*,[ \t]*')
+    _REGEX_TSMAP = re.compile(r"X-TIMESTAMP-MAP=")
+    _REGEX_TSMAP_LOCAL = re.compile(r"LOCAL:")
+    _REGEX_TSMAP_MPEGTS = re.compile(r"MPEGTS:([0-9]+)")
+    _REGEX_TSMAP_SEP = re.compile(r"[ \t]*,[ \t]*")
 
     # This was removed from the spec in the 2017 revision;
     # the last spec draft to describe this syntax element is
     # <https://www.w3.org/TR/2015/WD-webvtt1-20151208/#webvtt-metadata-header>.
     # Nevertheless, YouTube keeps serving those
-    _REGEX_META = re.compile(r'(?:(?!-->)[^\r\n])+:(?:(?!-->)[^\r\n])+(?:\r\n|[\r\n])')
+    _REGEX_META = re.compile(r"(?:(?!-->)[^\r\n])+:(?:(?!-->)[^\r\n])+(?:\r\n|[\r\n])")
 
     @classmethod
     def __parse_tsmap(cls, parser):
@@ -205,7 +210,7 @@ class Magic(HeaderBlock):
             raise ParseError(parser)
 
         extra = m.group(1)
-        local, mpegts, meta = None, None, ''
+        local, mpegts, meta = None, None, ""
         while not parser.consume(_REGEX_NL):
             if parser.consume(cls._REGEX_TSMAP):
                 local, mpegts = cls.__parse_tsmap(parser)
@@ -219,43 +224,49 @@ class Magic(HeaderBlock):
         return cls(extra=extra, mpegts=mpegts, local=local, meta=meta)
 
     def write_into(self, stream):
-        stream.write('WEBVTT')
+        stream.write("WEBVTT")
         if self.extra is not None:
             stream.write(self.extra)
-        stream.write('\n')
+        stream.write("\n")
         if self.local or self.mpegts:
-            stream.write('X-TIMESTAMP-MAP=LOCAL:')
+            stream.write("X-TIMESTAMP-MAP=LOCAL:")
             stream.write(_format_ts(self.local if self.local is not None else 0))
-            stream.write(',MPEGTS:')
+            stream.write(",MPEGTS:")
             stream.write(str(self.mpegts if self.mpegts is not None else 0))
-            stream.write('\n')
+            stream.write("\n")
         if self.meta:
             stream.write(self.meta)
-        stream.write('\n')
+        stream.write("\n")
 
 
 class StyleBlock(HeaderBlock):
-    _REGEX = re.compile(r'''(?x)
+    _REGEX = re.compile(
+        r"""(?x)
         STYLE[\ \t]*(?:\r\n|[\r\n])
         ((?:(?!-->)[^\r\n])+(?:\r\n|[\r\n]))*
         (?:\r\n|[\r\n])
-    ''')
+    """
+    )
 
 
 class RegionBlock(HeaderBlock):
-    _REGEX = re.compile(r'''(?x)
+    _REGEX = re.compile(
+        r"""(?x)
         REGION[\ \t]*
         ((?:(?!-->)[^\r\n])+(?:\r\n|[\r\n]))*
         (?:\r\n|[\r\n])
-    ''')
+    """
+    )
 
 
 class CommentBlock(Block):
-    _REGEX = re.compile(r'''(?x)
+    _REGEX = re.compile(
+        r"""(?x)
         NOTE(?:\r\n|[\ \t\r\n])
         ((?:(?!-->)[^\r\n])+(?:\r\n|[\r\n]))*
         (?:\r\n|[\r\n])
-    ''')
+    """
+    )
 
 
 class CueBlock(Block):
@@ -263,10 +274,10 @@ class CueBlock(Block):
     A cue block. The payload is not interpreted.
     """
 
-    _REGEX_ID = re.compile(r'((?:(?!-->)[^\r\n])+)(?:\r\n|[\r\n])')
-    _REGEX_ARROW = re.compile(r'[ \t]+-->[ \t]+')
-    _REGEX_SETTINGS = re.compile(r'[ \t]+((?:(?!-->)[^\r\n])+)')
-    _REGEX_PAYLOAD = re.compile(r'[^\r\n]+(?:\r\n|[\r\n])?')
+    _REGEX_ID = re.compile(r"((?:(?!-->)[^\r\n])+)(?:\r\n|[\r\n])")
+    _REGEX_ARROW = re.compile(r"[ \t]+-->[ \t]+")
+    _REGEX_SETTINGS = re.compile(r"[ \t]+((?:(?!-->)[^\r\n])+)")
+    _REGEX_PAYLOAD = re.compile(r"[^\r\n]+(?:\r\n|[\r\n])?")
 
     @classmethod
     def parse(cls, parser):
@@ -304,32 +315,34 @@ class CueBlock(Block):
         parser.commit()
         return cls(
             id=id_,
-            start=start, end=end, settings=settings,
+            start=start,
+            end=end,
+            settings=settings,
             text=text.getvalue(),
         )
 
     def write_into(self, stream):
         if self.id is not None:
             stream.write(self.id)
-            stream.write('\n')
+            stream.write("\n")
         stream.write(_format_ts(self.start))
-        stream.write(' --> ')
+        stream.write(" --> ")
         stream.write(_format_ts(self.end))
         if self.settings is not None:
-            stream.write(' ')
+            stream.write(" ")
             stream.write(self.settings)
-        stream.write('\n')
+        stream.write("\n")
         stream.write(self.text)
-        stream.write('\n')
+        stream.write("\n")
 
     @property
     def as_json(self):
         return {
-            'id': self.id,
-            'start': self.start,
-            'end': self.end,
-            'text': self.text,
-            'settings': self.settings,
+            "id": self.id,
+            "start": self.start,
+            "end": self.end,
+            "text": self.text,
+            "settings": self.settings,
         }
 
     def __eq__(self, other):
@@ -338,11 +351,11 @@ class CueBlock(Block):
     @classmethod
     def from_json(cls, json):
         return cls(
-            id=json['id'],
-            start=json['start'],
-            end=json['end'],
-            text=json['text'],
-            settings=json['settings'],
+            id=json["id"],
+            start=json["start"],
+            end=json["end"],
+            text=json["text"],
+            settings=json["settings"],
         )
 
     def hinges(self, other):

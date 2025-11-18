@@ -13,7 +13,6 @@ import urllib.request
 from .exceptions import RequestError
 from ..dependencies import certifi
 from ..socks import ProxyType, sockssocket
-from ..utils import format_field, traverse_obj
 
 if typing.TYPE_CHECKING:
     from collections.abc import Iterable
@@ -32,8 +31,8 @@ def ssl_load_certs(context: ssl.SSLContext, use_certifi=True):
         # https://bugs.python.org/issue35665, https://bugs.python.org/issue45312
         except ssl.SSLError:
             # enum_certificates is not present in mingw python. See https://github.com/yt-dlp/yt-dlp/issues/1151
-            if sys.platform == 'win32' and hasattr(ssl, 'enum_certificates'):
-                for storename in ('CA', 'ROOT'):
+            if sys.platform == "win32" and hasattr(ssl, "enum_certificates"):
+                for storename in ("CA", "ROOT"):
                     ssl_load_windows_store_certs(context, storename)
             context.set_default_verify_paths()
 
@@ -41,9 +40,12 @@ def ssl_load_certs(context: ssl.SSLContext, use_certifi=True):
 def ssl_load_windows_store_certs(ssl_context, storename):
     # Code adapted from _load_windows_store_certs in https://github.com/python/cpython/blob/main/Lib/ssl.py
     try:
-        certs = [cert for cert, encoding, trust in ssl.enum_certificates(storename)
-                 if encoding == 'x509_asn' and (
-                     trust is True or ssl.Purpose.SERVER_AUTH.oid in trust)]
+        certs = [
+            cert
+            for cert, encoding, trust in ssl.enum_certificates(storename)
+            if encoding == "x509_asn"
+            and (trust is True or ssl.Purpose.SERVER_AUTH.oid in trust)
+        ]
     except PermissionError:
         return
     for cert in certs:
@@ -53,46 +55,36 @@ def ssl_load_windows_store_certs(ssl_context, storename):
 
 def make_socks_proxy_opts(socks_proxy):
     url_components = urllib.parse.urlparse(socks_proxy)
-    if url_components.scheme.lower() == 'socks5':
+    if url_components.scheme.lower() == "socks5":
         socks_type = ProxyType.SOCKS5
         rdns = False
-    elif url_components.scheme.lower() == 'socks5h':
+    elif url_components.scheme.lower() == "socks5h":
         socks_type = ProxyType.SOCKS5
         rdns = True
-    elif url_components.scheme.lower() == 'socks4':
+    elif url_components.scheme.lower() == "socks4":
         socks_type = ProxyType.SOCKS4
         rdns = False
-    elif url_components.scheme.lower() == 'socks4a':
+    elif url_components.scheme.lower() == "socks4a":
         socks_type = ProxyType.SOCKS4A
         rdns = True
     else:
-        raise ValueError(f'Unknown SOCKS proxy version: {url_components.scheme.lower()}')
+        raise ValueError(
+            f"Unknown SOCKS proxy version: {url_components.scheme.lower()}"
+        )
 
     def unquote_if_non_empty(s):
         if not s:
             return s
         return urllib.parse.unquote_plus(s)
+
     return {
-        'proxytype': socks_type,
-        'addr': url_components.hostname,
-        'port': url_components.port or 1080,
-        'rdns': rdns,
-        'username': unquote_if_non_empty(url_components.username),
-        'password': unquote_if_non_empty(url_components.password),
+        "proxytype": socks_type,
+        "addr": url_components.hostname,
+        "port": url_components.port or 1080,
+        "rdns": rdns,
+        "username": unquote_if_non_empty(url_components.username),
+        "password": unquote_if_non_empty(url_components.password),
     }
-
-
-def select_proxy(url, proxies):
-    """Unified proxy selector for all backends"""
-    url_components = urllib.parse.urlparse(url)
-    if 'no' in proxies:
-        hostport = url_components.hostname + format_field(url_components.port, None, ':%s')
-        if urllib.request.proxy_bypass_environment(hostport, {'no': proxies['no']}):
-            return
-        elif urllib.request.proxy_bypass(hostport):  # check system settings
-            return
-
-    return traverse_obj(proxies, url_components.scheme or 'http', 'all')
 
 
 def get_redirect_method(method, status):
@@ -100,14 +92,14 @@ def get_redirect_method(method, status):
 
     # A 303 must either use GET or HEAD for subsequent request
     # https://datatracker.ietf.org/doc/html/rfc7231#section-6.4.4
-    if status == 303 and method != 'HEAD':
-        method = 'GET'
+    if status == 303 and method != "HEAD":
+        method = "GET"
     # 301 and 302 redirects are commonly turned into a GET from a POST
     # for subsequent requests by browsers, so we'll do the same.
     # https://datatracker.ietf.org/doc/html/rfc7231#section-6.4.2
     # https://datatracker.ietf.org/doc/html/rfc7231#section-6.4.3
-    if status in (301, 302) and method == 'POST':
-        method = 'GET'
+    if status in (301, 302) and method == "POST":
+        method = "GET"
     return method
 
 
@@ -123,22 +115,24 @@ def make_ssl_context(
     context.check_hostname = verify
     context.verify_mode = ssl.CERT_REQUIRED if verify else ssl.CERT_NONE
     # OpenSSL 1.1.1+ Python 3.8+ keylog file
-    if hasattr(context, 'keylog_filename'):
-        context.keylog_filename = os.environ.get('SSLKEYLOGFILE') or None
+    if hasattr(context, "keylog_filename"):
+        context.keylog_filename = os.environ.get("SSLKEYLOGFILE") or None
 
     # Some servers may reject requests if ALPN extension is not sent. See:
     # https://github.com/python/cpython/issues/85140
     # https://github.com/yt-dlp/yt-dlp/issues/3878
     with contextlib.suppress(NotImplementedError):
-        context.set_alpn_protocols(['http/1.1'])
+        context.set_alpn_protocols(["http/1.1"])
     if verify:
         ssl_load_certs(context, use_certifi)
 
     if legacy_support:
         context.options |= 4  # SSL_OP_LEGACY_SERVER_CONNECT
-        context.set_ciphers('DEFAULT')  # compat
+        context.set_ciphers("DEFAULT")  # compat
 
-    elif ssl.OPENSSL_VERSION_INFO >= (1, 1, 1) and not ssl.OPENSSL_VERSION.startswith('LibreSSL'):
+    elif ssl.OPENSSL_VERSION_INFO >= (1, 1, 1) and not ssl.OPENSSL_VERSION.startswith(
+        "LibreSSL"
+    ):
         # Use the default SSL ciphers and minimum TLS version settings from Python 3.10 [1].
         # This is to ensure consistent behavior across Python versions and libraries, and help avoid fingerprinting
         # in some situations [2][3].
@@ -152,18 +146,21 @@ def make_ssl_context(
         # 5. https://peps.python.org/pep-0644/#libressl-support
         # 6. https://github.com/yt-dlp/yt-dlp/commit/5b9f253fa0aee996cf1ed30185d4b502e00609c4#commitcomment-89054368
         context.set_ciphers(
-            '@SECLEVEL=2:ECDH+AESGCM:ECDH+CHACHA20:ECDH+AES:DHE+AES:!aNULL:!eNULL:!aDSS:!SHA1:!AESCCM')
+            "@SECLEVEL=2:ECDH+AESGCM:ECDH+CHACHA20:ECDH+AES:DHE+AES:!aNULL:!eNULL:!aDSS:!SHA1:!AESCCM"
+        )
         context.minimum_version = ssl.TLSVersion.TLSv1_2
 
     if client_certificate:
         try:
             context.load_cert_chain(
-                client_certificate, keyfile=client_certificate_key,
-                password=client_certificate_password)
+                client_certificate,
+                keyfile=client_certificate_key,
+                password=client_certificate_password,
+            )
         except ssl.SSLError:
-            raise RequestError('Unable to load client certificate')
+            raise RequestError("Unable to load client certificate")
 
-        if getattr(context, 'post_handshake_auth', None) is not None:
+        if getattr(context, "post_handshake_auth", None) is not None:
             context.post_handshake_auth = True
     return context
 
@@ -187,7 +184,7 @@ class InstanceStoreMixin:
         return instance
 
     def _close_instance(self, instance):
-        if callable(getattr(instance, 'close', None)):
+        if callable(getattr(instance, "close", None)):
             instance.close()
 
     def _clear_instances(self):
@@ -196,9 +193,11 @@ class InstanceStoreMixin:
         self.__instances.clear()
 
 
-def add_accept_encoding_header(headers: HTTPHeaderDict, supported_encodings: Iterable[str]):
-    if 'Accept-Encoding' not in headers:
-        headers['Accept-Encoding'] = ', '.join(supported_encodings) or 'identity'
+def add_accept_encoding_header(
+    headers: HTTPHeaderDict, supported_encodings: Iterable[str]
+):
+    if "Accept-Encoding" not in headers:
+        headers["Accept-Encoding"] = ", ".join(supported_encodings) or "identity"
 
 
 def wrap_request_errors(func):
@@ -210,11 +209,12 @@ def wrap_request_errors(func):
             if e.handler is None:
                 e.handler = self
             raise
+
     return wrapper
 
 
 def _socket_connect(ip_addr, timeout, source_address):
-    af, socktype, proto, canonname, sa = ip_addr
+    af, socktype, proto, _canonname, sa = ip_addr
     sock = socket.socket(af, socktype, proto)
     try:
         if timeout is not socket._GLOBAL_DEFAULT_TIMEOUT:
@@ -228,12 +228,14 @@ def _socket_connect(ip_addr, timeout, source_address):
         raise
 
 
-def create_socks_proxy_socket(dest_addr, proxy_args, proxy_ip_addr, timeout, source_address):
-    af, socktype, proto, canonname, sa = proxy_ip_addr
+def create_socks_proxy_socket(
+    dest_addr, proxy_args, proxy_ip_addr, timeout, source_address
+):
+    af, socktype, proto, _canonname, sa = proxy_ip_addr
     sock = sockssocket(af, socktype, proto)
     try:
         connect_proxy_args = proxy_args.copy()
-        connect_proxy_args.update({'addr': sa[0], 'port': sa[1]})
+        connect_proxy_args.update({"addr": sa[0], "port": sa[1]})
         sock.setproxy(**connect_proxy_args)
         if timeout is not socket._GLOBAL_DEFAULT_TIMEOUT:
             sock.settimeout(timeout)
@@ -259,14 +261,15 @@ def create_connection(
     host, port = address
     ip_addrs = socket.getaddrinfo(host, port, 0, socket.SOCK_STREAM)
     if not ip_addrs:
-        raise OSError('getaddrinfo returns an empty list')
+        raise OSError("getaddrinfo returns an empty list")
     if source_address is not None:
-        af = socket.AF_INET if ':' not in source_address[0] else socket.AF_INET6
+        af = socket.AF_INET if ":" not in source_address[0] else socket.AF_INET6
         ip_addrs = [addr for addr in ip_addrs if addr[0] == af]
         if not ip_addrs:
             raise OSError(
-                f'No remote IPv{4 if af == socket.AF_INET else 6} addresses available for connect. '
-                f'Can\'t use "{source_address[0]}" as source address')
+                f"No remote IPv{4 if af == socket.AF_INET else 6} addresses available for connect. "
+                f'Can\'t use "{source_address[0]}" as source address'
+            )
 
     err = None
     for ip_addr in ip_addrs:

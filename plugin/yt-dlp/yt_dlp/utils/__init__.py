@@ -1,7 +1,7 @@
 # flake8: noqa: F403
 from ..compat.compat_utils import passthrough_module
 
-passthrough_module(__name__, '._deprecated')
+passthrough_module(__name__, "._deprecated")
 del passthrough_module
 
 # isort: off

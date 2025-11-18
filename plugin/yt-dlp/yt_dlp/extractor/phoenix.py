@@ -1,5 +1,3 @@
-import re
-
 from .youtube import YoutubeIE
 from .zdf import ZDFBaseIE
 from ..utils import (
@@ -7,123 +5,113 @@ from ..utils import (
     merge_dicts,
     try_get,
     unified_timestamp,
-    urljoin,
 )
 
 
 class PhoenixIE(ZDFBaseIE):
-    IE_NAME = 'phoenix.de'
-    _VALID_URL = r'https?://(?:www\.)?phoenix\.de/(?:[^/]+/)*[^/?#&]*-a-(?P<id>\d+)\.html'
-    _TESTS = [{
-        # Same as https://www.zdf.de/politik/phoenix-sendungen/wohin-fuehrt-der-protest-in-der-pandemie-100.html
-        'url': 'https://www.phoenix.de/sendungen/ereignisse/corona-nachgehakt/wohin-fuehrt-der-protest-in-der-pandemie-a-2050630.html',
-        'md5': '34ec321e7eb34231fd88616c65c92db0',
-        'info_dict': {
-            'id': '210222_phx_nachgehakt_corona_protest',
-            'ext': 'mp4',
-            'title': 'Wohin führt der Protest in der Pandemie?',
-            'description': 'md5:7d643fe7f565e53a24aac036b2122fbd',
-            'duration': 1691,
-            'timestamp': 1613902500,
-            'upload_date': '20210221',
-            'uploader': 'Phoenix',
-            'series': 'corona nachgehakt',
-            'episode': 'Wohin führt der Protest in der Pandemie?',
+    IE_NAME = "phoenix.de"
+    _VALID_URL = (
+        r"https?://(?:www\.)?phoenix\.de/(?:[^/?#]+/)*[^/?#&]*-a-(?P<id>\d+)\.html"
+    )
+    _TESTS = [
+        {
+            "url": "https://www.phoenix.de/sendungen/dokumentationen/spitzbergen-a-893349.html",
+            "md5": "a79e86d9774d0b3f2102aff988a0bd32",
+            "info_dict": {
+                "id": "221215_phx_spitzbergen",
+                "ext": "mp4",
+                "title": "Spitzbergen",
+                "description": "Film von Tilmann Bünz",
+                "duration": 728.0,
+                "timestamp": 1555600500,
+                "upload_date": "20190418",
+                "uploader": "Phoenix",
+                "thumbnail": "https://www.phoenix.de/sixcms/media.php/21/Bergspitzen1.png",
+                "series": "Dokumentationen",
+                "episode": "Spitzbergen",
+            },
         },
-    }, {
-        # Youtube embed
-        'url': 'https://www.phoenix.de/sendungen/gespraeche/phoenix-streitgut-brennglas-corona-a-1965505.html',
-        'info_dict': {
-            'id': 'hMQtqFYjomk',
-            'ext': 'mp4',
-            'title': 'phoenix streitgut: Brennglas Corona - Wie gerecht ist unsere Gesellschaft?',
-            'description': 'md5:ac7a02e2eb3cb17600bc372e4ab28fdd',
-            'duration': 3509,
-            'upload_date': '20201219',
-            'uploader': 'phoenix',
-            'uploader_id': 'phoenix',
+        {
+            "url": "https://www.phoenix.de/entwicklungen-in-russland-a-2044720.html",
+            "only_matching": True,
         },
-        'params': {
-            'skip_download': True,
+        {
+            # no media
+            "url": "https://www.phoenix.de/sendungen/dokumentationen/mit-dem-jumbo-durch-die-nacht-a-89625.html",
+            "only_matching": True,
         },
-    }, {
-        'url': 'https://www.phoenix.de/entwicklungen-in-russland-a-2044720.html',
-        'only_matching': True,
-    }, {
-        # no media
-        'url': 'https://www.phoenix.de/sendungen/dokumentationen/mit-dem-jumbo-durch-die-nacht-a-89625.html',
-        'only_matching': True,
-    }, {
-        # Same as https://www.zdf.de/politik/phoenix-sendungen/die-gesten-der-maechtigen-100.html
-        'url': 'https://www.phoenix.de/sendungen/dokumentationen/gesten-der-maechtigen-i-a-89468.html?ref=suche',
-        'only_matching': True,
-    }]
+        {
+            # Same as https://www.zdf.de/politik/phoenix-sendungen/die-gesten-der-maechtigen-100.html
+            "url": "https://www.phoenix.de/sendungen/dokumentationen/gesten-der-maechtigen-i-a-89468.html?ref=suche",
+            "only_matching": True,
+        },
+    ]
 
     def _real_extract(self, url):
         article_id = self._match_id(url)
 
         article = self._download_json(
-            f'https://www.phoenix.de/response/id/{article_id}', article_id,
-            'Downloading article JSON')
+            f"https://www.phoenix.de/response/id/{article_id}",
+            article_id,
+            "Downloading article JSON",
+        )
 
-        video = article['absaetze'][0]
-        title = video.get('titel') or article.get('subtitel')
+        video = article["absaetze"][0]
+        title = video.get("titel") or article.get("subtitel")
 
-        if video.get('typ') == 'video-youtube':
-            video_id = video['id']
+        if video.get("typ") == "video-youtube":
+            video_id = video["id"]
             return self.url_result(
-                video_id, ie=YoutubeIE.ie_key(), video_id=video_id,
-                video_title=title)
+                video_id, ie=YoutubeIE.ie_key(), video_id=video_id, video_title=title
+            )
 
-        video_id = str(video.get('basename') or video.get('content'))
+        video_id = str(video.get("basename") or video.get("content"))
 
         details = self._download_json(
-            'https://www.phoenix.de/php/mediaplayer/data/beitrags_details.php',
-            video_id, 'Downloading details JSON', query={
-                'ak': 'web',
-                'ptmd': 'true',
-                'id': video_id,
-                'profile': 'player2',
-            })
+            "https://www.phoenix.de/php/mediaplayer/data/beitrags_details.php",
+            video_id,
+            "Downloading details JSON",
+            query={
+                "ak": "web",
+                "ptmd": "true",
+                "id": video_id,
+                "profile": "player2",
+            },
+        )
 
-        title = title or details['title']
-        content_id = details['tracking']['nielsen']['content']['assetid']
+        title = title or details["title"]
+        content_id = details["tracking"]["nielsen"]["content"]["assetid"]
 
         info = self._extract_ptmd(
-            f'https://tmd.phoenix.de/tmd/2/ngplayer_2_3/vod/ptmd/phoenix/{content_id}',
-            content_id, None, url)
+            f"https://tmd.phoenix.de/tmd/2/android_native_6/vod/ptmd/phoenix/{content_id}",
+            content_id,
+        )
 
-        duration = int_or_none(try_get(
-            details, lambda x: x['tracking']['nielsen']['content']['length']))
-        timestamp = unified_timestamp(details.get('editorialDate'))
+        duration = int_or_none(
+            try_get(details, lambda x: x["tracking"]["nielsen"]["content"]["length"])
+        )
+        timestamp = unified_timestamp(details.get("editorialDate"))
         series = try_get(
-            details, lambda x: x['tracking']['nielsen']['content']['program'],
-            str)
-        episode = title if details.get('contentType') == 'episode' else None
+            details, lambda x: x["tracking"]["nielsen"]["content"]["program"], str
+        )
+        episode = title if details.get("contentType") == "episode" else None
 
-        thumbnails = []
-        teaser_images = try_get(details, lambda x: x['teaserImageRef']['layouts'], dict) or {}
-        for thumbnail_key, thumbnail_url in teaser_images.items():
-            thumbnail_url = urljoin(url, thumbnail_url)
-            if not thumbnail_url:
-                continue
-            thumbnail = {
-                'url': thumbnail_url,
-            }
-            m = re.match('^([0-9]+)x([0-9]+)$', thumbnail_key)
-            if m:
-                thumbnail['width'] = int(m.group(1))
-                thumbnail['height'] = int(m.group(2))
-            thumbnails.append(thumbnail)
+        teaser_images = (
+            try_get(details, lambda x: x["teaserImageRef"]["layouts"], dict) or {}
+        )
+        thumbnails = self._extract_thumbnails(teaser_images)
 
-        return merge_dicts(info, {
-            'id': content_id,
-            'title': title,
-            'description': details.get('leadParagraph'),
-            'duration': duration,
-            'thumbnails': thumbnails,
-            'timestamp': timestamp,
-            'uploader': details.get('tvService'),
-            'series': series,
-            'episode': episode,
-        })
+        return merge_dicts(
+            info,
+            {
+                "id": content_id,
+                "title": title,
+                "description": details.get("leadParagraph"),
+                "duration": duration,
+                "thumbnails": thumbnails,
+                "timestamp": timestamp,
+                "uploader": details.get("tvService"),
+                "series": series,
+                "episode": episode,
+            },
+        )

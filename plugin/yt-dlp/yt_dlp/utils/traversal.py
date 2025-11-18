@@ -36,8 +36,15 @@ from ._utils import (
 
 
 def traverse_obj(
-        obj, *paths, default=NO_DEFAULT, expected_type=None, get_all=True,
-        casesense=True, is_user_input=NO_DEFAULT, traverse_string=False):
+    obj,
+    *paths,
+    default=NO_DEFAULT,
+    expected_type=None,
+    get_all=True,
+    casesense=True,
+    is_user_input=NO_DEFAULT,
+    traverse_string=False,
+):
     """
     Safely traverse nested `dict`s and `Iterable`s
 
@@ -103,7 +110,9 @@ def traverse_obj(
                             is always returned. If a path ends on a `dict` that result will always be a `dict`.
     """
     if is_user_input is not NO_DEFAULT:
-        deprecation_warning('The is_user_input parameter is deprecated and no longer works')
+        deprecation_warning(
+            "The is_user_input parameter is deprecated and no longer works"
+        )
 
     casefold = lambda k: k.casefold() if isinstance(k, str) else k
 
@@ -136,7 +145,8 @@ def traverse_obj(
         elif isinstance(key, (list, tuple)):
             branching = True
             result = itertools.chain.from_iterable(
-                apply_path(obj, branch, is_last)[0] for branch in key)
+                apply_path(obj, branch, is_last)[0] for branch in key
+            )
 
         elif key is ...:
             branching = True
@@ -144,7 +154,9 @@ def traverse_obj(
                 obj = dict(obj, key=obj.key, value=obj.value)
             if isinstance(obj, collections.abc.Mapping):
                 result = obj.values()
-            elif is_iterable_like(obj) or isinstance(obj, xml.etree.ElementTree.Element):
+            elif is_iterable_like(obj) or isinstance(
+                obj, xml.etree.ElementTree.Element
+            ):
                 result = obj
             elif isinstance(obj, re.Match):
                 result = obj.groups()
@@ -160,12 +172,14 @@ def traverse_obj(
                 obj = dict(obj, key=obj.key, value=obj.value)
             if isinstance(obj, collections.abc.Mapping):
                 iter_obj = obj.items()
-            elif is_iterable_like(obj) or isinstance(obj, xml.etree.ElementTree.Element):
+            elif is_iterable_like(obj) or isinstance(
+                obj, xml.etree.ElementTree.Element
+            ):
                 iter_obj = enumerate(obj)
             elif isinstance(obj, re.Match):
                 iter_obj = itertools.chain(
-                    enumerate((obj.group(), *obj.groups())),
-                    obj.groupdict().items())
+                    enumerate((obj.group(), *obj.groups())), obj.groupdict().items()
+                )
             elif traverse_string:
                 branching = False
                 iter_obj = enumerate(str(obj))
@@ -174,20 +188,26 @@ def traverse_obj(
 
             result = (v for k, v in iter_obj if try_call(key, args=(k, v)))
             if not branching:  # string traversal
-                result = ''.join(result)
+                result = "".join(result)
 
         elif isinstance(key, dict):
-            iter_obj = ((k, _traverse_obj(obj, v, False, is_last)) for k, v in key.items())
+            iter_obj = (
+                (k, _traverse_obj(obj, v, False, is_last)) for k, v in key.items()
+            )
             result = {
-                k: v if v is not None else default for k, v in iter_obj
+                k: v if v is not None else default
+                for k, v in iter_obj
                 if v is not None or default is not NO_DEFAULT
             } or None
 
         elif isinstance(obj, collections.abc.Mapping):
             if isinstance(obj, http.cookies.Morsel):
                 obj = dict(obj, key=obj.key, value=obj.value)
-            result = (try_call(obj.get, args=(key,)) if casesense or try_call(obj.__contains__, args=(key,)) else
-                      next((v for k, v in obj.items() if casefold(k) == key), None))
+            result = (
+                try_call(obj.get, args=(key,))
+                if casesense or try_call(obj.__contains__, args=(key,))
+                else next((v for k, v in obj.items() if casefold(k) == key), None)
+            )
 
         elif isinstance(obj, re.Match):
             if isinstance(key, int) or casesense:
@@ -195,10 +215,14 @@ def traverse_obj(
                     result = obj.group(key)
 
             elif isinstance(key, str):
-                result = next((v for k, v in obj.groupdict().items() if casefold(k) == key), None)
+                result = next(
+                    (v for k, v in obj.groupdict().items() if casefold(k) == key), None
+                )
 
         elif isinstance(key, (int, slice)):
-            if is_iterable_like(obj, (collections.abc.Sequence, xml.etree.ElementTree.Element)):
+            if is_iterable_like(
+                obj, (collections.abc.Sequence, xml.etree.ElementTree.Element)
+            ):
                 branching = isinstance(key, slice)
                 with contextlib.suppress(IndexError):
                     result = obj[key]
@@ -207,27 +231,27 @@ def traverse_obj(
                     result = str(obj)[key]
 
         elif isinstance(obj, xml.etree.ElementTree.Element) and isinstance(key, str):
-            xpath, _, special = key.rpartition('/')
-            if not special.startswith('@') and not special.endswith('()'):
+            xpath, _, special = key.rpartition("/")
+            if not special.startswith("@") and not special.endswith("()"):
                 xpath = key
                 special = None
 
             # Allow abbreviations of relative paths, absolute paths error
-            if xpath.startswith('/'):
-                xpath = f'.{xpath}'
-            elif xpath and not xpath.startswith('./'):
-                xpath = f'./{xpath}'
+            if xpath.startswith("/"):
+                xpath = f".{xpath}"
+            elif xpath and not xpath.startswith("./"):
+                xpath = f"./{xpath}"
 
             def apply_specials(element):
                 if special is None:
                     return element
-                if special == '@':
+                if special == "@":
                     return element.attrib
-                if special.startswith('@'):
+                if special.startswith("@"):
                     return try_call(element.attrib.get, args=(special[1:],))
-                if special == 'text()':
+                if special == "text()":
                     return element.text
-                raise SyntaxError(f'apply_specials is missing case for {special!r}')
+                raise SyntaxError(f"apply_specials is missing case for {special!r}")
 
             if xpath:
                 result = list(map(apply_specials, obj.iterfind(xpath)))
@@ -320,7 +344,7 @@ def value(value, /):
 def require(name, /, *, expected=False):
     def func(value):
         if value is None:
-            raise _RequiredError(f'Unable to extract {name}', expected=expected)
+            raise _RequiredError(f"Unable to extract {name}", expected=expected)
 
         return value
 
@@ -332,14 +356,18 @@ class _RequiredError(ExtractorError):
 
 
 @typing.overload
-def subs_list_to_dict(*, lang: str | None = 'und', ext: str | None = None) -> collections.abc.Callable[[list[dict]], dict[str, list[dict]]]: ...
+def subs_list_to_dict(
+    *, lang: str | None = "und", ext: str | None = None
+) -> collections.abc.Callable[[list[dict]], dict[str, list[dict]]]: ...
 
 
 @typing.overload
-def subs_list_to_dict(subs: list[dict] | None, /, *, lang: str | None = 'und', ext: str | None = None) -> dict[str, list[dict]]: ...
+def subs_list_to_dict(
+    subs: list[dict] | None, /, *, lang: str | None = "und", ext: str | None = None
+) -> dict[str, list[dict]]: ...
 
 
-def subs_list_to_dict(subs: list[dict] | None = None, /, *, lang='und', ext=None):
+def subs_list_to_dict(subs: list[dict] | None = None, /, *, lang="und", ext=None):
     """
     Convert subtitles from a traversal into a subtitle dict.
     The path should have an `all` immediately before this function.
@@ -357,30 +385,32 @@ def subs_list_to_dict(subs: list[dict] | None = None, /, *, lang='und', ext=None
     result = collections.defaultdict(list)
 
     for sub in subs:
-        if not url_or_none(sub.get('url')) and not sub.get('data'):
+        if not url_or_none(sub.get("url")) and not sub.get("data"):
             continue
-        sub_id = sub.pop('id', None)
+        sub_id = sub.pop("id", None)
         if not isinstance(sub_id, str):
             if not lang:
                 continue
             sub_id = lang
-        sub_ext = sub.get('ext')
+        sub_ext = sub.get("ext")
         if not isinstance(sub_ext, str):
             if not ext:
-                sub.pop('ext', None)
+                sub.pop("ext", None)
             else:
-                sub['ext'] = ext
+                sub["ext"] = ext
         result[sub_id].append(sub)
     result = dict(result)
 
     for subs in result.values():
-        subs.sort(key=lambda x: x.pop('quality', 0) or 0)
+        subs.sort(key=lambda x: x.pop("quality", 0) or 0)
 
     return result
 
 
 @typing.overload
-def find_element(*, attr: str, value: str, tag: str | None = None, html=False, regex=False): ...
+def find_element(
+    *, attr: str, value: str, tag: str | None = None, html=False, regex=False
+): ...
 
 
 @typing.overload
@@ -395,21 +425,27 @@ def find_element(*, id: str, tag: str | None = None, html=False, regex=False): .
 def find_element(*, tag: str, html=False, regex=False): ...
 
 
-def find_element(*, tag=None, id=None, cls=None, attr=None, value=None, html=False, regex=False):
+def find_element(
+    *, tag=None, id=None, cls=None, attr=None, value=None, html=False, regex=False
+):
     # deliberately using `id=` and `cls=` for ease of readability
-    assert tag or id or cls or (attr and value), 'One of tag, id, cls or (attr AND value) is required'
-    ANY_TAG = r'[\w:.-]+'
+    assert (
+        tag or id or cls or (attr and value)
+    ), "One of tag, id, cls or (attr AND value) is required"
+    ANY_TAG = r"[\w:.-]+"
 
     if attr and value:
-        assert not cls, 'Cannot match both attr and cls'
-        assert not id, 'Cannot match both attr and id'
+        assert not cls, "Cannot match both attr and cls"
+        assert not id, "Cannot match both attr and id"
         func = get_element_html_by_attribute if html else get_element_by_attribute
-        return functools.partial(func, attr, value, tag=tag or ANY_TAG, escape_value=not regex)
+        return functools.partial(
+            func, attr, value, tag=tag or ANY_TAG, escape_value=not regex
+        )
 
     elif cls:
-        assert not id, 'Cannot match both cls and id'
-        assert tag is None, 'Cannot match both cls and tag'
-        assert not regex, 'Cannot use regex with cls'
+        assert not id, "Cannot match both cls and id"
+        assert tag is None, "Cannot match both cls and tag"
+        assert not regex, "Cannot use regex with cls"
         func = get_element_html_by_class if html else get_element_by_class
         return functools.partial(func, cls)
 
@@ -426,20 +462,26 @@ def find_elements(*, cls: str, html=False): ...
 
 
 @typing.overload
-def find_elements(*, attr: str, value: str, tag: str | None = None, html=False, regex=False): ...
+def find_elements(
+    *, attr: str, value: str, tag: str | None = None, html=False, regex=False
+): ...
 
 
-def find_elements(*, tag=None, cls=None, attr=None, value=None, html=False, regex=False):
+def find_elements(
+    *, tag=None, cls=None, attr=None, value=None, html=False, regex=False
+):
     # deliberately using `cls=` for ease of readability
-    assert cls or (attr and value), 'One of cls or (attr AND value) is required'
+    assert cls or (attr and value), "One of cls or (attr AND value) is required"
 
     if attr and value:
-        assert not cls, 'Cannot match both attr and cls'
+        assert not cls, "Cannot match both attr and cls"
         func = get_elements_html_by_attribute if html else get_elements_by_attribute
-        return functools.partial(func, attr, value, tag=tag or r'[\w:.-]+', escape_value=not regex)
+        return functools.partial(
+            func, attr, value, tag=tag or r"[\w:.-]+", escape_value=not regex
+        )
 
-    assert not tag, 'Cannot match both cls and tag'
-    assert not regex, 'Cannot use regex with cls'
+    assert not tag, "Cannot match both cls and tag"
+    assert not regex, "Cannot use regex with cls"
     func = get_elements_html_by_class if html else get_elements_by_class
     return functools.partial(func, cls)
 
@@ -452,7 +494,7 @@ def trim_str(*, start=None, end=None):
         if start and s.startswith(start):
             start_idx = len(start)
         if end and s.endswith(end):
-            return s[start_idx:-len(end)]
+            return s[start_idx : -len(end)]
         return s[start_idx:]
 
     return trim
@@ -467,7 +509,9 @@ def unpack(func, **kwargs):
 
 
 def get_first(obj, *paths, **kwargs):
-    return traverse_obj(obj, *((..., *variadic(keys)) for keys in paths), **kwargs, get_all=False)
+    return traverse_obj(
+        obj, *((..., *variadic(keys)) for keys in paths), **kwargs, get_all=False
+    )
 
 
 def dict_get(d, key_or_keys, default=None, skip_false_values=True):

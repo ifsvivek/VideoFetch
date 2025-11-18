@@ -19,26 +19,28 @@ from ..utils import (
 
 def cookie_to_dict(cookie):
     cookie_dict = {
-        'name': cookie.name,
-        'value': cookie.value,
+        "name": cookie.name,
+        "value": cookie.value,
     }
     if cookie.port_specified:
-        cookie_dict['port'] = cookie.port
+        cookie_dict["port"] = cookie.port
     if cookie.domain_specified:
-        cookie_dict['domain'] = cookie.domain
+        cookie_dict["domain"] = cookie.domain
     if cookie.path_specified:
-        cookie_dict['path'] = cookie.path
+        cookie_dict["path"] = cookie.path
     if cookie.expires is not None:
-        cookie_dict['expires'] = cookie.expires
+        cookie_dict["expires"] = cookie.expires
     if cookie.secure is not None:
-        cookie_dict['secure'] = cookie.secure
+        cookie_dict["secure"] = cookie.secure
     if cookie.discard is not None:
-        cookie_dict['discard'] = cookie.discard
+        cookie_dict["discard"] = cookie.discard
     with contextlib.suppress(TypeError):
-        if (cookie.has_nonstandard_attr('httpOnly')
-                or cookie.has_nonstandard_attr('httponly')
-                or cookie.has_nonstandard_attr('HttpOnly')):
-            cookie_dict['httponly'] = True
+        if (
+            cookie.has_nonstandard_attr("httpOnly")
+            or cookie.has_nonstandard_attr("httponly")
+            or cookie.has_nonstandard_attr("HttpOnly")
+        ):
+            cookie_dict["httponly"] = True
     return cookie_dict
 
 
@@ -52,9 +54,9 @@ class PhantomJSwrapper:
     This class is experimental.
     """
 
-    INSTALL_HINT = 'Please download it from https://phantomjs.org/download.html'
+    INSTALL_HINT = "Please download it from https://phantomjs.org/download.html"
 
-    _BASE_JS = R'''
+    _BASE_JS = R"""
         phantom.onError = function(msg, trace) {{
           var msgStack = ['PHANTOM ERROR: ' + msg];
           if(trace && trace.length) {{
@@ -67,9 +69,9 @@ class PhantomJSwrapper:
           console.error(msgStack.join('\n'));
           phantom.exit(1);
         }};
-    '''
+    """
 
-    _TEMPLATE = R'''
+    _TEMPLATE = R"""
         var page = require('webpage').create();
         var fs = require('fs');
         var read = {{ mode: 'r', charset: 'utf-8' }};
@@ -99,20 +101,22 @@ class PhantomJSwrapper:
           }}
         }};
         page.open("");
-    '''
+    """
 
-    _TMP_FILE_NAMES = ['script', 'html', 'cookies']
+    _TMP_FILE_NAMES = ["script", "html", "cookies"]
 
     @staticmethod
     def _version():
-        return get_exe_version('phantomjs', version_re=r'([0-9.]+)')
+        return get_exe_version("phantomjs", version_re=r"([0-9.]+)")
 
     def __init__(self, extractor, required_version=None, timeout=10000):
         self._TMP_FILES = {}
 
-        self.exe = check_executable('phantomjs', ['-v'])
+        self.exe = check_executable("phantomjs", ["-v"])
         if not self.exe:
-            raise ExtractorError(f'PhantomJS not found, {self.INSTALL_HINT}', expected=True)
+            raise ExtractorError(
+                f"PhantomJS not found, {self.INSTALL_HINT}", expected=True
+            )
 
         self.extractor = extractor
 
@@ -120,20 +124,24 @@ class PhantomJSwrapper:
             version = self._version()
             if is_outdated_version(version, required_version):
                 self.extractor._downloader.report_warning(
-                    'Your copy of PhantomJS is outdated, update it to version '
-                    f'{required_version} or newer if you encounter any errors.')
+                    "Your copy of PhantomJS is outdated, update it to version "
+                    f"{required_version} or newer if you encounter any errors."
+                )
 
         for name in self._TMP_FILE_NAMES:
             tmp = tempfile.NamedTemporaryFile(delete=False)
             tmp.close()
             self._TMP_FILES[name] = tmp
 
-        self.options = collections.ChainMap({
-            'timeout': timeout,
-        }, {
-            x: self._TMP_FILES[x].name.replace('\\', '\\\\').replace('"', '\\"')
-            for x in self._TMP_FILE_NAMES
-        })
+        self.options = collections.ChainMap(
+            {
+                "timeout": timeout,
+            },
+            {
+                x: self._TMP_FILES[x].name.replace("\\", "\\\\").replace('"', '\\"')
+                for x in self._TMP_FILE_NAMES
+            },
+        )
 
     def __del__(self):
         for name in self._TMP_FILE_NAMES:
@@ -143,24 +151,33 @@ class PhantomJSwrapper:
     def _save_cookies(self, url):
         cookies = cookie_jar_to_list(self.extractor.cookiejar)
         for cookie in cookies:
-            if 'path' not in cookie:
-                cookie['path'] = '/'
-            if 'domain' not in cookie:
-                cookie['domain'] = urllib.parse.urlparse(url).netloc
-        with open(self._TMP_FILES['cookies'].name, 'wb') as f:
+            if "path" not in cookie:
+                cookie["path"] = "/"
+            if "domain" not in cookie:
+                cookie["domain"] = urllib.parse.urlparse(url).netloc
+        with open(self._TMP_FILES["cookies"].name, "wb") as f:
             f.write(json.dumps(cookies).encode())
 
     def _load_cookies(self):
-        with open(self._TMP_FILES['cookies'].name, 'rb') as f:
-            cookies = json.loads(f.read().decode('utf-8'))
+        with open(self._TMP_FILES["cookies"].name, "rb") as f:
+            cookies = json.loads(f.read().decode("utf-8"))
         for cookie in cookies:
-            if cookie['httponly'] is True:
-                cookie['rest'] = {'httpOnly': None}
-            if 'expiry' in cookie:
-                cookie['expire_time'] = cookie['expiry']
+            if cookie["httponly"] is True:
+                cookie["rest"] = {"httpOnly": None}
+            if "expiry" in cookie:
+                cookie["expire_time"] = cookie["expiry"]
             self.extractor._set_cookie(**cookie)
 
-    def get(self, url, html=None, video_id=None, note=None, note2='Executing JS on webpage', headers={}, jscode='saveAndExit();'):
+    def get(
+        self,
+        url,
+        html=None,
+        video_id=None,
+        note=None,
+        note2="Executing JS on webpage",
+        headers={},
+        jscode="saveAndExit();",
+    ):
         """
         Downloads webpage (if needed) and executes JS
 
@@ -196,48 +213,66 @@ class PhantomJSwrapper:
             });
             check();
         """
-        if 'saveAndExit();' not in jscode:
-            raise ExtractorError('`saveAndExit();` not found in `jscode`')
+        if "saveAndExit();" not in jscode:
+            raise ExtractorError("`saveAndExit();` not found in `jscode`")
         if not html:
-            html = self.extractor._download_webpage(url, video_id, note=note, headers=headers)
-        with open(self._TMP_FILES['html'].name, 'wb') as f:
+            html = self.extractor._download_webpage(
+                url, video_id, note=note, headers=headers
+            )
+        with open(self._TMP_FILES["html"].name, "wb") as f:
             f.write(html.encode())
 
         self._save_cookies(url)
 
-        user_agent = headers.get('User-Agent') or self.extractor.get_param('http_headers')['User-Agent']
-        jscode = self._TEMPLATE.format_map(self.options.new_child({
-            'url': url,
-            'ua': user_agent.replace('"', '\\"'),
-            'jscode': jscode,
-        }))
+        user_agent = (
+            headers.get("User-Agent")
+            or self.extractor.get_param("http_headers")["User-Agent"]
+        )
+        jscode = self._TEMPLATE.format_map(
+            self.options.new_child(
+                {
+                    "url": url,
+                    "ua": user_agent.replace('"', '\\"'),
+                    "jscode": jscode,
+                }
+            )
+        )
 
         stdout = self.execute(jscode, video_id, note=note2)
 
-        with open(self._TMP_FILES['html'].name, 'rb') as f:
-            html = f.read().decode('utf-8')
+        with open(self._TMP_FILES["html"].name, "rb") as f:
+            html = f.read().decode("utf-8")
         self._load_cookies()
 
         return html, stdout
 
-    def execute(self, jscode, video_id=None, *, note='Executing JS'):
+    def execute(self, jscode, video_id=None, *, note="Executing JS"):
         """Execute JS and return stdout"""
-        if 'phantom.exit();' not in jscode:
-            jscode += ';\nphantom.exit();'
+        if "phantom.exit();" not in jscode:
+            jscode += ";\nphantom.exit();"
         jscode = self._BASE_JS + jscode
 
-        with open(self._TMP_FILES['script'].name, 'w', encoding='utf-8') as f:
+        with open(self._TMP_FILES["script"].name, "w", encoding="utf-8") as f:
             f.write(jscode)
         self.extractor.to_screen(f'{format_field(video_id, None, "%s: ")}{note}')
 
-        cmd = [self.exe, '--ssl-protocol=any', self._TMP_FILES['script'].name]
-        self.extractor.write_debug(f'PhantomJS command line: {shell_quote(cmd)}')
+        cmd = [self.exe, "--ssl-protocol=any", self._TMP_FILES["script"].name]
+        self.extractor.write_debug(f"PhantomJS command line: {shell_quote(cmd)}")
         try:
-            stdout, stderr, returncode = Popen.run(cmd, timeout=self.options['timeout'] / 1000,
-                                                   text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            stdout, stderr, returncode = Popen.run(
+                cmd,
+                timeout=self.options["timeout"] / 1000,
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
         except Exception as e:
-            raise ExtractorError(f'{note} failed: Unable to run PhantomJS binary', cause=e)
+            raise ExtractorError(
+                f"{note} failed: Unable to run PhantomJS binary", cause=e
+            )
         if returncode:
-            raise ExtractorError(f'{note} failed with returncode {returncode}:\n{stderr.strip()}')
+            raise ExtractorError(
+                f"{note} failed with returncode {returncode}:\n{stderr.strip()}"
+            )
 
         return stdout

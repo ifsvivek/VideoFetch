@@ -12,7 +12,7 @@ import struct
 
 from .compat import compat_ord
 
-__author__ = 'Timo Schmid <coding@timoschmid.de>'
+__author__ = "Timo Schmid <coding@timoschmid.de>"
 
 SOCKS4_VERSION = 4
 SOCKS4_REPLY_VERSION = 0x00
@@ -20,7 +20,7 @@ SOCKS4_REPLY_VERSION = 0x00
 # if the client cannot resolve the destination host's domain name to find its
 # IP address, it should set the first three bytes of DSTIP to NULL and the last
 # byte to a non-zero value.
-SOCKS4_DEFAULT_DSTIP = struct.pack('!BBBB', 0, 0, 0, 0xFF)
+SOCKS4_DEFAULT_DSTIP = struct.pack("!BBBB", 0, 0, 0, 0xFF)
 
 SOCKS5_VERSION = 5
 SOCKS5_USER_AUTH_VERSION = 0x01
@@ -54,14 +54,16 @@ class ProxyError(OSError):
 
     def __init__(self, code=None, msg=None):
         if code is not None and msg is None:
-            msg = self.CODES.get(code) or 'unknown error'
+            msg = self.CODES.get(code) or "unknown error"
         super().__init__(code, msg)
 
 
 class InvalidVersionError(ProxyError):
     def __init__(self, expected_version, got_version):
-        msg = (f'Invalid response version from server. Expected {expected_version:02x} got '
-               f'{got_version:02x}')
+        msg = (
+            f"Invalid response version from server. Expected {expected_version:02x} got "
+            f"{got_version:02x}"
+        )
         super().__init__(0, msg)
 
 
@@ -69,9 +71,9 @@ class Socks4Error(ProxyError):
     ERR_SUCCESS = 90
 
     CODES = {
-        91: 'request rejected or failed',
-        92: 'request rejected because SOCKS server cannot connect to identd on the client',
-        93: 'request rejected because the client program and identd report different user-ids',
+        91: "request rejected or failed",
+        92: "request rejected because SOCKS server cannot connect to identd on the client",
+        93: "request rejected because the client program and identd report different user-ids",
     }
 
 
@@ -79,16 +81,16 @@ class Socks5Error(ProxyError):
     ERR_GENERAL_FAILURE = 0x01
 
     CODES = {
-        0x01: 'general SOCKS server failure',
-        0x02: 'connection not allowed by ruleset',
-        0x03: 'Network unreachable',
-        0x04: 'Host unreachable',
-        0x05: 'Connection refused',
-        0x06: 'TTL expired',
-        0x07: 'Command not supported',
-        0x08: 'Address type not supported',
-        0xFE: 'unknown username or invalid password',
-        0xFF: 'all offered authentication methods were rejected',
+        0x01: "general SOCKS server failure",
+        0x02: "connection not allowed by ruleset",
+        0x03: "Network unreachable",
+        0x04: "Host unreachable",
+        0x05: "Connection refused",
+        0x06: "TTL expired",
+        0x07: "Command not supported",
+        0x08: "Address type not supported",
+        0xFE: "unknown username or invalid password",
+        0xFF: "all offered authentication methods were rejected",
     }
 
 
@@ -98,8 +100,9 @@ class ProxyType:
     SOCKS5 = 2
 
 
-Proxy = collections.namedtuple('Proxy', (
-    'type', 'host', 'port', 'username', 'password', 'remote_dns'))
+Proxy = collections.namedtuple(
+    "Proxy", ("type", "host", "port", "username", "password", "remote_dns")
+)
 
 
 class sockssocket(socket.socket):
@@ -113,21 +116,21 @@ class sockssocket(socket.socket):
         self._proxy = Proxy(proxytype, addr, port, username, password, rdns)
 
     def recvall(self, cnt):
-        data = b''
+        data = b""
         while len(data) < cnt:
             cur = self.recv(cnt - len(data))
             if not cur:
-                raise EOFError(f'{cnt - len(data)} bytes missing')
+                raise EOFError(f"{cnt - len(data)} bytes missing")
             data += cur
         return data
 
     def _recv_bytes(self, cnt):
         data = self.recvall(cnt)
-        return struct.unpack(f'!{cnt}B', data)
+        return struct.unpack(f"!{cnt}B", data)
 
     @staticmethod
     def _len_and_data(data):
-        return struct.pack('!B', len(data)) + data
+        return struct.pack("!B", len(data)) + data
 
     def _check_response_version(self, expected_version, got_version):
         if got_version != expected_version:
@@ -151,19 +154,24 @@ class sockssocket(socket.socket):
     def _setup_socks4(self, address, is_4a=False):
         destaddr, port = address
 
-        _, ipaddr = self._resolve_address(destaddr, SOCKS4_DEFAULT_DSTIP, use_remote_dns=is_4a, family=socket.AF_INET)
+        _, ipaddr = self._resolve_address(
+            destaddr, SOCKS4_DEFAULT_DSTIP, use_remote_dns=is_4a, family=socket.AF_INET
+        )
 
-        packet = struct.pack('!BBH', SOCKS4_VERSION, Socks4Command.CMD_CONNECT, port) + ipaddr
+        packet = (
+            struct.pack("!BBH", SOCKS4_VERSION, Socks4Command.CMD_CONNECT, port)
+            + ipaddr
+        )
 
-        username = (self._proxy.username or '').encode()
-        packet += username + b'\x00'
+        username = (self._proxy.username or "").encode()
+        packet += username + b"\x00"
 
         if is_4a and self._proxy.remote_dns and ipaddr == SOCKS4_DEFAULT_DSTIP:
-            packet += destaddr.encode() + b'\x00'
+            packet += destaddr.encode() + b"\x00"
 
         self.sendall(packet)
 
-        version, resp_code, dstport, dsthost = struct.unpack('!BBHI', self.recvall(8))
+        version, resp_code, dstport, dsthost = struct.unpack("!BBHI", self.recvall(8))
 
         self._check_response_version(SOCKS4_REPLY_VERSION, version)
 
@@ -177,14 +185,14 @@ class sockssocket(socket.socket):
         self._setup_socks4(address, is_4a=True)
 
     def _socks5_auth(self):
-        packet = struct.pack('!B', SOCKS5_VERSION)
+        packet = struct.pack("!B", SOCKS5_VERSION)
 
         auth_methods = [Socks5Auth.AUTH_NONE]
         if self._proxy.username and self._proxy.password:
             auth_methods.append(Socks5Auth.AUTH_USER_PASS)
 
-        packet += struct.pack('!B', len(auth_methods))
-        packet += struct.pack(f'!{len(auth_methods)}B', *auth_methods)
+        packet += struct.pack("!B", len(auth_methods))
+        packet += struct.pack(f"!{len(auth_methods)}B", *auth_methods)
 
         self.sendall(packet)
 
@@ -193,14 +201,16 @@ class sockssocket(socket.socket):
         self._check_response_version(SOCKS5_VERSION, version)
 
         if method == Socks5Auth.AUTH_NO_ACCEPTABLE or (
-                method == Socks5Auth.AUTH_USER_PASS and (not self._proxy.username or not self._proxy.password)):
+            method == Socks5Auth.AUTH_USER_PASS
+            and (not self._proxy.username or not self._proxy.password)
+        ):
             self.close()
             raise Socks5Error(Socks5Auth.AUTH_NO_ACCEPTABLE)
 
         if method == Socks5Auth.AUTH_USER_PASS:
             username = self._proxy.username.encode()
             password = self._proxy.password.encode()
-            packet = struct.pack('!B', SOCKS5_USER_AUTH_VERSION)
+            packet = struct.pack("!B", SOCKS5_USER_AUTH_VERSION)
             packet += self._len_and_data(username) + self._len_and_data(password)
             self.sendall(packet)
 
@@ -220,16 +230,18 @@ class sockssocket(socket.socket):
         self._socks5_auth()
 
         reserved = 0
-        packet = struct.pack('!BBB', SOCKS5_VERSION, Socks5Command.CMD_CONNECT, reserved)
+        packet = struct.pack(
+            "!BBB", SOCKS5_VERSION, Socks5Command.CMD_CONNECT, reserved
+        )
         if ipaddr is None:
             destaddr = destaddr.encode()
-            packet += struct.pack('!B', Socks5AddressType.ATYP_DOMAINNAME)
+            packet += struct.pack("!B", Socks5AddressType.ATYP_DOMAINNAME)
             packet += self._len_and_data(destaddr)
         elif family == socket.AF_INET:
-            packet += struct.pack('!B', Socks5AddressType.ATYP_IPV4) + ipaddr
+            packet += struct.pack("!B", Socks5AddressType.ATYP_IPV4) + ipaddr
         elif family == socket.AF_INET6:
-            packet += struct.pack('!B', Socks5AddressType.ATYP_IPV6) + ipaddr
-        packet += struct.pack('!H', port)
+            packet += struct.pack("!B", Socks5AddressType.ATYP_IPV6) + ipaddr
+        packet += struct.pack("!H", port)
 
         self.sendall(packet)
 
@@ -248,7 +260,7 @@ class sockssocket(socket.socket):
             destaddr = self.recvall(alen)
         elif atype == Socks5AddressType.ATYP_IPV6:
             destaddr = self.recvall(16)
-        destport = struct.unpack('!H', self.recvall(2))[0]
+        destport = struct.unpack("!H", self.recvall(2))[0]
 
         return (destaddr, destport)
 

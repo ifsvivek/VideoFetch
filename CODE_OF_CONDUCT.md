@@ -228,9 +228,9 @@ This Code of Conduct is a living document that may be updated to:
 -   **🌱 Reflect Growth**: Adapt to our community's evolving needs
 -   **📋 Address Gaps**: Fill in any gaps or ambiguities discovered over time
 
-**Last Updated**: January 2025
+**Last Updated**: November 2025
 
-**Version**: 2.0
+**Version**: 2.1
 
 ---
 

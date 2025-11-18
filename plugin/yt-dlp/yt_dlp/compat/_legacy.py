@@ -1,4 +1,4 @@
-""" Do not use! """
+"""Do not use!"""
 
 import base64
 import collections
@@ -37,7 +37,7 @@ from ..dependencies import websockets as compat_websockets  # noqa: F401
 from ..dependencies.Cryptodome import AES as compat_pycrypto_AES  # noqa: F401
 from ..networking.exceptions import HTTPError as compat_HTTPError
 
-passthrough_module(__name__, '...utils', ('WINDOWS_VT_MODE', 'windows_enable_vt_mode'))
+passthrough_module(__name__, "...utils", ("windows_enable_vt_mode",))
 
 
 # compat_ctypes_WINFUNCTYPE = ctypes.WINFUNCTYPE
@@ -58,9 +58,13 @@ compat_collections_abc = collections.abc
 compat_cookiejar = compat_http_cookiejar = http.cookiejar
 compat_cookiejar_Cookie = compat_http_cookiejar_Cookie = http.cookiejar.Cookie
 compat_cookies = compat_http_cookies = http.cookies
-compat_cookies_SimpleCookie = compat_http_cookies_SimpleCookie = http.cookies.SimpleCookie
+compat_cookies_SimpleCookie = compat_http_cookies_SimpleCookie = (
+    http.cookies.SimpleCookie
+)
 compat_etree_Element = compat_xml_etree_ElementTree_Element = etree.Element
-compat_etree_register_namespace = compat_xml_etree_register_namespace = etree.register_namespace
+compat_etree_register_namespace = compat_xml_etree_register_namespace = (
+    etree.register_namespace
+)
 compat_filter = filter
 compat_get_terminal_size = shutil.get_terminal_size
 compat_getenv = os.getenv
@@ -72,7 +76,7 @@ compat_HTMLParser = compat_html_parser_HTMLParser = html.parser.HTMLParser
 compat_http_client = http.client
 compat_http_server = http.server
 compat_input = input
-compat_integer_types = (int, )
+compat_integer_types = (int,)
 compat_itertools_count = itertools.count
 compat_kwargs = lambda kwargs: kwargs
 compat_map = map
