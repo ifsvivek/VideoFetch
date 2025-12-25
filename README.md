@@ -94,8 +94,9 @@ _Transform your video downloading experience with support for YouTube, TikTok, V
 2. **Install in Free Download Manager**
 
     - Open Free Download Manager
-    - Navigate to **Tools** → **Plugins**
-    - Click **"Add Plugin"**
+    - Navigate to **Menu and Settings** (☰) → **Add-ones**
+    - Click icon ⚙️
+    - Then Click **"Install add-on from file..."**
     - Select the downloaded `VideoFetch.fda` file
     - Restart Free Download Manager
 
