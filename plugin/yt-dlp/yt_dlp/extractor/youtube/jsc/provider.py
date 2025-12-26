@@ -17,25 +17,25 @@ from yt_dlp.extractor.youtube.pot._provider import (
 from yt_dlp.utils import ExtractorError
 
 __all__ = [
-    "JsChallengeProvider",
-    "JsChallengeProviderError",
-    "JsChallengeProviderRejectedRequest",
-    "JsChallengeProviderResponse",
-    "JsChallengeRequest",
-    "JsChallengeResponse",
-    "JsChallengeType",
-    "NChallengeInput",
-    "NChallengeOutput",
-    "SigChallengeInput",
-    "SigChallengeOutput",
-    "register_preference",
-    "register_provider",
+    'JsChallengeProvider',
+    'JsChallengeProviderError',
+    'JsChallengeProviderRejectedRequest',
+    'JsChallengeProviderResponse',
+    'JsChallengeRequest',
+    'JsChallengeResponse',
+    'JsChallengeType',
+    'NChallengeInput',
+    'NChallengeOutput',
+    'SigChallengeInput',
+    'SigChallengeOutput',
+    'register_preference',
+    'register_provider',
 ]
 
 
 class JsChallengeType(enum.Enum):
-    N = "n"
-    SIG = "sig"
+    N = 'n'
+    SIG = 'sig'
 
 
 @dataclasses.dataclass(frozen=True)
@@ -92,16 +92,14 @@ class JsChallengeProviderError(IEContentProviderError):
     """An error occurred while solving the challenge"""
 
 
-class JsChallengeProvider(IEContentProvider, abc.ABC, suffix="JCP"):
+class JsChallengeProvider(IEContentProvider, abc.ABC, suffix='JCP'):
 
     # Set to None to disable the check
     _SUPPORTED_TYPES: tuple[JsChallengeType] | None = ()
 
     def __validate_request(self, request: JsChallengeRequest):
         if not self.is_available():
-            raise JsChallengeProviderRejectedRequest(
-                f"{self.PROVIDER_NAME} is not available"
-            )
+            raise JsChallengeProviderRejectedRequest(f'{self.PROVIDER_NAME} is not available')
 
         # Validate request using built-in settings
         if (
@@ -109,12 +107,9 @@ class JsChallengeProvider(IEContentProvider, abc.ABC, suffix="JCP"):
             and request.type not in self._SUPPORTED_TYPES
         ):
             raise JsChallengeProviderRejectedRequest(
-                f'JS Challenge type "{request.type}" is not supported by {self.PROVIDER_NAME}'
-            )
+                f'JS Challenge type "{request.type}" is not supported by {self.PROVIDER_NAME}')
 
-    def bulk_solve(
-        self, requests: list[JsChallengeRequest]
-    ) -> typing.Generator[JsChallengeProviderResponse, None, None]:
+    def bulk_solve(self, requests: list[JsChallengeRequest]) -> typing.Generator[JsChallengeProviderResponse, None, None]:
         """Solve multiple JS challenges and return the results"""
         validated_requests = []
         for request in requests:
@@ -127,13 +122,9 @@ class JsChallengeProvider(IEContentProvider, abc.ABC, suffix="JCP"):
         yield from self._real_bulk_solve(validated_requests)
 
     @abc.abstractmethod
-    def _real_bulk_solve(
-        self, requests: list[JsChallengeRequest]
-    ) -> typing.Generator[JsChallengeProviderResponse, None, None]:
+    def _real_bulk_solve(self, requests: list[JsChallengeRequest]) -> typing.Generator[JsChallengeProviderResponse, None, None]:
         """Subclasses can override this method to handle bulk solving"""
-        raise NotImplementedError(
-            f"{self.PROVIDER_NAME} does not implement bulk solving"
-        )
+        raise NotImplementedError(f'{self.PROVIDER_NAME} does not implement bulk solving')
 
     def _get_player(self, video_id, player_url):
         try:
@@ -144,8 +135,7 @@ class JsChallengeProvider(IEContentProvider, abc.ABC, suffix="JCP"):
             )
         except ExtractorError as e:
             raise JsChallengeProviderError(
-                f"Failed to load player for JS challenge: {e}"
-            ) from e
+                f'Failed to load player for JS challenge: {e}') from e
 
 
 def register_provider(provider: type[JsChallengeProvider]):
@@ -157,9 +147,7 @@ def register_provider(provider: type[JsChallengeProvider]):
     )
 
 
-def register_preference(
-    *providers: type[JsChallengeProvider],
-) -> typing.Callable[[Preference], Preference]:
+def register_preference(*providers: type[JsChallengeProvider]) -> typing.Callable[[Preference], Preference]:
     """Register a preference for a JsChallengeProvider class."""
     return register_preference_generic(
         JsChallengeProvider,
@@ -170,4 +158,4 @@ def register_preference(
 
 if typing.TYPE_CHECKING:
     Preference = typing.Callable[[JsChallengeProvider, list[JsChallengeRequest]], int]
-    __all__.append("Preference")
+    __all__.append('Preference')

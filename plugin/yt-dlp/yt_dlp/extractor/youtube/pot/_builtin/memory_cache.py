@@ -14,32 +14,30 @@ from yt_dlp.extractor.youtube.pot.cache import (
 
 
 def initialize_global_cache(max_size: int):
-    if _pot_memory_cache.value.get("cache") is None:
-        _pot_memory_cache.value["cache"] = {}
-        _pot_memory_cache.value["lock"] = Lock()
-        _pot_memory_cache.value["max_size"] = max_size
+    if _pot_memory_cache.value.get('cache') is None:
+        _pot_memory_cache.value['cache'] = {}
+        _pot_memory_cache.value['lock'] = Lock()
+        _pot_memory_cache.value['max_size'] = max_size
 
-    if _pot_memory_cache.value["max_size"] != max_size:
-        raise ValueError("Cannot change max_size of initialized global memory cache")
+    if _pot_memory_cache.value['max_size'] != max_size:
+        raise ValueError('Cannot change max_size of initialized global memory cache')
 
     return (
-        _pot_memory_cache.value["cache"],
-        _pot_memory_cache.value["lock"],
-        _pot_memory_cache.value["max_size"],
+        _pot_memory_cache.value['cache'],
+        _pot_memory_cache.value['lock'],
+        _pot_memory_cache.value['max_size'],
     )
 
 
 @register_provider
 class MemoryLRUPCP(PoTokenCacheProvider, BuiltinIEContentProvider):
-    PROVIDER_NAME = "memory"
+    PROVIDER_NAME = 'memory'
     DEFAULT_CACHE_SIZE = 25
 
     def __init__(
         self,
         *args,
-        initialize_cache: typing.Callable[
-            [int], tuple[dict[str, tuple[str, int]], Lock, int]
-        ] = initialize_global_cache,
+        initialize_cache: typing.Callable[[int], tuple[dict[str, tuple[str, int]], Lock, int]] = initialize_global_cache,
         **kwargs,
     ):
         super().__init__(*args, **kwargs)

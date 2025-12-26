@@ -26,7 +26,6 @@ class ImpersonateTarget:
     Note: None is used to indicate to match any.
 
     """
-
     client: str | None = None
     version: str | None = None
     os: str | None = None
@@ -34,43 +33,26 @@ class ImpersonateTarget:
 
     def __post_init__(self):
         if self.version and not self.client:
-            raise ValueError("client is required if version is set")
+            raise ValueError('client is required if version is set')
         if self.os_version and not self.os:
-            raise ValueError("os is required if os_version is set")
+            raise ValueError('os is required if os_version is set')
 
     def __contains__(self, target: ImpersonateTarget):
         if not isinstance(target, ImpersonateTarget):
             return False
         return (
-            (
-                self.client is None
-                or target.client is None
-                or self.client == target.client
-            )
-            and (
-                self.version is None
-                or target.version is None
-                or self.version == target.version
-            )
+            (self.client is None or target.client is None or self.client == target.client)
+            and (self.version is None or target.version is None or self.version == target.version)
             and (self.os is None or target.os is None or self.os == target.os)
-            and (
-                self.os_version is None
-                or target.os_version is None
-                or self.os_version == target.os_version
-            )
+            and (self.os_version is None or target.os_version is None or self.os_version == target.os_version)
         )
 
     def __str__(self):
-        return f"{join_nonempty(self.client, self.version)}:{join_nonempty(self.os, self.os_version)}".rstrip(
-            ":"
-        )
+        return f'{join_nonempty(self.client, self.version)}:{join_nonempty(self.os, self.os_version)}'.rstrip(':')
 
     @classmethod
     def from_str(cls, target: str):
-        mobj = re.fullmatch(
-            r"(?:(?P<client>[^:-]+)(?:-(?P<version>[^:-]+))?)?(?::(?:(?P<os>[^:-]+)(?:-(?P<os_version>[^:-]+))?)?)?",
-            target,
-        )
+        mobj = re.fullmatch(r'(?:(?P<client>[^:-]+)(?:-(?P<version>[^:-]+))?)?(?::(?:(?P<os>[^:-]+)(?:-(?P<os_version>[^:-]+))?)?)?', target)
         if not mobj:
             raise ValueError(f'Invalid impersonate target "{target}"')
         return cls(**mobj.groupdict())
@@ -96,7 +78,6 @@ class ImpersonateRequestHandler(RequestHandler, ABC):
     @param impersonate: the default impersonate target to use for requests.
                         Set to None to disable impersonation.
     """
-
     _SUPPORTED_IMPERSONATE_TARGET_MAP: dict[ImpersonateTarget, Any] = {}
 
     def __init__(self, *, impersonate: ImpersonateTarget = None, **kwargs):
@@ -108,12 +89,12 @@ class ImpersonateRequestHandler(RequestHandler, ABC):
         if target is None or not self.supported_targets:
             return
         if not self.is_supported_target(target):
-            raise UnsupportedRequest(f"Unsupported impersonate target: {target}")
+            raise UnsupportedRequest(f'Unsupported impersonate target: {target}')
 
     def _check_extensions(self, extensions):
         super()._check_extensions(extensions)
-        if "impersonate" in extensions:
-            self._check_impersonate_target(extensions.get("impersonate"))
+        if 'impersonate' in extensions:
+            self._check_impersonate_target(extensions.get('impersonate'))
 
     def _validate(self, request):
         super()._validate(request)
@@ -127,8 +108,7 @@ class ImpersonateRequestHandler(RequestHandler, ABC):
             if target in supported_target:
                 if self.verbose:
                     self._logger.stdout(
-                        f"{self.RH_NAME}: resolved impersonate target {target} to {supported_target}"
-                    )
+                        f'{self.RH_NAME}: resolved impersonate target {target} to {supported_target}')
                 return supported_target
 
     @classproperty
@@ -141,13 +121,9 @@ class ImpersonateRequestHandler(RequestHandler, ABC):
 
     def _get_request_target(self, request):
         """Get the requested target for the request"""
-        return self._resolve_target(
-            request.extensions.get("impersonate") or self.impersonate
-        )
+        return self._resolve_target(request.extensions.get('impersonate') or self.impersonate)
 
-    def _prepare_impersonate_headers(
-        self, request: Request, headers: HTTPHeaderDict
-    ) -> None:  # noqa: B027
+    def _prepare_impersonate_headers(self, request: Request, headers: HTTPHeaderDict) -> None:  # noqa: B027
         """Additional operations to prepare headers before building. To be extended by subclasses.
         @param request: Request object
         @param headers: Merged headers to prepare
@@ -167,13 +143,13 @@ class ImpersonateRequestHandler(RequestHandler, ABC):
                     headers.pop(k)
 
         self._prepare_impersonate_headers(request, headers)
-        if request.extensions.get("keep_header_casing"):
+        if request.extensions.get('keep_header_casing'):
             return headers.sensitive()
         return dict(headers)
 
 
 @register_preference(ImpersonateRequestHandler)
 def impersonate_preference(rh, request):
-    if request.extensions.get("impersonate") or rh.impersonate:
+    if request.extensions.get('impersonate') or rh.impersonate:
         return 1000
     return 0

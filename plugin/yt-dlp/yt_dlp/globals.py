@@ -12,7 +12,7 @@ class Indirect:
         self.value = initial
 
     def __repr__(self, /):
-        return f"{type(self).__name__}({self.value!r})"
+        return f'{type(self).__name__}({self.value!r})'
 
 
 postprocessors = Indirect({})
@@ -21,7 +21,7 @@ extractors = Indirect({})
 # Plugins
 all_plugins_loaded = Indirect(False)
 plugin_specs = Indirect({})
-plugin_dirs = Indirect(["default"])
+plugin_dirs = Indirect(['default'])
 
 plugin_ies = Indirect({})
 plugin_pps = Indirect({})
@@ -30,7 +30,7 @@ plugin_ies_overrides = Indirect(defaultdict(list))
 # Misc
 IN_CLI = Indirect(False)
 LAZY_EXTRACTORS = Indirect(None)  # `False`=force, `None`=disabled, `True`=enabled
-WINDOWS_VT_MODE = Indirect(False if os.name == "nt" else None)
+WINDOWS_VT_MODE = Indirect(False if os.name == 'nt' else None)
 
 # JS Runtimes
 # If adding support for another runtime, register it here to allow `js_runtimes` option to accept it.

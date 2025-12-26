@@ -3,28 +3,23 @@ from .common import InfoExtractor
 
 class RestudyIE(InfoExtractor):
     _WORKING = False
-    _VALID_URL = (
-        r"https?://(?:(?:www|portal)\.)?restudy\.dk/video/[^/]+/id/(?P<id>[0-9]+)"
-    )
-    _TESTS = [
-        {
-            "url": "https://www.restudy.dk/video/play/id/1637",
-            "info_dict": {
-                "id": "1637",
-                "ext": "flv",
-                "title": "Leiden-frosteffekt",
-                "description": "Denne video er et eksperiment med flydende kvælstof.",
-            },
-            "params": {
-                # rtmp download
-                "skip_download": True,
-            },
+    _VALID_URL = r'https?://(?:(?:www|portal)\.)?restudy\.dk/video/[^/]+/id/(?P<id>[0-9]+)'
+    _TESTS = [{
+        'url': 'https://www.restudy.dk/video/play/id/1637',
+        'info_dict': {
+            'id': '1637',
+            'ext': 'flv',
+            'title': 'Leiden-frosteffekt',
+            'description': 'Denne video er et eksperiment med flydende kvælstof.',
         },
-        {
-            "url": "https://portal.restudy.dk/video/leiden-frosteffekt/id/1637",
-            "only_matching": True,
+        'params': {
+            # rtmp download
+            'skip_download': True,
         },
-    ]
+    }, {
+        'url': 'https://portal.restudy.dk/video/leiden-frosteffekt/id/1637',
+        'only_matching': True,
+    }]
 
     def _real_extract(self, url):
         video_id = self._match_id(url)
@@ -35,13 +30,12 @@ class RestudyIE(InfoExtractor):
         description = self._og_search_description(webpage).strip()
 
         formats = self._extract_smil_formats(
-            f"https://cdn.portal.restudy.dk/dynamic/themes/front/awsmedia/SmilDirectory/video_{video_id}.xml",
-            video_id,
-        )
+            f'https://cdn.portal.restudy.dk/dynamic/themes/front/awsmedia/SmilDirectory/video_{video_id}.xml',
+            video_id)
 
         return {
-            "id": video_id,
-            "title": title,
-            "description": description,
-            "formats": formats,
+            'id': video_id,
+            'title': title,
+            'description': description,
+            'formats': formats,
         }

@@ -12,7 +12,7 @@ class FC2LiveFD(FileDownloader):
     """
 
     def real_download(self, filename, info_dict):
-        ws = info_dict["ws"]
+        ws = info_dict['ws']
 
         heartbeat_lock = threading.Lock()
         heartbeat_state = [None, 1]
@@ -23,11 +23,9 @@ class FC2LiveFD(FileDownloader):
 
             try:
                 heartbeat_state[1] += 1
-                ws.send(
-                    '{"name":"heartbeat","arguments":{},"id":%d}' % heartbeat_state[1]
-                )
+                ws.send('{"name":"heartbeat","arguments":{},"id":%d}' % heartbeat_state[1])
             except Exception:
-                self.to_screen("[fc2:live] Heartbeat failed")
+                self.to_screen('[fc2:live] Heartbeat failed')
 
             with heartbeat_lock:
                 heartbeat_state[0] = threading.Timer(30, heartbeat)
@@ -37,16 +35,12 @@ class FC2LiveFD(FileDownloader):
         heartbeat()
 
         new_info_dict = info_dict.copy()
-        new_info_dict.update(
-            {
-                "ws": None,
-                "protocol": "live_ffmpeg",
-            }
-        )
+        new_info_dict.update({
+            'ws': None,
+            'protocol': 'live_ffmpeg',
+        })
         try:
-            return FFmpegFD(self.ydl, self.params or {}).download(
-                filename, new_info_dict
-            )
+            return FFmpegFD(self.ydl, self.params or {}).download(filename, new_info_dict)
         finally:
             # stop heartbeating
             heartbeat_state[1] = -1

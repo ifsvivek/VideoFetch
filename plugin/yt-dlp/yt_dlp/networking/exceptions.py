@@ -24,18 +24,13 @@ class RequestError(YoutubeDLError):
 
 class UnsupportedRequest(RequestError):
     """raised when a handler cannot handle a request"""
-
     pass
 
 
 class NoSupportingHandlers(RequestError):
     """raised when no handlers can support a request for various reasons"""
 
-    def __init__(
-        self,
-        unsupported_errors: list[UnsupportedRequest],
-        unexpected_errors: list[Exception],
-    ):
+    def __init__(self, unsupported_errors: list[UnsupportedRequest], unexpected_errors: list[Exception]):
         self.unsupported_errors = unsupported_errors or []
         self.unexpected_errors = unexpected_errors or []
 
@@ -44,22 +39,13 @@ class NoSupportingHandlers(RequestError):
         for err in unsupported_errors:
             err_handler_map.setdefault(err.msg, []).append(err.handler.RH_NAME)
 
-        reason_str = ", ".join(
-            [
-                f'{msg} ({", ".join(handlers)})'
-                for msg, handlers in err_handler_map.items()
-            ]
-        )
+        reason_str = ', '.join([f'{msg} ({", ".join(handlers)})' for msg, handlers in err_handler_map.items()])
         if unexpected_errors:
-            reason_str = " + ".join(
-                filter(
-                    None, [reason_str, f"{len(unexpected_errors)} unexpected error(s)"]
-                )
-            )
+            reason_str = ' + '.join(filter(None, [reason_str, f'{len(unexpected_errors)} unexpected error(s)']))
 
-        err_str = "Unable to handle request"
+        err_str = 'Unable to handle request'
         if reason_str:
-            err_str += f": {reason_str}"
+            err_str += f': {reason_str}'
 
         super().__init__(msg=err_str)
 
@@ -74,9 +60,9 @@ class HTTPError(RequestError):
         self.status = response.status
         self.reason = response.reason
         self.redirect_loop = redirect_loop
-        msg = f"HTTP Error {response.status}: {response.reason}"
+        msg = f'HTTP Error {response.status}: {response.reason}'
         if redirect_loop:
-            msg += " (redirect loop detected)"
+            msg += ' (redirect loop detected)'
 
         super().__init__(msg=msg)
 
@@ -84,21 +70,21 @@ class HTTPError(RequestError):
         self.response.close()
 
     def __repr__(self):
-        return f"<HTTPError {self.status}: {self.reason}>"
+        return f'<HTTPError {self.status}: {self.reason}>'
 
 
 class IncompleteRead(TransportError):
     def __init__(self, partial: int, expected: int | None = None, **kwargs):
         self.partial = partial
         self.expected = expected
-        msg = f"{partial} bytes read"
+        msg = f'{partial} bytes read'
         if expected is not None:
-            msg += f", {expected} more expected"
+            msg += f', {expected} more expected'
 
         super().__init__(msg=msg, **kwargs)
 
     def __repr__(self):
-        return f"<IncompleteRead: {self.msg}>"
+        return f'<IncompleteRead: {self.msg}>'
 
 
 class SSLError(TransportError):
@@ -107,7 +93,6 @@ class SSLError(TransportError):
 
 class CertificateVerifyError(SSLError):
     """Raised when certificate validated has failed"""
-
     pass
 
 

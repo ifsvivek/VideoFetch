@@ -23,23 +23,23 @@ from yt_dlp.utils import traverse_obj
 from yt_dlp.utils.networking import HTTPHeaderDict
 
 __all__ = [
-    "ExternalRequestFeature",
-    "PoTokenContext",
-    "PoTokenProvider",
-    "PoTokenProviderError",
-    "PoTokenProviderRejectedRequest",
-    "PoTokenRequest",
-    "PoTokenResponse",
-    "provider_bug_report_message",
-    "register_preference",
-    "register_provider",
+    'ExternalRequestFeature',
+    'PoTokenContext',
+    'PoTokenProvider',
+    'PoTokenProviderError',
+    'PoTokenProviderRejectedRequest',
+    'PoTokenRequest',
+    'PoTokenResponse',
+    'provider_bug_report_message',
+    'register_preference',
+    'register_provider',
 ]
 
 
 class PoTokenContext(enum.Enum):
-    GVS = "gvs"
-    PLAYER = "player"
-    SUBS = "subs"
+    GVS = 'gvs'
+    PLAYER = 'player'
+    SUBS = 'subs'
 
 
 @dataclasses.dataclass
@@ -62,9 +62,7 @@ class PoTokenRequest:
     _gvs_bind_to_video_id: bool = False
 
     # Networking parameters
-    request_cookiejar: YoutubeDLCookieJar = dataclasses.field(
-        default_factory=YoutubeDLCookieJar
-    )
+    request_cookiejar: YoutubeDLCookieJar = dataclasses.field(default_factory=YoutubeDLCookieJar)
     request_proxy: str | None = None
     request_headers: HTTPHeaderDict = dataclasses.field(default_factory=HTTPHeaderDict)
     request_timeout: float | None = None
@@ -108,7 +106,7 @@ class ExternalRequestFeature(enum.Enum):
     DISABLE_TLS_VERIFICATION = enum.auto()
 
 
-class PoTokenProvider(IEContentProvider, abc.ABC, suffix="PTP"):
+class PoTokenProvider(IEContentProvider, abc.ABC, suffix='PTP'):
 
     # Set to None to disable the check
     _SUPPORTED_CONTEXTS: tuple[PoTokenContext] | None = ()
@@ -128,9 +126,7 @@ class PoTokenProvider(IEContentProvider, abc.ABC, suffix="PTP"):
 
     def __validate_request(self, request: PoTokenRequest):
         if not self.is_available():
-            raise PoTokenProviderRejectedRequest(
-                f"{self.PROVIDER_NAME} is not available"
-            )
+            raise PoTokenProviderRejectedRequest(f'{self.PROVIDER_NAME} is not available')
 
         # Validate request using built-in settings
         if (
@@ -138,18 +134,15 @@ class PoTokenProvider(IEContentProvider, abc.ABC, suffix="PTP"):
             and request.context not in self._SUPPORTED_CONTEXTS
         ):
             raise PoTokenProviderRejectedRequest(
-                f'PO Token Context "{request.context}" is not supported by {self.PROVIDER_NAME}'
-            )
+                f'PO Token Context "{request.context}" is not supported by {self.PROVIDER_NAME}')
 
         if self._SUPPORTED_CLIENTS is not None:
             client_name = traverse_obj(
-                request.innertube_context, ("client", "clientName")
-            )
+                request.innertube_context, ('client', 'clientName'))
             if client_name not in self._SUPPORTED_CLIENTS:
                 raise PoTokenProviderRejectedRequest(
                     f'Client "{client_name}" is not supported by {self.PROVIDER_NAME}. '
-                    f'Supported clients: {", ".join(self._SUPPORTED_CLIENTS) or "none"}'
-                )
+                    f'Supported clients: {", ".join(self._SUPPORTED_CLIENTS) or "none"}')
 
         self.__validate_external_request_features(request)
 
@@ -158,12 +151,12 @@ class PoTokenProvider(IEContentProvider, abc.ABC, suffix="PTP"):
         return {
             scheme: feature
             for scheme, feature in {
-                "http": ExternalRequestFeature.PROXY_SCHEME_HTTP,
-                "https": ExternalRequestFeature.PROXY_SCHEME_HTTPS,
-                "socks4": ExternalRequestFeature.PROXY_SCHEME_SOCKS4,
-                "socks4a": ExternalRequestFeature.PROXY_SCHEME_SOCKS4A,
-                "socks5": ExternalRequestFeature.PROXY_SCHEME_SOCKS5,
-                "socks5h": ExternalRequestFeature.PROXY_SCHEME_SOCKS5H,
+                'http': ExternalRequestFeature.PROXY_SCHEME_HTTP,
+                'https': ExternalRequestFeature.PROXY_SCHEME_HTTPS,
+                'socks4': ExternalRequestFeature.PROXY_SCHEME_SOCKS4,
+                'socks4a': ExternalRequestFeature.PROXY_SCHEME_SOCKS4A,
+                'socks5': ExternalRequestFeature.PROXY_SCHEME_SOCKS5,
+                'socks5h': ExternalRequestFeature.PROXY_SCHEME_SOCKS5H,
             }.items()
             if feature in (self._SUPPORTED_EXTERNAL_REQUEST_FEATURES or [])
         }
@@ -178,28 +171,23 @@ class PoTokenProvider(IEContentProvider, abc.ABC, suffix="PTP"):
                 raise PoTokenProviderRejectedRequest(
                     f'External requests by "{self.PROVIDER_NAME}" provider do not '
                     f'support proxy scheme "{scheme}". Supported proxy schemes: '
-                    f'{", ".join(self._supported_proxy_schemes) or "none"}'
-                )
+                    f'{", ".join(self._supported_proxy_schemes) or "none"}')
 
         if (
             request.request_source_address
-            and ExternalRequestFeature.SOURCE_ADDRESS
-            not in self._SUPPORTED_EXTERNAL_REQUEST_FEATURES
+            and ExternalRequestFeature.SOURCE_ADDRESS not in self._SUPPORTED_EXTERNAL_REQUEST_FEATURES
         ):
             raise PoTokenProviderRejectedRequest(
                 f'External requests by "{self.PROVIDER_NAME}" provider '
-                f"do not support setting source address"
-            )
+                f'do not support setting source address')
 
         if (
             not request.request_verify_tls
-            and ExternalRequestFeature.DISABLE_TLS_VERIFICATION
-            not in self._SUPPORTED_EXTERNAL_REQUEST_FEATURES
+            and ExternalRequestFeature.DISABLE_TLS_VERIFICATION not in self._SUPPORTED_EXTERNAL_REQUEST_FEATURES
         ):
             raise PoTokenProviderRejectedRequest(
                 f'External requests by "{self.PROVIDER_NAME}" provider '
-                f"do not support ignoring TLS certificate failures"
-            )
+                f'do not support ignoring TLS certificate failures')
 
     def request_pot(self, request: PoTokenRequest) -> PoTokenResponse:
         self.__validate_request(request)
@@ -212,13 +200,7 @@ class PoTokenProvider(IEContentProvider, abc.ABC, suffix="PTP"):
 
     # Helper functions
 
-    def _request_webpage(
-        self,
-        request: Request,
-        pot_request: PoTokenRequest | None = None,
-        note=None,
-        **kwargs,
-    ) -> Response:
+    def _request_webpage(self, request: Request, pot_request: PoTokenRequest | None = None, note=None, **kwargs) -> Response:
         """Make a request using the internal HTTP Client.
         Use this instead of calling requests, urllib3 or other HTTP client libraries directly!
 
@@ -239,17 +221,13 @@ class PoTokenProvider(IEContentProvider, abc.ABC, suffix="PTP"):
         # however, the YouTube extractor may override some.
         if pot_request is not None:
             req.headers = HTTPHeaderDict(pot_request.request_headers, req.headers)
-            req.proxies = req.proxies or (
-                {"all": pot_request.request_proxy} if pot_request.request_proxy else {}
-            )
+            req.proxies = req.proxies or ({'all': pot_request.request_proxy} if pot_request.request_proxy else {})
 
             if pot_request.request_cookiejar is not None:
-                req.extensions["cookiejar"] = req.extensions.get(
-                    "cookiejar", pot_request.request_cookiejar
-                )
+                req.extensions['cookiejar'] = req.extensions.get('cookiejar', pot_request.request_cookiejar)
 
         if note is not False:
-            self.logger.info(str(note) if note else "Requesting webpage")
+            self.logger.info(str(note) if note else 'Requesting webpage')
         return self.ie._downloader.urlopen(req)
 
 
@@ -262,19 +240,17 @@ def register_provider(provider: type[PoTokenProvider]):
     )
 
 
-def provider_bug_report_message(provider: IEContentProvider, before=";"):
+def provider_bug_report_message(provider: IEContentProvider, before=';'):
     msg = provider.BUG_REPORT_MESSAGE
 
     before = before.rstrip()
-    if not before or before.endswith((".", "!", "?")):
+    if not before or before.endswith(('.', '!', '?')):
         msg = msg[0].title() + msg[1:]
 
-    return f"{before} {msg}" if before else msg
+    return f'{before} {msg}' if before else msg
 
 
-def register_preference(
-    *providers: type[PoTokenProvider],
-) -> typing.Callable[[Preference], Preference]:
+def register_preference(*providers: type[PoTokenProvider]) -> typing.Callable[[Preference], Preference]:
     """Register a preference for a PoTokenProvider"""
     return register_preference_generic(
         PoTokenProvider,
@@ -285,7 +261,7 @@ def register_preference(
 
 if typing.TYPE_CHECKING:
     Preference = typing.Callable[[PoTokenProvider, PoTokenRequest], int]
-    __all__.append("Preference")
+    __all__.append('Preference')
 
     # Barebones innertube context. There may be more fields.
     class ClientInfo(typing.TypedDict, total=False):

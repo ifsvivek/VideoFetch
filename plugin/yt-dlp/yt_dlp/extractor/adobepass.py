@@ -18,1364 +18,1363 @@ from ..utils import (
 )
 
 MSO_INFO = {
-    "DTV": {
-        "name": "DIRECTV",
-        "username_field": "username",
-        "password_field": "password",
-    },
-    "ATT": {
-        "name": "AT&T U-verse",
-        "username_field": "userid",
-        "password_field": "password",
-    },
-    "ATTOTT": {
-        "name": "DIRECTV NOW",
-        "username_field": "email",
-        "password_field": "loginpassword",
-    },
-    "RCN": {
-        "name": "RCN",
-        "username_field": "username",
-        "password_field": "password",
+    'DTV': {
+        'name': 'DIRECTV',
+        'username_field': 'username',
+        'password_field': 'password',
+    },
+    'ATT': {
+        'name': 'AT&T U-verse',
+        'username_field': 'userid',
+        'password_field': 'password',
+    },
+    'ATTOTT': {
+        'name': 'DIRECTV NOW',
+        'username_field': 'email',
+        'password_field': 'loginpassword',
+    },
+    'RCN': {
+        'name': 'RCN',
+        'username_field': 'username',
+        'password_field': 'password',
     },
-    "Rogers": {
-        "name": "Rogers",
-        "username_field": "UserName",
-        "password_field": "UserPassword",
+    'Rogers': {
+        'name': 'Rogers',
+        'username_field': 'UserName',
+        'password_field': 'UserPassword',
     },
-    "Comcast_SSO": {
-        "name": "Comcast XFINITY",
-        "username_field": "user",
-        "password_field": "passwd",
-        "login_hostname": "login.xfinity.com",
+    'Comcast_SSO': {
+        'name': 'Comcast XFINITY',
+        'username_field': 'user',
+        'password_field': 'passwd',
+        'login_hostname': 'login.xfinity.com',
     },
-    "TWC": {
-        "name": "Time Warner Cable | Spectrum",
-        "username_field": "Ecom_User_ID",
-        "password_field": "Ecom_Password",
+    'TWC': {
+        'name': 'Time Warner Cable | Spectrum',
+        'username_field': 'Ecom_User_ID',
+        'password_field': 'Ecom_Password',
     },
-    "Brighthouse": {
-        "name": "Bright House Networks | Spectrum",
-        "username_field": "j_username",
-        "password_field": "j_password",
+    'Brighthouse': {
+        'name': 'Bright House Networks | Spectrum',
+        'username_field': 'j_username',
+        'password_field': 'j_password',
     },
-    "Charter_Direct": {
-        "name": "Charter Spectrum",
-        "username_field": "IDToken1",
-        "password_field": "IDToken2",
+    'Charter_Direct': {
+        'name': 'Charter Spectrum',
+        'username_field': 'IDToken1',
+        'password_field': 'IDToken2',
     },
-    "Spectrum": {
-        "name": "Spectrum",
-        "username_field": "IDToken1",
-        "password_field": "IDToken2",
+    'Spectrum': {
+        'name': 'Spectrum',
+        'username_field': 'IDToken1',
+        'password_field': 'IDToken2',
     },
-    "Philo": {
-        "name": "Philo",
-        "username_field": "ident",
+    'Philo': {
+        'name': 'Philo',
+        'username_field': 'ident',
     },
-    "Verizon": {
-        "name": "Verizon FiOS",
-        "username_field": "IDToken1",
-        "password_field": "IDToken2",
-        "login_hostname": "ssoauth.verizon.com",
+    'Verizon': {
+        'name': 'Verizon FiOS',
+        'username_field': 'IDToken1',
+        'password_field': 'IDToken2',
+        'login_hostname': 'ssoauth.verizon.com',
     },
-    "Fubo": {
-        "name": "Fubo",
-        "username_field": "username",
-        "password_field": "password",
+    'Fubo': {
+        'name': 'Fubo',
+        'username_field': 'username',
+        'password_field': 'password',
     },
-    "Cablevision": {
-        "name": "Optimum/Cablevision",
-        "username_field": "j_username",
-        "password_field": "j_password",
+    'Cablevision': {
+        'name': 'Optimum/Cablevision',
+        'username_field': 'j_username',
+        'password_field': 'j_password',
     },
-    "thr030": {
-        "name": "3 Rivers Communications",
+    'thr030': {
+        'name': '3 Rivers Communications',
     },
-    "com140": {
-        "name": "Access Montana",
+    'com140': {
+        'name': 'Access Montana',
     },
-    "acecommunications": {
-        "name": "AcenTek",
+    'acecommunications': {
+        'name': 'AcenTek',
     },
-    "acm010": {
-        "name": "Acme Communications",
+    'acm010': {
+        'name': 'Acme Communications',
     },
-    "ada020": {
-        "name": "Adams Cable Service",
+    'ada020': {
+        'name': 'Adams Cable Service',
     },
-    "alb020": {
-        "name": "Albany Mutual Telephone",
+    'alb020': {
+        'name': 'Albany Mutual Telephone',
     },
-    "algona": {
-        "name": "Algona Municipal Utilities",
+    'algona': {
+        'name': 'Algona Municipal Utilities',
     },
-    "allwest": {
-        "name": "All West Communications",
+    'allwest': {
+        'name': 'All West Communications',
     },
-    "all025": {
-        "name": "Allen's Communications",
+    'all025': {
+        'name': 'Allen\'s Communications',
     },
-    "spl010": {
-        "name": "Alliance Communications",
+    'spl010': {
+        'name': 'Alliance Communications',
     },
-    "all070": {
-        "name": "ALLO Communications",
+    'all070': {
+        'name': 'ALLO Communications',
     },
-    "alpine": {
-        "name": "Alpine Communications",
+    'alpine': {
+        'name': 'Alpine Communications',
     },
-    "hun015": {
-        "name": "American Broadband",
+    'hun015': {
+        'name': 'American Broadband',
     },
-    "nwc010": {
-        "name": "American Broadband Missouri",
+    'nwc010': {
+        'name': 'American Broadband Missouri',
     },
-    "com130-02": {
-        "name": "American Community Networks",
+    'com130-02': {
+        'name': 'American Community Networks',
     },
-    "com130-01": {
-        "name": "American Warrior Networks",
+    'com130-01': {
+        'name': 'American Warrior Networks',
     },
-    "tom020": {
-        "name": "Amherst Telephone/Tomorrow Valley",
+    'tom020': {
+        'name': 'Amherst Telephone/Tomorrow Valley',
     },
-    "tvc020": {
-        "name": "Andycable",
+    'tvc020': {
+        'name': 'Andycable',
     },
-    "arkwest": {
-        "name": "Arkwest Communications",
+    'arkwest': {
+        'name': 'Arkwest Communications',
     },
-    "art030": {
-        "name": "Arthur Mutual Telephone Company",
+    'art030': {
+        'name': 'Arthur Mutual Telephone Company',
     },
-    "arvig": {
-        "name": "Arvig",
+    'arvig': {
+        'name': 'Arvig',
     },
-    "nttcash010": {
-        "name": "Ashland Home Net",
+    'nttcash010': {
+        'name': 'Ashland Home Net',
     },
-    "astound": {
-        "name": "Astound (now Wave)",
+    'astound': {
+        'name': 'Astound (now Wave)',
     },
-    "dix030": {
-        "name": "ATC Broadband",
+    'dix030': {
+        'name': 'ATC Broadband',
     },
-    "ara010": {
-        "name": "ATC Communications",
+    'ara010': {
+        'name': 'ATC Communications',
     },
-    "she030-02": {
-        "name": "Ayersville Communications",
+    'she030-02': {
+        'name': 'Ayersville Communications',
     },
-    "baldwin": {
-        "name": "Baldwin Lightstream",
+    'baldwin': {
+        'name': 'Baldwin Lightstream',
     },
-    "bal040": {
-        "name": "Ballard TV",
+    'bal040': {
+        'name': 'Ballard TV',
     },
-    "cit025": {
-        "name": "Bardstown Cable TV",
+    'cit025': {
+        'name': 'Bardstown Cable TV',
     },
-    "bay030": {
-        "name": "Bay Country Communications",
+    'bay030': {
+        'name': 'Bay Country Communications',
     },
-    "tel095": {
-        "name": "Beaver Creek Cooperative Telephone",
+    'tel095': {
+        'name': 'Beaver Creek Cooperative Telephone',
     },
-    "bea020": {
-        "name": "Beaver Valley Cable",
+    'bea020': {
+        'name': 'Beaver Valley Cable',
     },
-    "bee010": {
-        "name": "Bee Line Cable",
+    'bee010': {
+        'name': 'Bee Line Cable',
     },
-    "wir030": {
-        "name": "Beehive Broadband",
+    'wir030': {
+        'name': 'Beehive Broadband',
     },
-    "bra020": {
-        "name": "BELD",
+    'bra020': {
+        'name': 'BELD',
     },
-    "bel020": {
-        "name": "Bellevue Municipal Cable",
+    'bel020': {
+        'name': 'Bellevue Municipal Cable',
     },
-    "vol040-01": {
-        "name": "Ben Lomand Connect / BLTV",
+    'vol040-01': {
+        'name': 'Ben Lomand Connect / BLTV',
     },
-    "bev010": {
-        "name": "BEVCOMM",
+    'bev010': {
+        'name': 'BEVCOMM',
     },
-    "big020": {
-        "name": "Big Sandy Broadband",
+    'big020': {
+        'name': 'Big Sandy Broadband',
     },
-    "ble020": {
-        "name": "Bledsoe Telephone Cooperative",
+    'ble020': {
+        'name': 'Bledsoe Telephone Cooperative',
     },
-    "bvt010": {
-        "name": "Blue Valley Tele-Communications",
+    'bvt010': {
+        'name': 'Blue Valley Tele-Communications',
     },
-    "bra050": {
-        "name": "Brandenburg Telephone Co.",
+    'bra050': {
+        'name': 'Brandenburg Telephone Co.',
     },
-    "bte010": {
-        "name": "Bristol Tennessee Essential Services",
+    'bte010': {
+        'name': 'Bristol Tennessee Essential Services',
     },
-    "annearundel": {
-        "name": "Broadstripe",
+    'annearundel': {
+        'name': 'Broadstripe',
     },
-    "btc010": {
-        "name": "BTC Communications",
+    'btc010': {
+        'name': 'BTC Communications',
     },
-    "btc040": {
-        "name": "BTC Vision - Nahunta",
+    'btc040': {
+        'name': 'BTC Vision - Nahunta',
     },
-    "bul010": {
-        "name": "Bulloch Telephone Cooperative",
+    'bul010': {
+        'name': 'Bulloch Telephone Cooperative',
     },
-    "but010": {
-        "name": "Butler-Bremer Communications",
+    'but010': {
+        'name': 'Butler-Bremer Communications',
     },
-    "tel160-csp": {
-        "name": "C Spire SNAP",
+    'tel160-csp': {
+        'name': 'C Spire SNAP',
     },
-    "csicable": {
-        "name": "Cable Services Inc.",
+    'csicable': {
+        'name': 'Cable Services Inc.',
     },
-    "cableamerica": {
-        "name": "CableAmerica",
+    'cableamerica': {
+        'name': 'CableAmerica',
     },
-    "cab038": {
-        "name": "CableSouth Media 3",
+    'cab038': {
+        'name': 'CableSouth Media 3',
     },
-    "weh010-camtel": {
-        "name": "Cam-Tel Company",
+    'weh010-camtel': {
+        'name': 'Cam-Tel Company',
     },
-    "car030": {
-        "name": "Cameron Communications",
+    'car030': {
+        'name': 'Cameron Communications',
     },
-    "canbytel": {
-        "name": "Canby Telcom",
+    'canbytel': {
+        'name': 'Canby Telcom',
     },
-    "crt020": {
-        "name": "CapRock Tv",
+    'crt020': {
+        'name': 'CapRock Tv',
     },
-    "car050": {
-        "name": "Carnegie Cable",
+    'car050': {
+        'name': 'Carnegie Cable',
     },
-    "cas": {
-        "name": "CAS Cable",
+    'cas': {
+        'name': 'CAS Cable',
     },
-    "casscomm": {
-        "name": "CASSCOMM",
+    'casscomm': {
+        'name': 'CASSCOMM',
     },
-    "mid180-02": {
-        "name": "Catalina Broadband Solutions",
+    'mid180-02': {
+        'name': 'Catalina Broadband Solutions',
     },
-    "cccomm": {
-        "name": "CC Communications",
+    'cccomm': {
+        'name': 'CC Communications',
     },
-    "nttccde010": {
-        "name": "CDE Lightband",
+    'nttccde010': {
+        'name': 'CDE Lightband',
     },
-    "cfunet": {
-        "name": "Cedar Falls Utilities",
+    'cfunet': {
+        'name': 'Cedar Falls Utilities',
     },
-    "dem010-01": {
-        "name": "Celect-Bloomer Telephone Area",
+    'dem010-01': {
+        'name': 'Celect-Bloomer Telephone Area',
     },
-    "dem010-02": {
-        "name": "Celect-Bruce Telephone Area",
+    'dem010-02': {
+        'name': 'Celect-Bruce Telephone Area',
     },
-    "dem010-03": {
-        "name": "Celect-Citizens Connected Area",
+    'dem010-03': {
+        'name': 'Celect-Citizens Connected Area',
     },
-    "dem010-04": {
-        "name": "Celect-Elmwood/Spring Valley Area",
+    'dem010-04': {
+        'name': 'Celect-Elmwood/Spring Valley Area',
     },
-    "dem010-06": {
-        "name": "Celect-Mosaic Telecom",
+    'dem010-06': {
+        'name': 'Celect-Mosaic Telecom',
     },
-    "dem010-05": {
-        "name": "Celect-West WI Telephone Area",
+    'dem010-05': {
+        'name': 'Celect-West WI Telephone Area',
     },
-    "net010-02": {
-        "name": "Cellcom/Nsight Telservices",
+    'net010-02': {
+        'name': 'Cellcom/Nsight Telservices',
     },
-    "cen100": {
-        "name": "CentraCom",
+    'cen100': {
+        'name': 'CentraCom',
     },
-    "nttccst010": {
-        "name": "Central Scott / CSTV",
+    'nttccst010': {
+        'name': 'Central Scott / CSTV',
     },
-    "cha035": {
-        "name": "Chaparral CableVision",
+    'cha035': {
+        'name': 'Chaparral CableVision',
     },
-    "cha050": {
-        "name": "Chariton Valley Communication Corporation, Inc.",
+    'cha050': {
+        'name': 'Chariton Valley Communication Corporation, Inc.',
     },
-    "cha060": {
-        "name": "Chatmoss Cablevision",
+    'cha060': {
+        'name': 'Chatmoss Cablevision',
     },
-    "nttcche010": {
-        "name": "Cherokee Communications",
+    'nttcche010': {
+        'name': 'Cherokee Communications',
     },
-    "che050": {
-        "name": "Chesapeake Bay Communications",
+    'che050': {
+        'name': 'Chesapeake Bay Communications',
     },
-    "cimtel": {
-        "name": "Cim-Tel Cable, LLC.",
+    'cimtel': {
+        'name': 'Cim-Tel Cable, LLC.',
     },
-    "cit180": {
-        "name": "Citizens Cablevision - Floyd, VA",
+    'cit180': {
+        'name': 'Citizens Cablevision - Floyd, VA',
     },
-    "cit210": {
-        "name": "Citizens Cablevision, Inc.",
+    'cit210': {
+        'name': 'Citizens Cablevision, Inc.',
     },
-    "cit040": {
-        "name": "Citizens Fiber",
+    'cit040': {
+        'name': 'Citizens Fiber',
     },
-    "cit250": {
-        "name": "Citizens Mutual",
+    'cit250': {
+        'name': 'Citizens Mutual',
     },
-    "war040": {
-        "name": "Citizens Telephone Corporation",
+    'war040': {
+        'name': 'Citizens Telephone Corporation',
     },
-    "wat025": {
-        "name": "City Of Monroe",
+    'wat025': {
+        'name': 'City Of Monroe',
     },
-    "wadsworth": {
-        "name": "CityLink",
+    'wadsworth': {
+        'name': 'CityLink',
     },
-    "nor100": {
-        "name": "CL Tel",
+    'nor100': {
+        'name': 'CL Tel',
     },
-    "cla010": {
-        "name": "Clarence Telephone and Cedar Communications",
+    'cla010': {
+        'name': 'Clarence Telephone and Cedar Communications',
     },
-    "ser060": {
-        "name": "Clear Choice Communications",
+    'ser060': {
+        'name': 'Clear Choice Communications',
     },
-    "tac020": {
-        "name": "Click! Cable TV",
+    'tac020': {
+        'name': 'Click! Cable TV',
     },
-    "war020": {
-        "name": "CLICK1.NET",
+    'war020': {
+        'name': 'CLICK1.NET',
     },
-    "cml010": {
-        "name": "CML Telephone Cooperative Association",
+    'cml010': {
+        'name': 'CML Telephone Cooperative Association',
     },
-    "cns": {
-        "name": "CNS",
+    'cns': {
+        'name': 'CNS',
     },
-    "com160": {
-        "name": "Co-Mo Connect",
+    'com160': {
+        'name': 'Co-Mo Connect',
     },
-    "coa020": {
-        "name": "Coast Communications",
+    'coa020': {
+        'name': 'Coast Communications',
     },
-    "coa030": {
-        "name": "Coaxial Cable TV",
+    'coa030': {
+        'name': 'Coaxial Cable TV',
     },
-    "mid055": {
-        "name": "Cobalt TV (Mid-State Community TV)",
+    'mid055': {
+        'name': 'Cobalt TV (Mid-State Community TV)',
     },
-    "col070": {
-        "name": "Columbia Power & Water Systems",
+    'col070': {
+        'name': 'Columbia Power & Water Systems',
     },
-    "col080": {
-        "name": "Columbus Telephone",
+    'col080': {
+        'name': 'Columbus Telephone',
     },
-    "nor105": {
-        "name": "Communications 1 Cablevision, Inc.",
+    'nor105': {
+        'name': 'Communications 1 Cablevision, Inc.',
     },
-    "com150": {
-        "name": "Community Cable & Broadband",
+    'com150': {
+        'name': 'Community Cable & Broadband',
     },
-    "com020": {
-        "name": "Community Communications Company",
+    'com020': {
+        'name': 'Community Communications Company',
     },
-    "coy010": {
-        "name": "commZoom",
+    'coy010': {
+        'name': 'commZoom',
     },
-    "com025": {
-        "name": "Complete Communication Services",
+    'com025': {
+        'name': 'Complete Communication Services',
     },
-    "cat020": {
-        "name": "Comporium",
+    'cat020': {
+        'name': 'Comporium',
     },
-    "com071": {
-        "name": "ComSouth Telesys",
+    'com071': {
+        'name': 'ComSouth Telesys',
     },
-    "consolidatedcable": {
-        "name": "Consolidated",
+    'consolidatedcable': {
+        'name': 'Consolidated',
     },
-    "conwaycorp": {
-        "name": "Conway Corporation",
+    'conwaycorp': {
+        'name': 'Conway Corporation',
     },
-    "coo050": {
-        "name": "Coon Valley Telecommunications Inc",
+    'coo050': {
+        'name': 'Coon Valley Telecommunications Inc',
     },
-    "coo080": {
-        "name": "Cooperative Telephone Company",
+    'coo080': {
+        'name': 'Cooperative Telephone Company',
     },
-    "cpt010": {
-        "name": "CP-TEL",
+    'cpt010': {
+        'name': 'CP-TEL',
     },
-    "cra010": {
-        "name": "Craw-Kan Telephone",
+    'cra010': {
+        'name': 'Craw-Kan Telephone',
     },
-    "crestview": {
-        "name": "Crestview Cable Communications",
+    'crestview': {
+        'name': 'Crestview Cable Communications',
     },
-    "cross": {
-        "name": "Cross TV",
+    'cross': {
+        'name': 'Cross TV',
     },
-    "cro030": {
-        "name": "Crosslake Communications",
+    'cro030': {
+        'name': 'Crosslake Communications',
     },
-    "ctc040": {
-        "name": "CTC - Brainerd MN",
+    'ctc040': {
+        'name': 'CTC - Brainerd MN',
     },
-    "phe030": {
-        "name": "CTV-Beam - East Alabama",
+    'phe030': {
+        'name': 'CTV-Beam - East Alabama',
     },
-    "cun010": {
-        "name": "Cunningham Telephone & Cable",
+    'cun010': {
+        'name': 'Cunningham Telephone & Cable',
     },
-    "dpc010": {
-        "name": "D & P Communications",
+    'dpc010': {
+        'name': 'D & P Communications',
     },
-    "dak030": {
-        "name": "Dakota Central Telecommunications",
+    'dak030': {
+        'name': 'Dakota Central Telecommunications',
     },
-    "nttcdel010": {
-        "name": "Delcambre Telephone LLC",
+    'nttcdel010': {
+        'name': 'Delcambre Telephone LLC',
     },
-    "tel160-del": {
-        "name": "Delta Telephone Company",
+    'tel160-del': {
+        'name': 'Delta Telephone Company',
     },
-    "sal040": {
-        "name": "DiamondNet",
+    'sal040': {
+        'name': 'DiamondNet',
     },
-    "ind060-dc": {
-        "name": "Direct Communications",
+    'ind060-dc': {
+        'name': 'Direct Communications',
     },
-    "doy010": {
-        "name": "Doylestown Cable TV",
+    'doy010': {
+        'name': 'Doylestown Cable TV',
     },
-    "dic010": {
-        "name": "DRN",
+    'dic010': {
+        'name': 'DRN',
     },
-    "dtc020": {
-        "name": "DTC",
+    'dtc020': {
+        'name': 'DTC',
     },
-    "dtc010": {
-        "name": "DTC Cable (Delhi)",
+    'dtc010': {
+        'name': 'DTC Cable (Delhi)',
     },
-    "dum010": {
-        "name": "Dumont Telephone Company",
+    'dum010': {
+        'name': 'Dumont Telephone Company',
     },
-    "dun010": {
-        "name": "Dunkerton Telephone Cooperative",
+    'dun010': {
+        'name': 'Dunkerton Telephone Cooperative',
     },
-    "cci010": {
-        "name": "Duo County Telecom",
+    'cci010': {
+        'name': 'Duo County Telecom',
     },
-    "eagle": {
-        "name": "Eagle Communications",
+    'eagle': {
+        'name': 'Eagle Communications',
     },
-    "weh010-east": {
-        "name": "East Arkansas Cable TV",
+    'weh010-east': {
+        'name': 'East Arkansas Cable TV',
     },
-    "eatel": {
-        "name": "EATEL Video, LLC",
+    'eatel': {
+        'name': 'EATEL Video, LLC',
     },
-    "ell010": {
-        "name": "ECTA",
+    'ell010': {
+        'name': 'ECTA',
     },
-    "emerytelcom": {
-        "name": "Emery Telcom Video LLC",
+    'emerytelcom': {
+        'name': 'Emery Telcom Video LLC',
     },
-    "nor200": {
-        "name": "Empire Access",
+    'nor200': {
+        'name': 'Empire Access',
     },
-    "endeavor": {
-        "name": "Endeavor Communications",
+    'endeavor': {
+        'name': 'Endeavor Communications',
     },
-    "sun045": {
-        "name": "Enhanced Telecommunications Corporation",
+    'sun045': {
+        'name': 'Enhanced Telecommunications Corporation',
     },
-    "mid030": {
-        "name": "enTouch",
+    'mid030': {
+        'name': 'enTouch',
     },
-    "epb020": {
-        "name": "EPB Smartnet",
+    'epb020': {
+        'name': 'EPB Smartnet',
     },
-    "jea010": {
-        "name": "EPlus Broadband",
+    'jea010': {
+        'name': 'EPlus Broadband',
     },
-    "com065": {
-        "name": "ETC",
+    'com065': {
+        'name': 'ETC',
     },
-    "ete010": {
-        "name": "Etex Communications",
+    'ete010': {
+        'name': 'Etex Communications',
     },
-    "fbc-tele": {
-        "name": "F&B Communications",
+    'fbc-tele': {
+        'name': 'F&B Communications',
     },
-    "fal010": {
-        "name": "Falcon Broadband",
+    'fal010': {
+        'name': 'Falcon Broadband',
     },
-    "fam010": {
-        "name": "FamilyView CableVision",
+    'fam010': {
+        'name': 'FamilyView CableVision',
     },
-    "far020": {
-        "name": "Farmers Mutual Telephone Company",
+    'far020': {
+        'name': 'Farmers Mutual Telephone Company',
     },
-    "fay010": {
-        "name": "Fayetteville Public Utilities",
+    'fay010': {
+        'name': 'Fayetteville Public Utilities',
     },
-    "sal060": {
-        "name": "fibrant",
+    'sal060': {
+        'name': 'fibrant',
     },
-    "fid010": {
-        "name": "Fidelity Communications",
+    'fid010': {
+        'name': 'Fidelity Communications',
     },
-    "for030": {
-        "name": "FJ Communications",
+    'for030': {
+        'name': 'FJ Communications',
     },
-    "fli020": {
-        "name": "Flint River Communications",
+    'fli020': {
+        'name': 'Flint River Communications',
     },
-    "far030": {
-        "name": "FMT - Jesup",
+    'far030': {
+        'name': 'FMT - Jesup',
     },
-    "foo010": {
-        "name": "Foothills Communications",
+    'foo010': {
+        'name': 'Foothills Communications',
     },
-    "for080": {
-        "name": "Forsyth CableNet",
+    'for080': {
+        'name': 'Forsyth CableNet',
     },
-    "fbcomm": {
-        "name": "Frankfort Plant Board",
+    'fbcomm': {
+        'name': 'Frankfort Plant Board',
     },
-    "tel160-fra": {
-        "name": "Franklin Telephone Company",
+    'tel160-fra': {
+        'name': 'Franklin Telephone Company',
     },
-    "nttcftc010": {
-        "name": "FTC",
+    'nttcftc010': {
+        'name': 'FTC',
     },
-    "fullchannel": {
-        "name": "Full Channel, Inc.",
+    'fullchannel': {
+        'name': 'Full Channel, Inc.',
     },
-    "gar040": {
-        "name": "Gardonville Cooperative Telephone Association",
+    'gar040': {
+        'name': 'Gardonville Cooperative Telephone Association',
     },
-    "gbt010": {
-        "name": "GBT Communications, Inc.",
+    'gbt010': {
+        'name': 'GBT Communications, Inc.',
     },
-    "tec010": {
-        "name": "Genuine Telecom",
+    'tec010': {
+        'name': 'Genuine Telecom',
     },
-    "clr010": {
-        "name": "Giant Communications",
+    'clr010': {
+        'name': 'Giant Communications',
     },
-    "gla010": {
-        "name": "Glasgow EPB",
+    'gla010': {
+        'name': 'Glasgow EPB',
     },
-    "gle010": {
-        "name": "Glenwood Telecommunications",
+    'gle010': {
+        'name': 'Glenwood Telecommunications',
     },
-    "gra060": {
-        "name": "GLW Broadband Inc.",
+    'gra060': {
+        'name': 'GLW Broadband Inc.',
     },
-    "goldenwest": {
-        "name": "Golden West Cablevision",
+    'goldenwest': {
+        'name': 'Golden West Cablevision',
     },
-    "vis030": {
-        "name": "Grantsburg Telcom",
+    'vis030': {
+        'name': 'Grantsburg Telcom',
     },
-    "gpcom": {
-        "name": "Great Plains Communications",
+    'gpcom': {
+        'name': 'Great Plains Communications',
     },
-    "gri010": {
-        "name": "Gridley Cable Inc",
+    'gri010': {
+        'name': 'Gridley Cable Inc',
     },
-    "hbc010": {
-        "name": "H&B Cable Services",
+    'hbc010': {
+        'name': 'H&B Cable Services',
     },
-    "hae010": {
-        "name": "Haefele TV Inc.",
+    'hae010': {
+        'name': 'Haefele TV Inc.',
     },
-    "htc010": {
-        "name": "Halstad Telephone Company",
+    'htc010': {
+        'name': 'Halstad Telephone Company',
     },
-    "har005": {
-        "name": "Harlan Municipal Utilities",
+    'har005': {
+        'name': 'Harlan Municipal Utilities',
     },
-    "har020": {
-        "name": "Hart Communications",
+    'har020': {
+        'name': 'Hart Communications',
     },
-    "ced010": {
-        "name": "Hartelco TV",
+    'ced010': {
+        'name': 'Hartelco TV',
     },
-    "hea040": {
-        "name": "Heart of Iowa Communications Cooperative",
+    'hea040': {
+        'name': 'Heart of Iowa Communications Cooperative',
     },
-    "htc020": {
-        "name": "Hickory Telephone Company",
+    'htc020': {
+        'name': 'Hickory Telephone Company',
     },
-    "nttchig010": {
-        "name": "Highland Communication Services",
+    'nttchig010': {
+        'name': 'Highland Communication Services',
     },
-    "hig030": {
-        "name": "Highland Media",
+    'hig030': {
+        'name': 'Highland Media',
     },
-    "spc010": {
-        "name": "Hilliary Communications",
+    'spc010': {
+        'name': 'Hilliary Communications',
     },
-    "hin020": {
-        "name": "Hinton CATV Co.",
+    'hin020': {
+        'name': 'Hinton CATV Co.',
     },
-    "hometel": {
-        "name": "HomeTel Entertainment, Inc.",
+    'hometel': {
+        'name': 'HomeTel Entertainment, Inc.',
     },
-    "hoodcanal": {
-        "name": "Hood Canal Communications",
+    'hoodcanal': {
+        'name': 'Hood Canal Communications',
     },
-    "weh010-hope": {
-        "name": "Hope - Prescott Cable TV",
+    'weh010-hope': {
+        'name': 'Hope - Prescott Cable TV',
     },
-    "horizoncable": {
-        "name": "Horizon Cable TV, Inc.",
+    'horizoncable': {
+        'name': 'Horizon Cable TV, Inc.',
     },
-    "hor040": {
-        "name": "Horizon Chillicothe Telephone",
+    'hor040': {
+        'name': 'Horizon Chillicothe Telephone',
     },
-    "htc030": {
-        "name": "HTC Communications Co. - IL",
+    'htc030': {
+        'name': 'HTC Communications Co. - IL',
     },
-    "htccomm": {
-        "name": "HTC Communications, Inc. - IA",
+    'htccomm': {
+        'name': 'HTC Communications, Inc. - IA',
     },
-    "wal005": {
-        "name": "Huxley Communications",
+    'wal005': {
+        'name': 'Huxley Communications',
     },
-    "imon": {
-        "name": "ImOn Communications",
+    'imon': {
+        'name': 'ImOn Communications',
     },
-    "ind040": {
-        "name": "Independence Telecommunications",
+    'ind040': {
+        'name': 'Independence Telecommunications',
     },
-    "rrc010": {
-        "name": "Inland Networks",
+    'rrc010': {
+        'name': 'Inland Networks',
     },
-    "stc020": {
-        "name": "Innovative Cable TV St Croix",
+    'stc020': {
+        'name': 'Innovative Cable TV St Croix',
     },
-    "car100": {
-        "name": "Innovative Cable TV St Thomas-St John",
+    'car100': {
+        'name': 'Innovative Cable TV St Thomas-St John',
     },
-    "icc010": {
-        "name": "Inside Connect Cable",
+    'icc010': {
+        'name': 'Inside Connect Cable',
     },
-    "int100": {
-        "name": "Integra Telecom",
+    'int100': {
+        'name': 'Integra Telecom',
     },
-    "int050": {
-        "name": "Interstate Telecommunications Coop",
+    'int050': {
+        'name': 'Interstate Telecommunications Coop',
     },
-    "irv010": {
-        "name": "Irvine Cable",
+    'irv010': {
+        'name': 'Irvine Cable',
     },
-    "k2c010": {
-        "name": "K2 Communications",
+    'k2c010': {
+        'name': 'K2 Communications',
     },
-    "kal010": {
-        "name": "Kalida Telephone Company, Inc.",
+    'kal010': {
+        'name': 'Kalida Telephone Company, Inc.',
     },
-    "kal030": {
-        "name": "Kalona Cooperative Telephone Company",
+    'kal030': {
+        'name': 'Kalona Cooperative Telephone Company',
     },
-    "kmt010": {
-        "name": "KMTelecom",
+    'kmt010': {
+        'name': 'KMTelecom',
     },
-    "kpu010": {
-        "name": "KPU Telecommunications",
+    'kpu010': {
+        'name': 'KPU Telecommunications',
     },
-    "kuh010": {
-        "name": "Kuhn Communications, Inc.",
+    'kuh010': {
+        'name': 'Kuhn Communications, Inc.',
     },
-    "lak130": {
-        "name": "Lakeland Communications",
+    'lak130': {
+        'name': 'Lakeland Communications',
     },
-    "lan010": {
-        "name": "Langco",
+    'lan010': {
+        'name': 'Langco',
     },
-    "lau020": {
-        "name": "Laurel Highland Total Communications, Inc.",
+    'lau020': {
+        'name': 'Laurel Highland Total Communications, Inc.',
     },
-    "leh010": {
-        "name": "Lehigh Valley Cooperative Telephone",
+    'leh010': {
+        'name': 'Lehigh Valley Cooperative Telephone',
     },
-    "bra010": {
-        "name": "Limestone Cable/Bracken Cable",
+    'bra010': {
+        'name': 'Limestone Cable/Bracken Cable',
     },
-    "loc020": {
-        "name": "LISCO",
+    'loc020': {
+        'name': 'LISCO',
     },
-    "lit020": {
-        "name": "Litestream",
+    'lit020': {
+        'name': 'Litestream',
     },
-    "tel140": {
-        "name": "LivCom",
+    'tel140': {
+        'name': 'LivCom',
     },
-    "loc010": {
-        "name": "LocalTel Communications",
+    'loc010': {
+        'name': 'LocalTel Communications',
     },
-    "weh010-longview": {
-        "name": "Longview - Kilgore Cable TV",
+    'weh010-longview': {
+        'name': 'Longview - Kilgore Cable TV',
     },
-    "lon030": {
-        "name": "Lonsdale Video Ventures, LLC",
+    'lon030': {
+        'name': 'Lonsdale Video Ventures, LLC',
     },
-    "lns010": {
-        "name": "Lost Nation-Elwood Telephone Co.",
+    'lns010': {
+        'name': 'Lost Nation-Elwood Telephone Co.',
     },
-    "nttclpc010": {
-        "name": "LPC Connect",
+    'nttclpc010': {
+        'name': 'LPC Connect',
     },
-    "lumos": {
-        "name": "Lumos Networks",
+    'lumos': {
+        'name': 'Lumos Networks',
     },
-    "madison": {
-        "name": "Madison Communications",
+    'madison': {
+        'name': 'Madison Communications',
     },
-    "mad030": {
-        "name": "Madison County Cable Inc.",
+    'mad030': {
+        'name': 'Madison County Cable Inc.',
     },
-    "nttcmah010": {
-        "name": "Mahaska Communication Group",
+    'nttcmah010': {
+        'name': 'Mahaska Communication Group',
     },
-    "mar010": {
-        "name": "Marne & Elk Horn Telephone Company",
+    'mar010': {
+        'name': 'Marne & Elk Horn Telephone Company',
     },
-    "mcc040": {
-        "name": "McClure Telephone Co.",
+    'mcc040': {
+        'name': 'McClure Telephone Co.',
     },
-    "mctv": {
-        "name": "MCTV",
+    'mctv': {
+        'name': 'MCTV',
     },
-    "merrimac": {
-        "name": "Merrimac Communications Ltd.",
+    'merrimac': {
+        'name': 'Merrimac Communications Ltd.',
     },
-    "metronet": {
-        "name": "Metronet",
+    'metronet': {
+        'name': 'Metronet',
     },
-    "mhtc": {
-        "name": "MHTC",
+    'mhtc': {
+        'name': 'MHTC',
     },
-    "midhudson": {
-        "name": "Mid-Hudson Cable",
+    'midhudson': {
+        'name': 'Mid-Hudson Cable',
     },
-    "midrivers": {
-        "name": "Mid-Rivers Communications",
+    'midrivers': {
+        'name': 'Mid-Rivers Communications',
     },
-    "mid045": {
-        "name": "Midstate Communications",
+    'mid045': {
+        'name': 'Midstate Communications',
     },
-    "mil080": {
-        "name": "Milford Communications",
+    'mil080': {
+        'name': 'Milford Communications',
     },
-    "min030": {
-        "name": "MINET",
+    'min030': {
+        'name': 'MINET',
     },
-    "nttcmin010": {
-        "name": "Minford TV",
+    'nttcmin010': {
+        'name': 'Minford TV',
     },
-    "san040-02": {
-        "name": "Mitchell Telecom",
+    'san040-02': {
+        'name': 'Mitchell Telecom',
     },
-    "mlg010": {
-        "name": "MLGC",
+    'mlg010': {
+        'name': 'MLGC',
     },
-    "mon060": {
-        "name": "Mon-Cre TVE",
+    'mon060': {
+        'name': 'Mon-Cre TVE',
     },
-    "mou110": {
-        "name": "Mountain Telephone",
+    'mou110': {
+        'name': 'Mountain Telephone',
     },
-    "mou050": {
-        "name": "Mountain Village Cable",
+    'mou050': {
+        'name': 'Mountain Village Cable',
     },
-    "mtacomm": {
-        "name": "MTA Communications, LLC",
+    'mtacomm': {
+        'name': 'MTA Communications, LLC',
     },
-    "mtc010": {
-        "name": "MTC Cable",
+    'mtc010': {
+        'name': 'MTC Cable',
     },
-    "med040": {
-        "name": "MTC Technologies",
+    'med040': {
+        'name': 'MTC Technologies',
     },
-    "man060": {
-        "name": "MTCC",
+    'man060': {
+        'name': 'MTCC',
     },
-    "mtc030": {
-        "name": "MTCO Communications",
+    'mtc030': {
+        'name': 'MTCO Communications',
     },
-    "mul050": {
-        "name": "Mulberry Telecommunications",
+    'mul050': {
+        'name': 'Mulberry Telecommunications',
     },
-    "mur010": {
-        "name": "Murray Electric System",
+    'mur010': {
+        'name': 'Murray Electric System',
     },
-    "musfiber": {
-        "name": "MUS FiberNET",
+    'musfiber': {
+        'name': 'MUS FiberNET',
     },
-    "mpw": {
-        "name": "Muscatine Power & Water",
+    'mpw': {
+        'name': 'Muscatine Power & Water',
     },
-    "nttcsli010": {
-        "name": "myEVTV.com",
+    'nttcsli010': {
+        'name': 'myEVTV.com',
     },
-    "nor115": {
-        "name": "NCC",
+    'nor115': {
+        'name': 'NCC',
     },
-    "nor260": {
-        "name": "NDTC",
+    'nor260': {
+        'name': 'NDTC',
     },
-    "nctc": {
-        "name": "Nebraska Central Telecom, Inc.",
+    'nctc': {
+        'name': 'Nebraska Central Telecom, Inc.',
     },
-    "nel020": {
-        "name": "Nelsonville TV Cable",
+    'nel020': {
+        'name': 'Nelsonville TV Cable',
     },
-    "nem010": {
-        "name": "Nemont",
+    'nem010': {
+        'name': 'Nemont',
     },
-    "new075": {
-        "name": "New Hope Telephone Cooperative",
+    'new075': {
+        'name': 'New Hope Telephone Cooperative',
     },
-    "nor240": {
-        "name": "NICP",
+    'nor240': {
+        'name': 'NICP',
     },
-    "cic010": {
-        "name": "NineStar Connect",
+    'cic010': {
+        'name': 'NineStar Connect',
     },
-    "nktelco": {
-        "name": "NKTelco",
+    'nktelco': {
+        'name': 'NKTelco',
     },
-    "nortex": {
-        "name": "Nortex Communications",
+    'nortex': {
+        'name': 'Nortex Communications',
     },
-    "nor140": {
-        "name": "North Central Telephone Cooperative",
+    'nor140': {
+        'name': 'North Central Telephone Cooperative',
     },
-    "nor030": {
-        "name": "Northland Communications",
+    'nor030': {
+        'name': 'Northland Communications',
     },
-    "nor075": {
-        "name": "Northwest Communications",
+    'nor075': {
+        'name': 'Northwest Communications',
     },
-    "nor125": {
-        "name": "Norwood Light Broadband",
+    'nor125': {
+        'name': 'Norwood Light Broadband',
     },
-    "net010": {
-        "name": "Nsight Telservices",
+    'net010': {
+        'name': 'Nsight Telservices',
     },
-    "dur010": {
-        "name": "Ntec",
+    'dur010': {
+        'name': 'Ntec',
     },
-    "nts010": {
-        "name": "NTS Communications",
+    'nts010': {
+        'name': 'NTS Communications',
     },
-    "new045": {
-        "name": "NU-Telecom",
+    'new045': {
+        'name': 'NU-Telecom',
     },
-    "nulink": {
-        "name": "NuLink",
+    'nulink': {
+        'name': 'NuLink',
     },
-    "jam030": {
-        "name": "NVC",
+    'jam030': {
+        'name': 'NVC',
     },
-    "far035": {
-        "name": "OmniTel Communications",
+    'far035': {
+        'name': 'OmniTel Communications',
     },
-    "onesource": {
-        "name": "OneSource Communications",
+    'onesource': {
+        'name': 'OneSource Communications',
     },
-    "cit230": {
-        "name": "Opelika Power Services",
+    'cit230': {
+        'name': 'Opelika Power Services',
     },
-    "daltonutilities": {
-        "name": "OptiLink",
+    'daltonutilities': {
+        'name': 'OptiLink',
     },
-    "mid140": {
-        "name": "OPTURA",
+    'mid140': {
+        'name': 'OPTURA',
     },
-    "ote010": {
-        "name": "OTEC Communication Company",
+    'ote010': {
+        'name': 'OTEC Communication Company',
     },
-    "cci020": {
-        "name": "Packerland Broadband",
+    'cci020': {
+        'name': 'Packerland Broadband',
     },
-    "pan010": {
-        "name": "Panora Telco/Guthrie Center Communications",
+    'pan010': {
+        'name': 'Panora Telco/Guthrie Center Communications',
     },
-    "otter": {
-        "name": "Park Region Telephone & Otter Tail Telcom",
+    'otter': {
+        'name': 'Park Region Telephone & Otter Tail Telcom',
     },
-    "mid050": {
-        "name": "Partner Communications Cooperative",
+    'mid050': {
+        'name': 'Partner Communications Cooperative',
     },
-    "fib010": {
-        "name": "Pathway",
+    'fib010': {
+        'name': 'Pathway',
     },
-    "paulbunyan": {
-        "name": "Paul Bunyan Communications",
+    'paulbunyan': {
+        'name': 'Paul Bunyan Communications',
     },
-    "pem020": {
-        "name": "Pembroke Telephone Company",
+    'pem020': {
+        'name': 'Pembroke Telephone Company',
     },
-    "mck010": {
-        "name": "Peoples Rural Telephone Cooperative",
+    'mck010': {
+        'name': 'Peoples Rural Telephone Cooperative',
     },
-    "pul010": {
-        "name": "PES Energize",
+    'pul010': {
+        'name': 'PES Energize',
     },
-    "phi010": {
-        "name": "Philippi Communications System",
+    'phi010': {
+        'name': 'Philippi Communications System',
     },
-    "phonoscope": {
-        "name": "Phonoscope Cable",
+    'phonoscope': {
+        'name': 'Phonoscope Cable',
     },
-    "pin070": {
-        "name": "Pine Belt Communications, Inc.",
+    'pin070': {
+        'name': 'Pine Belt Communications, Inc.',
     },
-    "weh010-pine": {
-        "name": "Pine Bluff Cable TV",
+    'weh010-pine': {
+        'name': 'Pine Bluff Cable TV',
     },
-    "pin060": {
-        "name": "Pineland Telephone Cooperative",
+    'pin060': {
+        'name': 'Pineland Telephone Cooperative',
     },
-    "cam010": {
-        "name": "Pinpoint Communications",
+    'cam010': {
+        'name': 'Pinpoint Communications',
     },
-    "pio060": {
-        "name": "Pioneer Broadband",
+    'pio060': {
+        'name': 'Pioneer Broadband',
     },
-    "pioncomm": {
-        "name": "Pioneer Communications",
+    'pioncomm': {
+        'name': 'Pioneer Communications',
     },
-    "pioneer": {
-        "name": "Pioneer DTV",
+    'pioneer': {
+        'name': 'Pioneer DTV',
     },
-    "pla020": {
-        "name": "Plant TiftNet, Inc.",
+    'pla020': {
+        'name': 'Plant TiftNet, Inc.',
     },
-    "par010": {
-        "name": "PLWC",
+    'par010': {
+        'name': 'PLWC',
     },
-    "pro035": {
-        "name": "PMT",
+    'pro035': {
+        'name': 'PMT',
     },
-    "vik011": {
-        "name": "Polar Cablevision",
+    'vik011': {
+        'name': 'Polar Cablevision',
     },
-    "pottawatomie": {
-        "name": "Pottawatomie Telephone Co.",
+    'pottawatomie': {
+        'name': 'Pottawatomie Telephone Co.',
     },
-    "premiercomm": {
-        "name": "Premier Communications",
+    'premiercomm': {
+        'name': 'Premier Communications',
     },
-    "psc010": {
-        "name": "PSC",
+    'psc010': {
+        'name': 'PSC',
     },
-    "pan020": {
-        "name": "PTCI",
+    'pan020': {
+        'name': 'PTCI',
     },
-    "qco010": {
-        "name": "QCOL",
+    'qco010': {
+        'name': 'QCOL',
     },
-    "qua010": {
-        "name": "Quality Cablevision",
+    'qua010': {
+        'name': 'Quality Cablevision',
     },
-    "rad010": {
-        "name": "Radcliffe Telephone Company",
+    'rad010': {
+        'name': 'Radcliffe Telephone Company',
     },
-    "car040": {
-        "name": "Rainbow Communications",
+    'car040': {
+        'name': 'Rainbow Communications',
     },
-    "rai030": {
-        "name": "Rainier Connect",
+    'rai030': {
+        'name': 'Rainier Connect',
     },
-    "ral010": {
-        "name": "Ralls Technologies",
+    'ral010': {
+        'name': 'Ralls Technologies',
     },
-    "rct010": {
-        "name": "RC Technologies",
+    'rct010': {
+        'name': 'RC Technologies',
     },
-    "red040": {
-        "name": "Red River Communications",
+    'red040': {
+        'name': 'Red River Communications',
     },
-    "ree010": {
-        "name": "Reedsburg Utility Commission",
+    'ree010': {
+        'name': 'Reedsburg Utility Commission',
     },
-    "mol010": {
-        "name": "Reliance Connects- Oregon",
+    'mol010': {
+        'name': 'Reliance Connects- Oregon',
     },
-    "res020": {
-        "name": "Reserve Telecommunications",
+    'res020': {
+        'name': 'Reserve Telecommunications',
     },
-    "weh010-resort": {
-        "name": "Resort TV Cable",
+    'weh010-resort': {
+        'name': 'Resort TV Cable',
     },
-    "rld010": {
-        "name": "Richland Grant Telephone Cooperative, Inc.",
+    'rld010': {
+        'name': 'Richland Grant Telephone Cooperative, Inc.',
     },
-    "riv030": {
-        "name": "River Valley Telecommunications Coop",
+    'riv030': {
+        'name': 'River Valley Telecommunications Coop',
     },
-    "rockportcable": {
-        "name": "Rock Port Cablevision",
+    'rockportcable': {
+        'name': 'Rock Port Cablevision',
     },
-    "rsf010": {
-        "name": "RS Fiber",
+    'rsf010': {
+        'name': 'RS Fiber',
     },
-    "rtc": {
-        "name": "RTC Communication Corp",
+    'rtc': {
+        'name': 'RTC Communication Corp',
     },
-    "res040": {
-        "name": "RTC-Reservation Telephone Coop.",
+    'res040': {
+        'name': 'RTC-Reservation Telephone Coop.',
     },
-    "rte010": {
-        "name": "RTEC Communications",
+    'rte010': {
+        'name': 'RTEC Communications',
     },
-    "stc010": {
-        "name": "S&T",
+    'stc010': {
+        'name': 'S&T',
     },
-    "san020": {
-        "name": "San Bruno Cable TV",
+    'san020': {
+        'name': 'San Bruno Cable TV',
     },
-    "san040-01": {
-        "name": "Santel",
+    'san040-01': {
+        'name': 'Santel',
     },
-    "sav010": {
-        "name": "SCI Broadband-Savage Communications Inc.",
+    'sav010': {
+        'name': 'SCI Broadband-Savage Communications Inc.',
     },
-    "sco050": {
-        "name": "Scottsboro Electric Power Board",
+    'sco050': {
+        'name': 'Scottsboro Electric Power Board',
     },
-    "scr010": {
-        "name": "Scranton Telephone Company",
+    'scr010': {
+        'name': 'Scranton Telephone Company',
     },
-    "selco": {
-        "name": "SELCO",
+    'selco': {
+        'name': 'SELCO',
     },
-    "she010": {
-        "name": "Shentel",
+    'she010': {
+        'name': 'Shentel',
     },
-    "she030": {
-        "name": "Sherwood Mutual Telephone Association, Inc.",
+    'she030': {
+        'name': 'Sherwood Mutual Telephone Association, Inc.',
     },
-    "ind060-ssc": {
-        "name": "Silver Star Communications",
+    'ind060-ssc': {
+        'name': 'Silver Star Communications',
     },
-    "sjoberg": {
-        "name": "Sjoberg's Inc.",
+    'sjoberg': {
+        'name': 'Sjoberg\'s Inc.',
     },
-    "sou025": {
-        "name": "SKT",
+    'sou025': {
+        'name': 'SKT',
     },
-    "sky050": {
-        "name": "SkyBest TV",
+    'sky050': {
+        'name': 'SkyBest TV',
     },
-    "nttcsmi010": {
-        "name": "Smithville Communications",
+    'nttcsmi010': {
+        'name': 'Smithville Communications',
     },
-    "woo010": {
-        "name": "Solarus",
+    'woo010': {
+        'name': 'Solarus',
     },
-    "sou075": {
-        "name": "South Central Rural Telephone Cooperative",
+    'sou075': {
+        'name': 'South Central Rural Telephone Cooperative',
     },
-    "sou065": {
-        "name": "South Holt Cablevision, Inc.",
+    'sou065': {
+        'name': 'South Holt Cablevision, Inc.',
     },
-    "sou035": {
-        "name": "South Slope Cooperative Communications",
+    'sou035': {
+        'name': 'South Slope Cooperative Communications',
     },
-    "spa020": {
-        "name": "Spanish Fork Community Network",
+    'spa020': {
+        'name': 'Spanish Fork Community Network',
     },
-    "spe010": {
-        "name": "Spencer Municipal Utilities",
+    'spe010': {
+        'name': 'Spencer Municipal Utilities',
     },
-    "spi005": {
-        "name": "Spillway Communications, Inc.",
+    'spi005': {
+        'name': 'Spillway Communications, Inc.',
     },
-    "srt010": {
-        "name": "SRT",
+    'srt010': {
+        'name': 'SRT',
     },
-    "cccsmc010": {
-        "name": "St. Maarten Cable TV",
+    'cccsmc010': {
+        'name': 'St. Maarten Cable TV',
     },
-    "sta025": {
-        "name": "Star Communications",
+    'sta025': {
+        'name': 'Star Communications',
     },
-    "sco020": {
-        "name": "STE",
+    'sco020': {
+        'name': 'STE',
     },
-    "uin010": {
-        "name": "STRATA Networks",
+    'uin010': {
+        'name': 'STRATA Networks',
     },
-    "sum010": {
-        "name": "Sumner Cable TV",
+    'sum010': {
+        'name': 'Sumner Cable TV',
     },
-    "pie010": {
-        "name": "Surry TV/PCSI TV",
+    'pie010': {
+        'name': 'Surry TV/PCSI TV',
     },
-    "swa010": {
-        "name": "Swayzee Communications",
+    'swa010': {
+        'name': 'Swayzee Communications',
     },
-    "sweetwater": {
-        "name": "Sweetwater Cable Television Co",
+    'sweetwater': {
+        'name': 'Sweetwater Cable Television Co',
     },
-    "weh010-talequah": {
-        "name": "Tahlequah Cable TV",
+    'weh010-talequah': {
+        'name': 'Tahlequah Cable TV',
     },
-    "tct": {
-        "name": "TCT",
+    'tct': {
+        'name': 'TCT',
     },
-    "tel050": {
-        "name": "Tele-Media Company",
+    'tel050': {
+        'name': 'Tele-Media Company',
     },
-    "com050": {
-        "name": "The Community Agency",
+    'com050': {
+        'name': 'The Community Agency',
     },
-    "thr020": {
-        "name": "Three River",
+    'thr020': {
+        'name': 'Three River',
     },
-    "cab140": {
-        "name": "Town & Country Technologies",
+    'cab140': {
+        'name': 'Town & Country Technologies',
     },
-    "tra010": {
-        "name": "Trans-Video",
+    'tra010': {
+        'name': 'Trans-Video',
     },
-    "tre010": {
-        "name": "Trenton TV Cable Company",
+    'tre010': {
+        'name': 'Trenton TV Cable Company',
     },
-    "tcc": {
-        "name": "Tri County Communications Cooperative",
+    'tcc': {
+        'name': 'Tri County Communications Cooperative',
     },
-    "tri025": {
-        "name": "TriCounty Telecom",
+    'tri025': {
+        'name': 'TriCounty Telecom',
     },
-    "tri110": {
-        "name": "TrioTel Communications, Inc.",
+    'tri110': {
+        'name': 'TrioTel Communications, Inc.',
     },
-    "tro010": {
-        "name": "Troy Cablevision, Inc.",
+    'tro010': {
+        'name': 'Troy Cablevision, Inc.',
     },
-    "tsc": {
-        "name": "TSC",
+    'tsc': {
+        'name': 'TSC',
     },
-    "cit220": {
-        "name": "Tullahoma Utilities Board",
+    'cit220': {
+        'name': 'Tullahoma Utilities Board',
     },
-    "tvc030": {
-        "name": "TV Cable of Rensselaer",
+    'tvc030': {
+        'name': 'TV Cable of Rensselaer',
     },
-    "tvc015": {
-        "name": "TVC Cable",
+    'tvc015': {
+        'name': 'TVC Cable',
     },
-    "cab180": {
-        "name": "TVision",
+    'cab180': {
+        'name': 'TVision',
     },
-    "twi040": {
-        "name": "Twin Lakes",
+    'twi040': {
+        'name': 'Twin Lakes',
     },
-    "tvtinc": {
-        "name": "Twin Valley",
+    'tvtinc': {
+        'name': 'Twin Valley',
     },
-    "uis010": {
-        "name": "Union Telephone Company",
+    'uis010': {
+        'name': 'Union Telephone Company',
     },
-    "uni110": {
-        "name": "United Communications - TN",
+    'uni110': {
+        'name': 'United Communications - TN',
     },
-    "uni120": {
-        "name": "United Services",
+    'uni120': {
+        'name': 'United Services',
     },
-    "uss020": {
-        "name": "US Sonet",
+    'uss020': {
+        'name': 'US Sonet',
     },
-    "cab060": {
-        "name": "USA Communications",
+    'cab060': {
+        'name': 'USA Communications',
     },
-    "she005": {
-        "name": "USA Communications/Shellsburg, IA",
+    'she005': {
+        'name': 'USA Communications/Shellsburg, IA',
     },
-    "val040": {
-        "name": "Valley TeleCom Group",
+    'val040': {
+        'name': 'Valley TeleCom Group',
     },
-    "val025": {
-        "name": "Valley Telecommunications",
+    'val025': {
+        'name': 'Valley Telecommunications',
     },
-    "val030": {
-        "name": "Valparaiso Broadband",
+    'val030': {
+        'name': 'Valparaiso Broadband',
     },
-    "cla050": {
-        "name": "Vast Broadband",
+    'cla050': {
+        'name': 'Vast Broadband',
     },
-    "sul015": {
-        "name": "Venture Communications Cooperative, Inc.",
+    'sul015': {
+        'name': 'Venture Communications Cooperative, Inc.',
     },
-    "ver025": {
-        "name": "Vernon Communications Co-op",
+    'ver025': {
+        'name': 'Vernon Communications Co-op',
     },
-    "weh010-vicksburg": {
-        "name": "Vicksburg Video",
+    'weh010-vicksburg': {
+        'name': 'Vicksburg Video',
     },
-    "vis070": {
-        "name": "Vision Communications",
+    'vis070': {
+        'name': 'Vision Communications',
     },
-    "volcanotel": {
-        "name": "Volcano Vision, Inc.",
+    'volcanotel': {
+        'name': 'Volcano Vision, Inc.',
     },
-    "vol040-02": {
-        "name": "VolFirst / BLTV",
+    'vol040-02': {
+        'name': 'VolFirst / BLTV',
     },
-    "ver070": {
-        "name": "VTel",
+    'ver070': {
+        'name': 'VTel',
     },
-    "nttcvtx010": {
-        "name": "VTX1",
+    'nttcvtx010': {
+        'name': 'VTX1',
     },
-    "bci010-02": {
-        "name": "Vyve Broadband",
+    'bci010-02': {
+        'name': 'Vyve Broadband',
     },
-    "wab020": {
-        "name": "Wabash Mutual Telephone",
+    'wab020': {
+        'name': 'Wabash Mutual Telephone',
     },
-    "waitsfield": {
-        "name": "Waitsfield Cable",
+    'waitsfield': {
+        'name': 'Waitsfield Cable',
     },
-    "wal010": {
-        "name": "Walnut Communications",
+    'wal010': {
+        'name': 'Walnut Communications',
     },
-    "wavebroadband": {
-        "name": "Wave",
+    'wavebroadband': {
+        'name': 'Wave',
     },
-    "wav030": {
-        "name": "Waverly Communications Utility",
+    'wav030': {
+        'name': 'Waverly Communications Utility',
     },
-    "wbi010": {
-        "name": "WBI",
+    'wbi010': {
+        'name': 'WBI',
     },
-    "web020": {
-        "name": "Webster-Calhoun Cooperative Telephone Association",
+    'web020': {
+        'name': 'Webster-Calhoun Cooperative Telephone Association',
     },
-    "wes005": {
-        "name": "West Alabama TV Cable",
+    'wes005': {
+        'name': 'West Alabama TV Cable',
     },
-    "carolinata": {
-        "name": "West Carolina Communications",
+    'carolinata': {
+        'name': 'West Carolina Communications',
     },
-    "wct010": {
-        "name": "West Central Telephone Association",
+    'wct010': {
+        'name': 'West Central Telephone Association',
     },
-    "wes110": {
-        "name": "West River Cooperative Telephone Company",
+    'wes110': {
+        'name': 'West River Cooperative Telephone Company',
     },
-    "ani030": {
-        "name": "WesTel Systems",
+    'ani030': {
+        'name': 'WesTel Systems',
     },
-    "westianet": {
-        "name": "Western Iowa Networks",
+    'westianet': {
+        'name': 'Western Iowa Networks',
     },
-    "nttcwhi010": {
-        "name": "Whidbey Telecom",
+    'nttcwhi010': {
+        'name': 'Whidbey Telecom',
     },
-    "weh010-white": {
-        "name": "White County Cable TV",
+    'weh010-white': {
+        'name': 'White County Cable TV',
     },
-    "wes130": {
-        "name": "Wiatel",
+    'wes130': {
+        'name': 'Wiatel',
     },
-    "wik010": {
-        "name": "Wiktel",
+    'wik010': {
+        'name': 'Wiktel',
     },
-    "wil070": {
-        "name": "Wilkes Communications, Inc./RiverStreet Networks",
+    'wil070': {
+        'name': 'Wilkes Communications, Inc./RiverStreet Networks',
     },
-    "wil015": {
-        "name": "Wilson Communications",
+    'wil015': {
+        'name': 'Wilson Communications',
     },
-    "win010": {
-        "name": "Windomnet/SMBS",
+    'win010': {
+        'name': 'Windomnet/SMBS',
     },
-    "win090": {
-        "name": "Windstream Cable TV",
+    'win090': {
+        'name': 'Windstream Cable TV',
     },
-    "wcta": {
-        "name": "Winnebago Cooperative Telecom Association",
+    'wcta': {
+        'name': 'Winnebago Cooperative Telecom Association',
     },
-    "wtc010": {
-        "name": "WTC",
+    'wtc010': {
+        'name': 'WTC',
     },
-    "wil040": {
-        "name": "WTC Communications, Inc.",
+    'wil040': {
+        'name': 'WTC Communications, Inc.',
     },
-    "wya010": {
-        "name": "Wyandotte Cable",
+    'wya010': {
+        'name': 'Wyandotte Cable',
     },
-    "hin020-02": {
-        "name": "X-Stream Services",
+    'hin020-02': {
+        'name': 'X-Stream Services',
     },
-    "xit010": {
-        "name": "XIT Communications",
+    'xit010': {
+        'name': 'XIT Communications',
     },
-    "yel010": {
-        "name": "Yelcot Communications",
+    'yel010': {
+        'name': 'Yelcot Communications',
     },
-    "mid180-01": {
-        "name": "yondoo",
+    'mid180-01': {
+        'name': 'yondoo',
     },
-    "cou060": {
-        "name": "Zito Media",
+    'cou060': {
+        'name': 'Zito Media',
     },
-    "slingtv": {
-        "name": "Sling TV",
-        "username_field": "username",
-        "password_field": "password",
-        "login_hostname": "identity.sling.com",
+    'slingtv': {
+        'name': 'Sling TV',
+        'username_field': 'username',
+        'password_field': 'password',
+        'login_hostname': 'identity.sling.com',
     },
-    "Suddenlink": {
-        "name": "Suddenlink",
-        "username_field": "username",
-        "password_field": "password",
+    'Suddenlink': {
+        'name': 'Suddenlink',
+        'username_field': 'username',
+        'password_field': 'password',
     },
-    "AlticeOne": {
-        "name": "Optimum TV",
-        "username_field": "j_username",
-        "password_field": "j_password",
+    'AlticeOne': {
+        'name': 'Optimum TV',
+        'username_field': 'j_username',
+        'password_field': 'j_password',
     },
 }
 
 
-class AdobePassIE(
-    InfoExtractor
-):  # XXX: Conventionally, base classes should end with BaseIE/InfoExtractor
-    _SERVICE_PROVIDER_TEMPLATE = "https://sp.auth.adobe.com/adobe-services/%s"
-    _USER_AGENT = "Mozilla/5.0 (X11; Linux i686; rv:47.0) Gecko/20100101 Firefox/47.0"
-    _MVPD_CACHE = "ap-mvpd"
+class AdobePassIE(InfoExtractor):  # XXX: Conventionally, base classes should end with BaseIE/InfoExtractor
+    _SERVICE_PROVIDER_TEMPLATE = 'https://sp.auth.adobe.com/adobe-services/%s'
+    _USER_AGENT = 'Mozilla/5.0 (X11; Linux i686; rv:47.0) Gecko/20100101 Firefox/47.0'
+    _MVPD_CACHE = 'ap-mvpd'
 
-    _DOWNLOADING_LOGIN_PAGE = "Downloading Provider Login Page"
+    _DOWNLOADING_LOGIN_PAGE = 'Downloading Provider Login Page'
 
     def _download_webpage_handle(self, *args, **kwargs):
         headers = self.geo_verification_headers()
-        headers.update(kwargs.get("headers") or {})
-        kwargs["headers"] = headers
-        return super()._download_webpage_handle(*args, **kwargs)
+        headers.update(kwargs.get('headers') or {})
+        kwargs['headers'] = headers
+        return super()._download_webpage_handle(
+            *args, **kwargs)
 
     @staticmethod
     def _get_mso_headers(mso_info):
@@ -1384,85 +1383,63 @@ class AdobePassIE(
 
     @staticmethod
     def _get_mvpd_resource(provider_id, title, guid, rating):
-        channel = etree.Element("channel")
-        channel_title = etree.SubElement(channel, "title")
+        channel = etree.Element('channel')
+        channel_title = etree.SubElement(channel, 'title')
         channel_title.text = provider_id
-        item = etree.SubElement(channel, "item")
-        resource_title = etree.SubElement(item, "title")
+        item = etree.SubElement(channel, 'item')
+        resource_title = etree.SubElement(item, 'title')
         resource_title.text = title
-        resource_guid = etree.SubElement(item, "guid")
+        resource_guid = etree.SubElement(item, 'guid')
         resource_guid.text = guid
-        resource_rating = etree.SubElement(item, "media:rating")
-        resource_rating.attrib = {"scheme": "urn:v-chip"}
+        resource_rating = etree.SubElement(item, 'media:rating')
+        resource_rating.attrib = {'scheme': 'urn:v-chip'}
         resource_rating.text = rating
-        return (
-            '<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/">'
-            + etree.tostring(channel).decode()
-            + "</rss>"
-        )
+        return '<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/">' + etree.tostring(channel).decode() + '</rss>'
 
-    def _extract_mvpd_auth(
-        self, url, video_id, requestor_id, resource, software_statement
-    ):
-        mso_id = self.get_param("ap_mso")
+    def _extract_mvpd_auth(self, url, video_id, requestor_id, resource, software_statement):
+        mso_id = self.get_param('ap_mso')
         if mso_id:
             mso_info = MSO_INFO[mso_id]
         else:
             mso_info = {}
 
         def xml_text(xml_str, tag):
-            return self._search_regex(f"<{tag}>(.+?)</{tag}>", xml_str, tag)
+            return self._search_regex(
+                f'<{tag}>(.+?)</{tag}>', xml_str, tag)
 
         def is_expired(token, date_ele):
-            token_expires = unified_timestamp(
-                re.sub(r"[_ ]GMT", "", xml_text(token, date_ele))
-            )
+            token_expires = unified_timestamp(re.sub(r'[_ ]GMT', '', xml_text(token, date_ele)))
             return token_expires and token_expires <= int(time.time())
 
         def post_form(form_page_res, note, data={}, validate_url=False):
             form_page, urlh = form_page_res
-            post_url = self._html_search_regex(
-                r'<form[^>]+action=(["\'])(?P<url>.+?)\1',
-                form_page,
-                "post url",
-                group="url",
-            )
-            if not re.match(r"https?://", post_url):
+            post_url = self._html_search_regex(r'<form[^>]+action=(["\'])(?P<url>.+?)\1', form_page, 'post url', group='url')
+            if not re.match(r'https?://', post_url):
                 post_url = urllib.parse.urljoin(urlh.url, post_url)
             if validate_url:
                 # This request is submitting credentials so we should validate it when possible
                 url_parsed = urllib.parse.urlparse(post_url)
-                expected_hostname = mso_info.get("login_hostname")
+                expected_hostname = mso_info.get('login_hostname')
                 if expected_hostname and expected_hostname != url_parsed.hostname:
                     raise ExtractorError(
                         f'Unexpected login URL hostname; expected "{expected_hostname}" but got '
-                        f'"{url_parsed.hostname}". Aborting before submitting credentials'
-                    )
-                if url_parsed.scheme != "https":
-                    self.write_debug("Upgrading login URL scheme to https")
-                    post_url = urllib.parse.urlunparse(
-                        url_parsed._replace(scheme="https")
-                    )
+                        f'"{url_parsed.hostname}". Aborting before submitting credentials')
+                if url_parsed.scheme != 'https':
+                    self.write_debug('Upgrading login URL scheme to https')
+                    post_url = urllib.parse.urlunparse(url_parsed._replace(scheme='https'))
             form_data = self._hidden_inputs(form_page)
             form_data.update(data)
             return self._download_webpage_handle(
-                post_url,
-                video_id,
-                note,
-                data=urlencode_postdata(form_data),
-                headers={
+                post_url, video_id, note, data=urlencode_postdata(form_data), headers={
                     **self._get_mso_headers(mso_info),
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-            )
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                })
 
         def raise_mvpd_required():
             raise ExtractorError(
-                "This video is only available for users of participating TV providers. "
-                "Use --ap-mso to specify Adobe Pass Multiple-system operator Identifier "
-                "and --ap-username and --ap-password or --netrc to provide account credentials.",
-                expected=True,
-            )
+                'This video is only available for users of participating TV providers. '
+                'Use --ap-mso to specify Adobe Pass Multiple-system operator Identifier '
+                'and --ap-username and --ap-password or --netrc to provide account credentials.', expected=True)
 
         def extract_redirect_url(html, url=None, fatal=False):
             # TODO: eliminate code duplication with generic extractor and move
@@ -1471,11 +1448,8 @@ class AdobePassIE(
             redirect_url = self._search_regex(
                 r'(?i)<meta\s+(?=(?:[a-z-]+="[^"]+"\s+)*http-equiv="refresh")'
                 rf'(?:[a-z-]+="[^"]+"\s+)*?content="{REDIRECT_REGEX}',
-                html,
-                "meta refresh redirect",
-                default=NO_DEFAULT if fatal else None,
-                fatal=fatal,
-            )
+                html, 'meta refresh redirect',
+                default=NO_DEFAULT if fatal else None, fatal=fatal)
             if not redirect_url:
                 return None
             if url:
@@ -1483,336 +1457,238 @@ class AdobePassIE(
             return redirect_url
 
         mvpd_headers = {
-            "ap_42": "anonymous",
-            "ap_11": "Linux i686",
-            "ap_z": self._USER_AGENT,
-            "User-Agent": self._USER_AGENT,
+            'ap_42': 'anonymous',
+            'ap_11': 'Linux i686',
+            'ap_z': self._USER_AGENT,
+            'User-Agent': self._USER_AGENT,
         }
 
-        guid = xml_text(resource, "guid") if "<" in resource else resource
+        guid = xml_text(resource, 'guid') if '<' in resource else resource
         for _ in range(2):
             requestor_info = self.cache.load(self._MVPD_CACHE, requestor_id) or {}
-            authn_token = requestor_info.get("authn_token")
-            if authn_token and is_expired(authn_token, "simpleTokenExpires"):
+            authn_token = requestor_info.get('authn_token')
+            if authn_token and is_expired(authn_token, 'simpleTokenExpires'):
                 authn_token = None
             if not authn_token:
                 if not mso_id:
                     raise_mvpd_required()
-                username, password = self._get_login_info(
-                    "ap_username", "ap_password", mso_id
-                )
+                username, password = self._get_login_info('ap_username', 'ap_password', mso_id)
                 if not username or not password:
                     raise_mvpd_required()
 
                 device_info, urlh = self._download_json_handle(
-                    "https://sp.auth.adobe.com/indiv/devices",
-                    video_id,
-                    "Registering device with Adobe",
-                    data=json.dumps({"fingerprint": uuid.uuid4().hex}).encode(),
-                    headers={"Content-Type": "application/json; charset=UTF-8"},
-                )
+                    'https://sp.auth.adobe.com/indiv/devices',
+                    video_id, 'Registering device with Adobe',
+                    data=json.dumps({'fingerprint': uuid.uuid4().hex}).encode(),
+                    headers={'Content-Type': 'application/json; charset=UTF-8'})
 
-                device_id = device_info["deviceId"]
-                mvpd_headers["pass_sfp"] = urlh.get_header("pass_sfp")
-                mvpd_headers["Ap_21"] = device_id
+                device_id = device_info['deviceId']
+                mvpd_headers['pass_sfp'] = urlh.get_header('pass_sfp')
+                mvpd_headers['Ap_21'] = device_id
 
                 registration = self._download_json(
-                    "https://sp.auth.adobe.com/o/client/register",
-                    video_id,
-                    "Registering client with Adobe",
-                    data=json.dumps(
-                        {"software_statement": software_statement}
-                    ).encode(),
-                    headers={"Content-Type": "application/json; charset=UTF-8"},
-                )
+                    'https://sp.auth.adobe.com/o/client/register',
+                    video_id, 'Registering client with Adobe',
+                    data=json.dumps({'software_statement': software_statement}).encode(),
+                    headers={'Content-Type': 'application/json; charset=UTF-8'})
 
                 access_token = self._download_json(
-                    "https://sp.auth.adobe.com/o/client/token",
-                    video_id,
-                    "Obtaining access token",
-                    data=urlencode_postdata(
-                        {
-                            "grant_type": "client_credentials",
-                            "client_id": registration["client_id"],
-                            "client_secret": registration["client_secret"],
-                        }
-                    ),
+                    'https://sp.auth.adobe.com/o/client/token', video_id,
+                    'Obtaining access token', data=urlencode_postdata({
+                        'grant_type': 'client_credentials',
+                        'client_id': registration['client_id'],
+                        'client_secret': registration['client_secret'],
+                    }),
                     headers={
-                        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                    },
-                )["access_token"]
-                mvpd_headers["Authorization"] = f"Bearer {access_token}"
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                    })['access_token']
+                mvpd_headers['Authorization'] = f'Bearer {access_token}'
 
                 reg_code = self._download_json(
-                    f"https://sp.auth.adobe.com/reggie/v1/{requestor_id}/regcode",
-                    video_id,
-                    "Obtaining registration code",
-                    data=urlencode_postdata(
-                        {
-                            "requestor": requestor_id,
-                            "deviceId": device_id,
-                            "format": "json",
-                        }
-                    ),
+                    f'https://sp.auth.adobe.com/reggie/v1/{requestor_id}/regcode',
+                    video_id, 'Obtaining registration code',
+                    data=urlencode_postdata({
+                        'requestor': requestor_id,
+                        'deviceId': device_id,
+                        'format': 'json',
+                    }),
                     headers={
-                        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                        "Authorization": f"Bearer {access_token}",
-                    },
-                )["code"]
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                        'Authorization': f'Bearer {access_token}',
+                    })['code']
 
                 provider_redirect_page_res = self._download_webpage_handle(
-                    self._SERVICE_PROVIDER_TEMPLATE % "authenticate/saml",
-                    video_id,
-                    "Downloading Provider Redirect Page",
-                    query={
-                        "noflash": "true",
-                        "mso_id": mso_id,
-                        "requestor_id": requestor_id,
-                        "no_iframe": "false",
-                        "domain_name": "adobe.com",
-                        "redirect_url": url,
-                        "reg_code": reg_code,
-                    },
-                    headers=self._get_mso_headers(mso_info),
-                )
+                    self._SERVICE_PROVIDER_TEMPLATE % 'authenticate/saml', video_id,
+                    'Downloading Provider Redirect Page', query={
+                        'noflash': 'true',
+                        'mso_id': mso_id,
+                        'requestor_id': requestor_id,
+                        'no_iframe': 'false',
+                        'domain_name': 'adobe.com',
+                        'redirect_url': url,
+                        'reg_code': reg_code,
+                    }, headers=self._get_mso_headers(mso_info))
 
-                if mso_id == "Comcast_SSO":
+                if mso_id == 'Comcast_SSO':
                     # Comcast page flow varies by video site and whether you
                     # are on Comcast's network.
                     provider_redirect_page, urlh = provider_redirect_page_res
-                    if "automatically signing you in" in provider_redirect_page:
+                    if 'automatically signing you in' in provider_redirect_page:
                         oauth_redirect_url = self._html_search_regex(
                             r'window\.location\s*=\s*[\'"]([^\'"]+)',
-                            provider_redirect_page,
-                            "oauth redirect",
-                        )
+                            provider_redirect_page, 'oauth redirect')
                         self._download_webpage(
-                            oauth_redirect_url, video_id, "Confirming auto login"
-                        )
-                    elif "automatically signed in with" in provider_redirect_page:
+                            oauth_redirect_url, video_id, 'Confirming auto login')
+                    elif 'automatically signed in with' in provider_redirect_page:
                         # Seems like comcast is rolling up new way of automatically signing customers
                         oauth_redirect_url = self._html_search_regex(
-                            r'continue:\s*"(https://oauth\.xfinity\.com/oauth/authorize\?.+)"',
-                            provider_redirect_page,
-                            "oauth redirect (signed)",
-                        )
+                            r'continue:\s*"(https://oauth\.xfinity\.com/oauth/authorize\?.+)"', provider_redirect_page,
+                            'oauth redirect (signed)')
                         # Just need to process the request. No useful data comes back
-                        self._download_webpage(
-                            oauth_redirect_url, video_id, "Confirming auto login"
-                        )
+                        self._download_webpage(oauth_redirect_url, video_id, 'Confirming auto login')
                     else:
                         if '<form name="signin"' in provider_redirect_page:
                             provider_login_page_res = provider_redirect_page_res
                         elif 'http-equiv="refresh"' in provider_redirect_page:
                             oauth_redirect_url = extract_redirect_url(
-                                provider_redirect_page, fatal=True
-                            )
+                                provider_redirect_page, fatal=True)
                             provider_login_page_res = self._download_webpage_handle(
-                                oauth_redirect_url,
-                                video_id,
-                                self._DOWNLOADING_LOGIN_PAGE,
-                                headers=self._get_mso_headers(mso_info),
-                            )
+                                oauth_redirect_url, video_id, self._DOWNLOADING_LOGIN_PAGE,
+                                headers=self._get_mso_headers(mso_info))
                         else:
                             provider_login_page_res = post_form(
-                                provider_redirect_page_res, self._DOWNLOADING_LOGIN_PAGE
-                            )
+                                provider_redirect_page_res,
+                                self._DOWNLOADING_LOGIN_PAGE)
 
                         mvpd_confirm_page_res = post_form(
-                            provider_login_page_res,
-                            "Logging in",
-                            {
-                                mso_info["username_field"]: username,
-                                mso_info["password_field"]: password,
-                            },
-                            validate_url=True,
-                        )
+                            provider_login_page_res, 'Logging in', {
+                                mso_info['username_field']: username,
+                                mso_info['password_field']: password,
+                            }, validate_url=True)
                         mvpd_confirm_page, urlh = mvpd_confirm_page_res
-                        if (
-                            '<button class="submit" value="Resume">Resume</button>'
-                            in mvpd_confirm_page
-                        ):
-                            post_form(mvpd_confirm_page_res, "Confirming Login")
-                elif mso_id == "Philo":
+                        if '<button class="submit" value="Resume">Resume</button>' in mvpd_confirm_page:
+                            post_form(mvpd_confirm_page_res, 'Confirming Login')
+                elif mso_id == 'Philo':
                     # Philo has very unique authentication method
                     self._request_webpage(
-                        "https://idp.philo.com/auth/init/login_code",
-                        video_id,
-                        "Requesting Philo auth code",
-                        data=json.dumps(
-                            {
-                                "ident": username,
-                                "device": "web",
-                                "send_confirm_link": False,
-                                "send_token": True,
-                                "device_ident": f"web-{uuid.uuid4().hex}",
-                                "include_login_link": True,
-                            }
-                        ).encode(),
-                        headers={
-                            "Content-Type": "application/json",
-                            "Accept": "application/json",
-                        },
-                    )
+                        'https://idp.philo.com/auth/init/login_code', video_id,
+                        'Requesting Philo auth code', data=json.dumps({
+                            'ident': username,
+                            'device': 'web',
+                            'send_confirm_link': False,
+                            'send_token': True,
+                            'device_ident': f'web-{uuid.uuid4().hex}',
+                            'include_login_link': True,
+                        }).encode(), headers={
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                        })
 
-                    philo_code = getpass.getpass(
-                        "Type auth code you have received [Return]: "
-                    )
+                    philo_code = getpass.getpass('Type auth code you have received [Return]: ')
                     self._request_webpage(
-                        "https://idp.philo.com/auth/update/login_code",
-                        video_id,
-                        "Submitting token",
-                        data=json.dumps({"token": philo_code}).encode(),
+                        'https://idp.philo.com/auth/update/login_code', video_id,
+                        'Submitting token', data=json.dumps({'token': philo_code}).encode(),
                         headers={
-                            "Content-Type": "application/json",
-                            "Accept": "application/json",
-                        },
-                    )
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                        })
 
-                    mvpd_confirm_page_res = self._download_webpage_handle(
-                        "https://idp.philo.com/idp/submit",
-                        video_id,
-                        "Confirming Philo Login",
-                    )
-                    post_form(mvpd_confirm_page_res, "Confirming Login")
-                elif mso_id == "Verizon":
+                    mvpd_confirm_page_res = self._download_webpage_handle('https://idp.philo.com/idp/submit', video_id, 'Confirming Philo Login')
+                    post_form(mvpd_confirm_page_res, 'Confirming Login')
+                elif mso_id == 'Verizon':
                     # In general, if you're connecting from a Verizon-assigned IP,
                     # you will not actually pass your credentials.
                     provider_redirect_page, urlh = provider_redirect_page_res
                     # From non-Verizon IP, still gave 'Please wait', but noticed N==Y; will need to try on Verizon IP
-                    if (
-                        "Please wait ..." in provider_redirect_page
-                        and "'N'== \"Y\"" not in provider_redirect_page
-                    ):
+                    if 'Please wait ...' in provider_redirect_page and '\'N\'== "Y"' not in provider_redirect_page:
                         saml_redirect_url = self._html_search_regex(
                             r'self\.parent\.location=(["\'])(?P<url>.+?)\1',
                             provider_redirect_page,
-                            "SAML Redirect URL",
-                            group="url",
-                        )
+                            'SAML Redirect URL', group='url')
                         saml_login_page = self._download_webpage(
-                            saml_redirect_url, video_id, "Downloading SAML Login Page"
-                        )
-                    elif "Verizon FiOS - sign in" in provider_redirect_page:
+                            saml_redirect_url, video_id,
+                            'Downloading SAML Login Page')
+                    elif 'Verizon FiOS - sign in' in provider_redirect_page:
                         # FXNetworks from non-Verizon IP
                         saml_login_page_res = post_form(
-                            provider_redirect_page_res,
-                            "Logging in",
-                            {
-                                mso_info["username_field"]: username,
-                                mso_info["password_field"]: password,
-                            },
-                            validate_url=True,
-                        )
+                            provider_redirect_page_res, 'Logging in', {
+                                mso_info['username_field']: username,
+                                mso_info['password_field']: password,
+                            }, validate_url=True)
                         saml_login_page, urlh = saml_login_page_res
-                        if "Please try again." in saml_login_page:
+                        if 'Please try again.' in saml_login_page:
                             raise ExtractorError(
-                                "We're sorry, but either the User ID or Password entered is not correct."
-                            )
+                                'We\'re sorry, but either the User ID or Password entered is not correct.')
                     else:
                         # ABC from non-Verizon IP
                         saml_redirect_url = self._html_search_regex(
                             r'var\surl\s*=\s*(["\'])(?P<url>.+?)\1',
                             provider_redirect_page,
-                            "SAML Redirect URL",
-                            group="url",
-                        )
-                        saml_redirect_url = saml_redirect_url.replace(r"\/", "/")
-                        saml_redirect_url = saml_redirect_url.replace(r"\-", "-")
-                        saml_redirect_url = saml_redirect_url.replace(r"\x26", "&")
+                            'SAML Redirect URL', group='url')
+                        saml_redirect_url = saml_redirect_url.replace(r'\/', '/')
+                        saml_redirect_url = saml_redirect_url.replace(r'\-', '-')
+                        saml_redirect_url = saml_redirect_url.replace(r'\x26', '&')
                         saml_login_page = self._download_webpage(
-                            saml_redirect_url, video_id, "Downloading SAML Login Page"
-                        )
+                            saml_redirect_url, video_id,
+                            'Downloading SAML Login Page')
                         saml_login_page, urlh = post_form(
-                            [saml_login_page, saml_redirect_url],
-                            "Logging in",
-                            {
-                                mso_info["username_field"]: username,
-                                mso_info["password_field"]: password,
-                            },
-                            validate_url=True,
-                        )
-                        if "Please try again." in saml_login_page:
+                            [saml_login_page, saml_redirect_url], 'Logging in', {
+                                mso_info['username_field']: username,
+                                mso_info['password_field']: password,
+                            }, validate_url=True)
+                        if 'Please try again.' in saml_login_page:
                             raise ExtractorError(
-                                "Failed to login, incorrect User ID or Password."
-                            )
+                                'Failed to login, incorrect User ID or Password.')
                     saml_login_url = self._search_regex(
                         r'xmlHttp\.open\("POST"\s*,\s*(["\'])(?P<url>.+?)\1',
-                        saml_login_page,
-                        "SAML Login URL",
-                        group="url",
-                    )
+                        saml_login_page, 'SAML Login URL', group='url')
                     saml_response_json = self._download_json(
-                        saml_login_url,
-                        video_id,
-                        "Downloading SAML Response",
-                        headers={"Content-Type": "text/xml"},
-                    )
+                        saml_login_url, video_id, 'Downloading SAML Response',
+                        headers={'Content-Type': 'text/xml'})
                     self._download_webpage(
-                        saml_response_json["targetValue"],
-                        video_id,
-                        "Confirming Login",
-                        data=urlencode_postdata(
-                            {
-                                "SAMLResponse": saml_response_json["SAMLResponse"],
-                                "RelayState": saml_response_json["RelayState"],
-                            }
-                        ),
-                        headers={
-                            "Content-Type": "application/x-www-form-urlencoded",
-                        },
-                    )
-                elif mso_id in ("Spectrum", "Charter_Direct"):
+                        saml_response_json['targetValue'], video_id,
+                        'Confirming Login', data=urlencode_postdata({
+                            'SAMLResponse': saml_response_json['SAMLResponse'],
+                            'RelayState': saml_response_json['RelayState'],
+                        }), headers={
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        })
+                elif mso_id in ('Spectrum', 'Charter_Direct'):
                     # Spectrum's login for is dynamically loaded via JS so we need to hardcode the flow
                     # as a one-off implementation.
                     provider_redirect_page, urlh = provider_redirect_page_res
                     provider_login_page_res = post_form(
-                        provider_redirect_page_res, self._DOWNLOADING_LOGIN_PAGE
-                    )
+                        provider_redirect_page_res, self._DOWNLOADING_LOGIN_PAGE)
                     saml_login_page, urlh = provider_login_page_res
                     relay_state = self._search_regex(
                         r'RelayState\s*=\s*"(?P<relay>.+?)";',
-                        saml_login_page,
-                        "RelayState",
-                        group="relay",
-                    )
+                        saml_login_page, 'RelayState', group='relay')
                     saml_request = self._search_regex(
                         r'SAMLRequest\s*=\s*"(?P<saml_request>.+?)";',
-                        saml_login_page,
-                        "SAMLRequest",
-                        group="saml_request",
-                    )
+                        saml_login_page, 'SAMLRequest', group='saml_request')
                     login_json = {
-                        mso_info["username_field"]: username,
-                        mso_info["password_field"]: password,
-                        "RelayState": relay_state,
-                        "SAMLRequest": saml_request,
+                        mso_info['username_field']: username,
+                        mso_info['password_field']: password,
+                        'RelayState': relay_state,
+                        'SAMLRequest': saml_request,
                     }
                     saml_response_json = self._download_json(
-                        "https://tveauthn.spectrum.net/tveauthentication/api/v1/manualAuth",
-                        video_id,
-                        "Downloading SAML Response",
+                        'https://tveauthn.spectrum.net/tveauthentication/api/v1/manualAuth', video_id,
+                        'Downloading SAML Response',
                         data=json.dumps(login_json).encode(),
                         headers={
-                            "Content-Type": "application/json",
-                            "Accept": "application/json",
-                        },
-                    )
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                        })
                     self._download_webpage(
-                        saml_response_json["SAMLRedirectUri"],
-                        video_id,
-                        "Confirming Login",
-                        data=urlencode_postdata(
-                            {
-                                "SAMLResponse": saml_response_json["SAMLResponse"],
-                                "RelayState": relay_state,
-                            }
-                        ),
-                        headers={
-                            "Content-Type": "application/x-www-form-urlencoded",
-                        },
-                    )
-                elif mso_id == "slingtv":
+                        saml_response_json['SAMLRedirectUri'], video_id,
+                        'Confirming Login', data=urlencode_postdata({
+                            'SAMLResponse': saml_response_json['SAMLResponse'],
+                            'RelayState': relay_state,
+                        }), headers={
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        })
+                elif mso_id == 'slingtv':
                     # SlingTV has a meta-refresh based authentication, but also
                     # looks at the tab history to count the number of times the
                     # browser has been on a page
@@ -1820,255 +1696,183 @@ class AdobePassIE(
                     first_bookend_page, urlh = provider_redirect_page_res
 
                     hidden_data = self._hidden_inputs(first_bookend_page)
-                    hidden_data["history"] = 1
+                    hidden_data['history'] = 1
 
                     provider_login_page_res = self._download_webpage_handle(
-                        urlh.url, video_id, "Sending first bookend", query=hidden_data
-                    )
+                        urlh.url, video_id, 'Sending first bookend',
+                        query=hidden_data)
 
                     provider_association_redirect, urlh = post_form(
-                        provider_login_page_res,
-                        "Logging in",
-                        {
-                            mso_info["username_field"]: username,
-                            mso_info["password_field"]: password,
-                        },
-                        validate_url=True,
-                    )
+                        provider_login_page_res, 'Logging in', {
+                            mso_info['username_field']: username,
+                            mso_info['password_field']: password,
+                        }, validate_url=True)
 
                     provider_refresh_redirect_url = extract_redirect_url(
-                        provider_association_redirect, url=urlh.url
-                    )
+                        provider_association_redirect, url=urlh.url)
 
                     last_bookend_page, urlh = self._download_webpage_handle(
-                        provider_refresh_redirect_url,
-                        video_id,
-                        "Downloading Auth Association Redirect Page",
-                    )
+                        provider_refresh_redirect_url, video_id,
+                        'Downloading Auth Association Redirect Page')
                     hidden_data = self._hidden_inputs(last_bookend_page)
-                    hidden_data["history"] = 3
+                    hidden_data['history'] = 3
 
                     mvpd_confirm_page_res = self._download_webpage_handle(
-                        urlh.url, video_id, "Sending final bookend", query=hidden_data
-                    )
+                        urlh.url, video_id, 'Sending final bookend',
+                        query=hidden_data)
 
-                    post_form(mvpd_confirm_page_res, "Confirming Login")
-                elif mso_id == "Suddenlink":
+                    post_form(mvpd_confirm_page_res, 'Confirming Login')
+                elif mso_id == 'Suddenlink':
                     # Suddenlink is similar to SlingTV in using a tab history count and a meta refresh,
                     # but they also do a dynmaic redirect using javascript that has to be followed as well
                     first_bookend_page, urlh = post_form(
-                        provider_redirect_page_res, "Pressing Continue..."
-                    )
+                        provider_redirect_page_res, 'Pressing Continue...')
 
                     hidden_data = self._hidden_inputs(first_bookend_page)
-                    hidden_data["history_val"] = 1
+                    hidden_data['history_val'] = 1
 
                     provider_login_redirect_page_res = self._download_webpage_handle(
-                        urlh.url, video_id, "Sending First Bookend", query=hidden_data
-                    )
+                        urlh.url, video_id, 'Sending First Bookend',
+                        query=hidden_data)
 
-                    provider_login_redirect_page, urlh = (
-                        provider_login_redirect_page_res
-                    )
+                    provider_login_redirect_page, urlh = provider_login_redirect_page_res
 
                     # Some website partners seem to not have the extra ajaxurl redirect step, so we check if we already
                     # have the login prompt or not
-                    if (
-                        'id="password" type="password" name="password"'
-                        in provider_login_redirect_page
-                    ):
+                    if 'id="password" type="password" name="password"' in provider_login_redirect_page:
                         provider_login_page_res = provider_login_redirect_page_res
                     else:
                         provider_tryauth_url = self._html_search_regex(
-                            r'url:\s*[\'"]([^\'"]+)',
-                            provider_login_redirect_page,
-                            "ajaxurl",
-                        )
+                            r'url:\s*[\'"]([^\'"]+)', provider_login_redirect_page, 'ajaxurl')
                         provider_tryauth_page = self._download_webpage(
-                            provider_tryauth_url,
-                            video_id,
-                            "Submitting TryAuth",
-                            query=hidden_data,
-                        )
+                            provider_tryauth_url, video_id, 'Submitting TryAuth',
+                            query=hidden_data)
 
                         provider_login_page_res = self._download_webpage_handle(
-                            f"https://authorize.suddenlink.net/saml/module.php/authSynacor/login.php?AuthState={provider_tryauth_page}",
-                            video_id,
-                            "Getting Login Page",
-                            query=hidden_data,
-                        )
+                            f'https://authorize.suddenlink.net/saml/module.php/authSynacor/login.php?AuthState={provider_tryauth_page}',
+                            video_id, 'Getting Login Page',
+                            query=hidden_data)
 
                     provider_association_redirect, urlh = post_form(
-                        provider_login_page_res,
-                        "Logging in",
-                        {
-                            mso_info["username_field"]: username,
-                            mso_info["password_field"]: password,
-                        },
-                        validate_url=True,
-                    )
+                        provider_login_page_res, 'Logging in', {
+                            mso_info['username_field']: username,
+                            mso_info['password_field']: password,
+                        }, validate_url=True)
 
                     provider_refresh_redirect_url = extract_redirect_url(
-                        provider_association_redirect, url=urlh.url
-                    )
+                        provider_association_redirect, url=urlh.url)
 
                     last_bookend_page, urlh = self._download_webpage_handle(
-                        provider_refresh_redirect_url,
-                        video_id,
-                        "Downloading Auth Association Redirect Page",
-                    )
+                        provider_refresh_redirect_url, video_id,
+                        'Downloading Auth Association Redirect Page')
 
                     hidden_data = self._hidden_inputs(last_bookend_page)
-                    hidden_data["history_val"] = 3
+                    hidden_data['history_val'] = 3
 
                     mvpd_confirm_page_res = self._download_webpage_handle(
-                        urlh.url, video_id, "Sending Final Bookend", query=hidden_data
-                    )
+                        urlh.url, video_id, 'Sending Final Bookend',
+                        query=hidden_data)
 
-                    post_form(mvpd_confirm_page_res, "Confirming Login")
-                elif mso_id == "Fubo":
+                    post_form(mvpd_confirm_page_res, 'Confirming Login')
+                elif mso_id == 'Fubo':
                     _, urlh = provider_redirect_page_res
 
                     fubo_response = self._download_json(
-                        "https://api.fubo.tv/partners/tve/connect",
-                        video_id,
-                        "Authenticating with Fubo",
-                        "Unable to authenticate with Fubo",
-                        query=parse_qs(urlh.url),
-                        data=json.dumps(
-                            {
-                                "username": username,
-                                "password": password,
-                            }
-                        ).encode(),
-                        headers={
-                            "Accept": "application/json",
-                            "Content-Type": "application/json",
-                        },
-                    )
+                        'https://api.fubo.tv/partners/tve/connect', video_id,
+                        'Authenticating with Fubo', 'Unable to authenticate with Fubo',
+                        query=parse_qs(urlh.url), data=json.dumps({
+                            'username': username,
+                            'password': password,
+                        }).encode(), headers={
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        })
 
                     self._request_webpage(
-                        "https://sp.auth.adobe.com/adobe-services/oauth2",
-                        video_id,
-                        "Authenticating with Adobe",
-                        "Failed to authenticate with Adobe",
+                        'https://sp.auth.adobe.com/adobe-services/oauth2', video_id,
+                        'Authenticating with Adobe', 'Failed to authenticate with Adobe',
                         query={
-                            "code": fubo_response["code"],
-                            "state": fubo_response["state"],
-                        },
-                    )
+                            'code': fubo_response['code'],
+                            'state': fubo_response['state'],
+                        })
                 else:
                     # Some providers (e.g. DIRECTV NOW) have another meta refresh
                     # based redirect that should be followed.
                     provider_redirect_page, urlh = provider_redirect_page_res
                     provider_refresh_redirect_url = extract_redirect_url(
-                        provider_redirect_page, url=urlh.url
-                    )
+                        provider_redirect_page, url=urlh.url)
                     if provider_refresh_redirect_url:
                         provider_redirect_page_res = self._download_webpage_handle(
-                            provider_refresh_redirect_url,
-                            video_id,
-                            "Downloading Provider Redirect Page (meta refresh)",
-                        )
+                            provider_refresh_redirect_url, video_id,
+                            'Downloading Provider Redirect Page (meta refresh)')
                     provider_login_page_res = post_form(
-                        provider_redirect_page_res, self._DOWNLOADING_LOGIN_PAGE
-                    )
+                        provider_redirect_page_res, self._DOWNLOADING_LOGIN_PAGE)
                     form_data = {
-                        mso_info.get("username_field", "username"): username,
-                        mso_info.get("password_field", "password"): password,
+                        mso_info.get('username_field', 'username'): username,
+                        mso_info.get('password_field', 'password'): password,
                     }
-                    if mso_id in ("Cablevision", "AlticeOne"):
-                        form_data["_eventId_proceed"] = ""
+                    if mso_id in ('Cablevision', 'AlticeOne'):
+                        form_data['_eventId_proceed'] = ''
                     mvpd_confirm_page_res = post_form(
-                        provider_login_page_res,
-                        "Logging in",
-                        form_data,
-                        validate_url=True,
-                    )
-                    if mso_id != "Rogers":
-                        post_form(mvpd_confirm_page_res, "Confirming Login")
+                        provider_login_page_res, 'Logging in', form_data, validate_url=True)
+                    if mso_id != 'Rogers':
+                        post_form(mvpd_confirm_page_res, 'Confirming Login')
 
                 try:
                     session = self._download_webpage(
-                        self._SERVICE_PROVIDER_TEMPLATE % "session",
-                        video_id,
-                        "Retrieving Session",
-                        data=urlencode_postdata(
-                            {
-                                "_method": "GET",
-                                "requestor_id": requestor_id,
-                                "reg_code": reg_code,
-                            }
-                        ),
-                        headers=mvpd_headers,
-                    )
+                        self._SERVICE_PROVIDER_TEMPLATE % 'session', video_id,
+                        'Retrieving Session', data=urlencode_postdata({
+                            '_method': 'GET',
+                            'requestor_id': requestor_id,
+                            'reg_code': reg_code,
+                        }), headers=mvpd_headers)
                 except ExtractorError as e:
-                    if (
-                        not mso_id
-                        and isinstance(e.cause, HTTPError)
-                        and e.cause.status == 401
-                    ):
+                    if not mso_id and isinstance(e.cause, HTTPError) and e.cause.status == 401:
                         raise_mvpd_required()
                     raise
-                if "<pendingLogout" in session:
+                if '<pendingLogout' in session:
                     self.cache.store(self._MVPD_CACHE, requestor_id, {})
                     continue
-                authn_token = unescapeHTML(xml_text(session, "authnToken"))
-                requestor_info["authn_token"] = authn_token
+                authn_token = unescapeHTML(xml_text(session, 'authnToken'))
+                requestor_info['authn_token'] = authn_token
                 self.cache.store(self._MVPD_CACHE, requestor_id, requestor_info)
 
             authz_token = requestor_info.get(guid)
-            if authz_token and is_expired(authz_token, "simpleTokenTTL"):
+            if authz_token and is_expired(authz_token, 'simpleTokenTTL'):
                 authz_token = None
             if not authz_token:
                 authorize = self._download_webpage(
-                    self._SERVICE_PROVIDER_TEMPLATE % "authorize",
-                    video_id,
-                    "Retrieving Authorization Token",
-                    data=urlencode_postdata(
-                        {
-                            "resource_id": resource,
-                            "requestor_id": requestor_id,
-                            "authentication_token": authn_token,
-                            "mso_id": xml_text(authn_token, "simpleTokenMsoID"),
-                            "userMeta": "1",
-                        }
-                    ),
-                    headers=mvpd_headers,
-                )
-                if "<pendingLogout" in authorize:
+                    self._SERVICE_PROVIDER_TEMPLATE % 'authorize', video_id,
+                    'Retrieving Authorization Token', data=urlencode_postdata({
+                        'resource_id': resource,
+                        'requestor_id': requestor_id,
+                        'authentication_token': authn_token,
+                        'mso_id': xml_text(authn_token, 'simpleTokenMsoID'),
+                        'userMeta': '1',
+                    }), headers=mvpd_headers)
+                if '<pendingLogout' in authorize:
                     self.cache.store(self._MVPD_CACHE, requestor_id, {})
                     continue
-                if "<error" in authorize:
-                    raise ExtractorError(xml_text(authorize, "details"), expected=True)
-                authz_token = unescapeHTML(xml_text(authorize, "authzToken"))
+                if '<error' in authorize:
+                    raise ExtractorError(xml_text(authorize, 'details'), expected=True)
+                authz_token = unescapeHTML(xml_text(authorize, 'authzToken'))
                 requestor_info[guid] = authz_token
                 self.cache.store(self._MVPD_CACHE, requestor_id, requestor_info)
 
-            mvpd_headers.update(
-                {
-                    "ap_19": xml_text(authn_token, "simpleSamlNameID"),
-                    "ap_23": xml_text(authn_token, "simpleSamlSessionIndex"),
-                }
-            )
+            mvpd_headers.update({
+                'ap_19': xml_text(authn_token, 'simpleSamlNameID'),
+                'ap_23': xml_text(authn_token, 'simpleSamlSessionIndex'),
+            })
 
             short_authorize = self._download_webpage(
-                self._SERVICE_PROVIDER_TEMPLATE % "shortAuthorize",
-                video_id,
-                "Retrieving Media Token",
-                data=urlencode_postdata(
-                    {
-                        "authz_token": authz_token,
-                        "requestor_id": requestor_id,
-                        "session_guid": xml_text(
-                            authn_token, "simpleTokenAuthenticationGuid"
-                        ),
-                        "hashed_guid": "false",
-                    }
-                ),
-                headers=mvpd_headers,
-            )
-            if "<pendingLogout" in short_authorize:
+                self._SERVICE_PROVIDER_TEMPLATE % 'shortAuthorize',
+                video_id, 'Retrieving Media Token', data=urlencode_postdata({
+                    'authz_token': authz_token,
+                    'requestor_id': requestor_id,
+                    'session_guid': xml_text(authn_token, 'simpleTokenAuthenticationGuid'),
+                    'hashed_guid': 'false',
+                }), headers=mvpd_headers)
+            if '<pendingLogout' in short_authorize:
                 self.cache.store(self._MVPD_CACHE, requestor_id, {})
                 continue
             return short_authorize

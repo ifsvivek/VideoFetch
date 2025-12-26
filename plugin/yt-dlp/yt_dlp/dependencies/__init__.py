@@ -1,7 +1,6 @@
 # flake8: noqa: F401
 """Imports all optional dependencies for the project.
-An attribute "_yt_dlp__identifier" may be inserted into the module if it uses an ambiguous namespace
-"""
+An attribute "_yt_dlp__identifier" may be inserted into the module if it uses an ambiguous namespace"""
 
 try:
     import brotlicffi as brotli
@@ -33,22 +32,17 @@ except ImportError:
 secretstorage = None
 try:
     import secretstorage
-
     _SECRETSTORAGE_UNAVAILABLE_REASON = None
 except ImportError:
     _SECRETSTORAGE_UNAVAILABLE_REASON = (
-        "as the `secretstorage` module is not installed. "
-        "Please install by running `python3 -m pip install secretstorage`"
-    )
+        'as the `secretstorage` module is not installed. '
+        'Please install by running `python3 -m pip install secretstorage`')
 except Exception as _err:
-    _SECRETSTORAGE_UNAVAILABLE_REASON = (
-        f"as the `secretstorage` module could not be initialized. {_err}"
-    )
+    _SECRETSTORAGE_UNAVAILABLE_REASON = f'as the `secretstorage` module could not be initialized. {_err}'
 
 
 try:
     import sqlite3
-
     # We need to get the underlying `sqlite` version, see https://github.com/yt-dlp/yt-dlp/issues/8152
     sqlite3._yt_dlp__version = sqlite3.sqlite_version
 except ImportError:
@@ -77,8 +71,8 @@ try:
 except ImportError:
     xattr = None
 else:
-    if hasattr(xattr, "set"):  # pyxattr
-        xattr._yt_dlp__identifier = "pyxattr"
+    if hasattr(xattr, 'set'):  # pyxattr
+        xattr._yt_dlp__identifier = 'pyxattr'
 
 try:
     import curl_cffi
@@ -93,7 +87,7 @@ except ImportError:
     yt_dlp_ejs = None
 
 
-all_dependencies = {k: v for k, v in globals().items() if not k.startswith("_")}
+all_dependencies = {k: v for k, v in globals().items() if not k.startswith('_')}
 available_dependencies = {k: v for k, v in all_dependencies.items() if v}
 
 
@@ -102,7 +96,7 @@ Cryptodome_AES = Cryptodome.AES
 
 
 __all__ = [
-    "all_dependencies",
-    "available_dependencies",
+    'all_dependencies',
+    'available_dependencies',
     *all_dependencies.keys(),
 ]

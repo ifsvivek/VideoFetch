@@ -41,31 +41,28 @@ def __getattr__(name):
     lookup = plugin_pps.value
     if name in lookup:
         deprecation_warning(
-            f"Importing a plugin Post-Processor from {__name__} is deprecated. "
-            f"Please import {PACKAGE_NAME}.postprocessor.{name} instead."
-        )
+            f'Importing a plugin Post-Processor from {__name__} is deprecated. '
+            f'Please import {PACKAGE_NAME}.postprocessor.{name} instead.')
         return lookup[name]
 
-    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+    raise AttributeError(f'module {__name__!r} has no attribute {name!r}')
 
 
 def get_postprocessor(key):
-    return postprocessors.value[key + "PP"]
+    return postprocessors.value[key + 'PP']
 
 
-register_plugin_spec(
-    PluginSpec(
-        module_name="postprocessor",
-        suffix="PP",
-        destination=postprocessors,
-        plugin_destination=plugin_pps,
-    )
-)
+register_plugin_spec(PluginSpec(
+    module_name='postprocessor',
+    suffix='PP',
+    destination=postprocessors,
+    plugin_destination=plugin_pps,
+))
 
 _default_pps = {
     name: value
     for name, value in globals().items()
-    if name.endswith("PP") or name in ("FFmpegPostProcessor", "PostProcessor")
+    if name.endswith('PP') or name in ('FFmpegPostProcessor', 'PostProcessor')
 }
 postprocessors.value.update(_default_pps)
 

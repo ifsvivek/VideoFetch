@@ -30,8 +30,8 @@ from .utils import (
     write_string,
 )
 
-PACKAGE_NAME = "yt_dlp_plugins"
-COMPAT_PACKAGE_NAME = "ytdlp_plugins"
+PACKAGE_NAME = 'yt_dlp_plugins'
+COMPAT_PACKAGE_NAME = 'ytdlp_plugins'
 _BASE_PACKAGE_PATH = Path(__file__).parent
 
 
@@ -40,13 +40,13 @@ _BASE_PACKAGE_PATH = Path(__file__).parent
 # However, we will still try our best.
 
 __all__ = [
-    "COMPAT_PACKAGE_NAME",
-    "PACKAGE_NAME",
-    "PluginSpec",
-    "directories",
-    "load_all_plugins",
-    "load_plugins",
-    "register_plugin_spec",
+    'COMPAT_PACKAGE_NAME',
+    'PACKAGE_NAME',
+    'PluginSpec',
+    'directories',
+    'load_all_plugins',
+    'load_plugins',
+    'register_plugin_spec',
 ]
 
 
@@ -69,15 +69,12 @@ class PluginLoader(importlib.abc.Loader):
 def dirs_in_zip(archive):
     try:
         with ZipFile(archive) as zip_:
-            return set(
-                itertools.chain.from_iterable(
-                    Path(file).parents for file in zip_.namelist()
-                )
-            )
+            return set(itertools.chain.from_iterable(
+                Path(file).parents for file in zip_.namelist()))
     except FileNotFoundError:
         pass
     except Exception as e:
-        write_string(f"WARNING: Could not read zip file {archive}: {e}\n")
+        write_string(f'WARNING: Could not read zip file {archive}: {e}\n')
     return ()
 
 
@@ -92,17 +89,17 @@ def default_plugin_paths():
 
     # Load from yt-dlp config folders
     yield from _get_package_paths(
-        *get_user_config_dirs("yt-dlp"),
-        *get_system_config_dirs("yt-dlp"),
-        containing_folder="plugins",
+        *get_user_config_dirs('yt-dlp'),
+        *get_system_config_dirs('yt-dlp'),
+        containing_folder='plugins',
     )
 
     # Load from yt-dlp-plugins folders
     yield from _get_package_paths(
         get_executable_path(),
-        *get_user_config_dirs(""),
-        *get_system_config_dirs(""),
-        containing_folder="yt-dlp-plugins",
+        *get_user_config_dirs(''),
+        *get_system_config_dirs(''),
+        containing_folder='yt-dlp-plugins',
     )
 
     # Load from PYTHONPATH directories
@@ -112,7 +109,7 @@ def default_plugin_paths():
 def candidate_plugin_paths(candidate):
     candidate_path = Path(candidate)
     if not candidate_path.is_dir():
-        raise ValueError(f"Invalid plugin directory: {candidate_path}")
+        raise ValueError(f'Invalid plugin directory: {candidate_path}')
     yield from candidate_path.iterdir()
 
 
@@ -127,34 +124,26 @@ class PluginFinder(importlib.abc.MetaPathFinder):
         self._zip_content_cache = {}
         self.packages = set(
             itertools.chain.from_iterable(
-                itertools.accumulate(name.split("."), lambda a, b: ".".join((a, b)))
-                for name in packages
-            )
-        )
+                itertools.accumulate(name.split('.'), lambda a, b: '.'.join((a, b)))
+                for name in packages))
 
     def search_locations(self, fullname):
         candidate_locations = itertools.chain.from_iterable(
-            (
-                default_plugin_paths()
-                if candidate == "default"
-                else candidate_plugin_paths(candidate)
-            )
+            default_plugin_paths() if candidate == 'default' else candidate_plugin_paths(candidate)
             for candidate in plugin_dirs.value
         )
 
-        parts = Path(*fullname.split("."))
+        parts = Path(*fullname.split('.'))
         for path in orderedSet(candidate_locations, lazy=True):
             candidate = path / parts
             try:
                 if candidate.is_dir():
                     yield candidate
-                elif path.suffix in (".zip", ".egg", ".whl") and path.is_file():
+                elif path.suffix in ('.zip', '.egg', '.whl') and path.is_file():
                     if parts in dirs_in_zip(path):
                         yield candidate
             except PermissionError as e:
-                write_string(
-                    f'Permission error while accessing modules in "{e.filename}"\n'
-                )
+                write_string(f'Permission error while accessing modules in "{e.filename}"\n')
 
     def find_spec(self, fullname, path=None, target=None):
         if fullname not in self.packages:
@@ -184,35 +173,32 @@ def directories():
 
 
 def iter_modules(subpackage):
-    fullname = f"{PACKAGE_NAME}.{subpackage}"
+    fullname = f'{PACKAGE_NAME}.{subpackage}'
     with contextlib.suppress(ModuleNotFoundError):
         pkg = importlib.import_module(fullname)
-        yield from pkgutil.iter_modules(path=pkg.__path__, prefix=f"{fullname}.")
+        yield from pkgutil.iter_modules(path=pkg.__path__, prefix=f'{fullname}.')
 
 
 def get_regular_classes(module, module_name, suffix):
     # Find standard public plugin classes (not overrides)
-    return inspect.getmembers(
-        module,
-        lambda obj: (
-            inspect.isclass(obj)
-            and obj.__name__.endswith(suffix)
-            and obj.__module__.startswith(module_name)
-            and not obj.__name__.startswith("_")
-            and obj.__name__ in getattr(module, "__all__", [obj.__name__])
-            and getattr(obj, "PLUGIN_NAME", None) is None
-        ),
-    )
+    return inspect.getmembers(module, lambda obj: (
+        inspect.isclass(obj)
+        and obj.__name__.endswith(suffix)
+        and obj.__module__.startswith(module_name)
+        and not obj.__name__.startswith('_')
+        and obj.__name__ in getattr(module, '__all__', [obj.__name__])
+        and getattr(obj, 'PLUGIN_NAME', None) is None
+    ))
 
 
 def load_plugins(plugin_spec: PluginSpec):
     name, suffix = plugin_spec.module_name, plugin_spec.suffix
     regular_classes = {}
-    if os.environ.get("YTDLP_NO_PLUGINS") or not plugin_dirs.value:
+    if os.environ.get('YTDLP_NO_PLUGINS') or not plugin_dirs.value:
         return regular_classes
 
     for finder, module_name, _ in iter_modules(name):
-        if any(x.startswith("_") for x in module_name.split(".")):
+        if any(x.startswith('_') for x in module_name.split('.')):
             continue
         try:
             spec = finder.find_spec(module_name)
@@ -221,7 +207,7 @@ def load_plugins(plugin_spec: PluginSpec):
             spec.loader.exec_module(module)
         except Exception:
             write_string(
-                f"Error while importing module {module_name!r}\n{traceback.format_exc(limit=-1)}",
+                f'Error while importing module {module_name!r}\n{traceback.format_exc(limit=-1)}',
             )
             continue
         regular_classes.update(get_regular_classes(module, module_name, suffix))
@@ -229,11 +215,11 @@ def load_plugins(plugin_spec: PluginSpec):
     # Compat: old plugin system using __init__.py
     # Note: plugins imported this way do not show up in directories()
     # nor are considered part of the yt_dlp_plugins namespace package
-    if "default" in plugin_dirs.value:
+    if 'default' in plugin_dirs.value:
         with contextlib.suppress(FileNotFoundError):
             spec = importlib.util.spec_from_file_location(
                 name,
-                Path(get_executable_path(), COMPAT_PACKAGE_NAME, name, "__init__.py"),
+                Path(get_executable_path(), COMPAT_PACKAGE_NAME, name, '__init__.py'),
             )
             plugins = importlib.util.module_from_spec(spec)
             sys.modules[spec.name] = plugins
@@ -243,9 +229,7 @@ def load_plugins(plugin_spec: PluginSpec):
     # Add the classes into the global plugin lookup for that type
     plugin_spec.plugin_destination.value = regular_classes
     # We want to prepend to the main lookup for that type
-    plugin_spec.destination.value = merge_dicts(
-        regular_classes, plugin_spec.destination.value
-    )
+    plugin_spec.destination.value = merge_dicts(regular_classes, plugin_spec.destination.value)
 
     return regular_classes
 
@@ -260,6 +244,4 @@ def register_plugin_spec(plugin_spec: PluginSpec):
     # If the plugin spec for a module is already registered, it will not be added again
     if plugin_spec.module_name not in plugin_specs.value:
         plugin_specs.value[plugin_spec.module_name] = plugin_spec
-        sys.meta_path.insert(
-            0, PluginFinder(f"{PACKAGE_NAME}.{plugin_spec.module_name}")
-        )
+        sys.meta_path.insert(0, PluginFinder(f'{PACKAGE_NAME}.{plugin_spec.module_name}'))

@@ -25,7 +25,7 @@ class PoTokenCacheProviderError(IEContentProviderError):
     """An error occurred while fetching a PO Token"""
 
 
-class PoTokenCacheProvider(IEContentProvider, abc.ABC, suffix="PCP"):
+class PoTokenCacheProvider(IEContentProvider, abc.ABC, suffix='PCP'):
     @abc.abstractmethod
     def get(self, key: str) -> str | None:
         pass
@@ -40,7 +40,7 @@ class PoTokenCacheProvider(IEContentProvider, abc.ABC, suffix="PCP"):
 
 
 class CacheProviderWritePolicy(enum.Enum):
-    WRITE_ALL = enum.auto()  # Write to all cache providers
+    WRITE_ALL = enum.auto()    # Write to all cache providers
     WRITE_FIRST = enum.auto()  # Write to only the first cache provider
 
 
@@ -54,7 +54,7 @@ class PoTokenCacheSpec:
     _provider: PoTokenCacheSpecProvider | None = None
 
 
-class PoTokenCacheSpecProvider(IEContentProvider, abc.ABC, suffix="PCSP"):
+class PoTokenCacheSpecProvider(IEContentProvider, abc.ABC, suffix='PCSP'):
 
     def is_available(self) -> bool:
         return True
@@ -84,8 +84,7 @@ def register_spec(provider: type[PoTokenCacheSpecProvider]):
 
 
 def register_preference(
-    *providers: type[PoTokenCacheProvider],
-) -> typing.Callable[[CacheProviderPreference], CacheProviderPreference]:
+        *providers: type[PoTokenCacheProvider]) -> typing.Callable[[CacheProviderPreference], CacheProviderPreference]:
     """Register a preference for a PoTokenCacheProvider"""
     return register_preference_generic(
         PoTokenCacheProvider,
@@ -95,6 +94,4 @@ def register_preference(
 
 
 if typing.TYPE_CHECKING:
-    CacheProviderPreference = typing.Callable[
-        [PoTokenCacheProvider, PoTokenRequest], int
-    ]
+    CacheProviderPreference = typing.Callable[[PoTokenCacheProvider, PoTokenRequest], int]
