@@ -84,41 +84,47 @@ var msAbstractParser = (function () {
         },
 
         isSupportedSource: function (url) {
-            // Let yt-dlp decide what it can handle - don't hardcode domains
-            return false; // Always use isPossiblySupportedSource for broader coverage
+            return false;
         },
 
         supportedSourceCheckPriority: function () {
-            return 100; // Higher priority to ensure this plugin is tried for supported URLs
+            return 0;
         },
 
         isPossiblySupportedSource: function (obj) {
-            // Be very permissive - let yt-dlp decide what it can handle
-            // Only exclude obvious non-video content and very basic checks
-            
-            // Skip binary files that are clearly not video pages
-            if (obj.contentType) {
-                if (/^(image\/|application\/(pdf|zip|rar|exe|msi|octet-stream)|text\/(css|javascript))/.test(obj.contentType)) {
-                    return false;
-                }
-            }
-            
-            // Skip extremely large files that are definitely not web pages
-            if (obj.resourceSize !== -1 && obj.resourceSize > 50 * 1024 * 1024) {
-                return false;
-            }
-            
             // Only process HTTP(S) URLs
             if (!/^https?:\/\//.test(obj.url)) {
                 return false;
             }
-            
+
+            // Skip binary/non-page content types
+            if (obj.contentType) {
+                if (/^(image\/|application\/(pdf|zip|rar|exe|msi|octet-stream)|text\/(css|javascript))/.test(obj.contentType)) {
+                    return false;
+                }
+                // Only proceed for HTML pages and unknown content types
+                if (/^(video\/|audio\/)/.test(obj.contentType)) {
+                    return false;
+                }
+            }
+
+            // Skip extremely large files that are definitely not web pages
+            if (obj.resourceSize !== -1 && obj.resourceSize > 50 * 1024 * 1024) {
+                return false;
+            }
+
+            // Skip URLs that look like direct file downloads (have a known non-media extension)
+            var urlPath = obj.url.split('?')[0].split('#')[0].toLowerCase();
+            if (/\.(zip|exe|msi|dmg|pkg|deb|rpm|tar|gz|bz2|xz|7z|rar|cab|iso|img|apk|ipa|jar|war|ear|pdf|doc|docx|xls|xlsx|ppt|pptx|txt|csv|bin|dat|db|sqlite|log|cfg|ini|conf|sh|bat|ps1|dll|so|dylib|whl|egg|gem|nupkg|vsix)$/.test(urlPath)) {
+                return false;
+            }
+
             // Let yt-dlp try everything else - this covers all 1800+ supported sites
             return true;
         },
 
         overrideUrlPolicy: function (url) {
-            return true;
+            return false;
         },
 
         checkBrowser: function (requestId, interactive, browser) {
