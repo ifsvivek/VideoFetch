@@ -10,7 +10,7 @@
   "minFeaturesLevel": 2,
   "dependencies": {
     "Python": {
-      "minVersion": "3.9"
+      "minVersion": "3.10"
     }
   },
   "permissions": [
